@@ -1,0 +1,141 @@
+<!--ADD Telecom Dialog---------------------------------------------------------------->
+<p-dialog header="Add DSLAM" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <form [formGroup]="form" #f="ngForm" (ngSubmit)="add_dslam(this.form)">
+    <div class="row">
+      <div class="col-md-12">
+        <span>
+          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listProvinces"
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
+
+          </p-autoComplete>
+          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listCities"
+          (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
+
+        </p-autoComplete>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="telecom_name">
+          <label for="float-input">Telecom Name</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="telecom_prefix">
+          <label for="float-input">Telecom Prefix</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="telecom_lat">
+          <label for="float-input">Telecom Lat</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="telecom_lat">
+          <label for="float-input">Telecom Long</label>
+        </span>
+        <hr />
+      </div>
+  
+    </div>
+    <button type="submit" (click)="displayMaximizable2=false;s">Submit</button>
+    <ng-template pTemplate="footer">
+    </ng-template>
+  </form>
+
+</p-dialog>
+
+
+<!--TELECOM Panel-------------------------------------------------------->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" style="text-align: center;">
+        Telecom Centers Panel
+        <span>
+          <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Telecom Center"
+            tooltipPosition="left" (click)="show_add_telecom_center()"></i>
+        </span>
+      </div>
+      <div>
+        <div class="disabled" *ngIf = "progressSpinner"></div>
+        <p-fieldset [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+          <p-header>Telecom Centers Search</p-header>
+        <table style="width: 1000px; margin: 10px;">
+          <thead>
+            <tr class="row-accessories border" style="margin: 10px;" >
+              <th>
+                <input pInputText type="text" [(ngModel)]="name" (keyup)="get_telecom_info(name,1)"
+                  placeholder="Search by Name" class="p-column-filter" style="margin: 10px;"
+                  pTooltip="Search by Name" tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="prefix_bukht_name" (keyup)="get_telecom_info(prefix_bukht_name,2)"
+                  placeholder="Search by Prefix Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by City"
+                  tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="city_info" (keyup)="get_telecom_info(city_info,3)"
+                  placeholder="Search by City" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Name"
+                  tooltipPosition="top">
+              </th>
+            </tr>
+          </thead>
+        </table>
+        </p-fieldset>
+      </div>
+      <div class="card-body" class="border" style="margin: 10px;" >
+        <p-table styleClass="p-datatable-striped" #dt1 [value]="listtelecoms" selectionMode="single" >
+          <ng-template pTemplate="header">
+
+            <tr class="row-accessories">
+              <th pSortableColumn="name">Telecom Center Name<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+              </th>
+              <th pSortableColumn="prefix_bukht_name">Prefix Name <p-sortIcon field="prefix_bukht_name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="total_ports_count">Total Ports <p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="down_ports_count">Down Ports<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="up_ports_count">Up Ports<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="dslams_count">Dslam Ports<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="city_info.name">City<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+              </th>
+
+          </ng-template>
+          <ng-template pTemplate="body" let-telecom>
+            <tr>
+              <td class="text-center" >{{telecom.name}}</td>
+              <td class="text-center">{{telecom.prefix_bukht_name}}</td>
+              <td class="text-center">{{telecom.total_ports_count}}</td>
+              <td class="text-center">{{telecom.down_ports_count}}</td>
+              <td class="text-center">{{telecom.up_ports_count}}</td>
+              <td class="text-center">{{telecom.dslams_count}}</td>
+              <td class="text-center">{{telecom.city_info.name}}</td>
+
+              <td class="text-center">
+
+                <div class="col-md-12" style="padding-left: 40%">
+                  <div class="row">
+                    <img src="\assets\img\brand\info_icon.png" (click)="show_telecom_info(telecom.id)" width="20" pTooltip="Telecom info" tooltipPosition="top"
+                      style="cursor: pointer; margin: 5px;" />
+                    <img src="\assets\img\brand\edit_icon.png" (click)="show_telecom(dslam.id)" width="20"
+                      pTooltip="Telecom Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                    <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Telecom"
+                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_dslam(dslam.id)" />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+          [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+      </div>
+    </div>
+  </div>
+</div>

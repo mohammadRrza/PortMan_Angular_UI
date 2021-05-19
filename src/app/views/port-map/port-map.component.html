@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          Port Map Panel
+          <span>
+            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Ports"
+              tooltipPosition="left" (click)="show_add_ports()"></i>
+          </span>
+        </div>
+        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+            <p-header>Port Search</p-header>
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="orders_ports" selectionMode="single" >
+                <ng-template pTemplate="header">
+                  <tr class="row-accessories border" style="margin: 10px;" >
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="username" (keyup)="search_orders(username,1)"
+                        placeholder="Search by Username" class="p-column-filter" style="margin: 10px;"
+                        pTooltip="Search by Username" tooltipPosition="top">
+                    </th>
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="ranjePhoneNumber" (keyup)="search_orders(ranjePhoneNumber,2)"
+                        placeholder="Search by Phone" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Phone"
+                        tooltipPosition="top">
+                    </th>
+                    <th>
+                        <input pInputText type="text" [(ngModel)]="fqdn" (keyup)="search_orders(fqdn,3)"
+                          placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
+                          tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="number" min="1" [(ngModel)]="slot" (keyup)="search_orders(slot,4)"
+                          placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Slot"
+                          tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="number" min="1" [(ngModel)]="port" (keyup)="search_orders(port,5)"
+                          placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
+                          tooltipPosition="Port">
+                      </th>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-fieldset>
+
+        <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="orders_ports" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="username">Username<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="telco_row">Telco Row<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="telco_column">Telco Column<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="telco_connection">Telco Connection<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="slot_number">Slot<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="port_number">Port<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ranjePhoneNumber">Ranje Phone Number<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fqdn">Fqdn<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th>Action<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order_port>
+                    <tr>
+                        <td class="text-center"><span>{{order_port.username}}</span></td>
+                        <td class="text-center"><span>{{order_port.telco_row}}</span></td>
+                        <td class="text-center"><span>{{order_port.telco_column}}</span></td>
+                        <td class="text-center"><span>{{order_port.telco_connection}}</span></td>
+                        <td class="text-center"><span>{{order_port.slot_number}}</span></td>
+                        <td class="text-center"><span>{{order_port.port_number}}</span></td>
+                        <td class="text-center"><span>{{order_port.ranjePhoneNumber}}</span></td>
+                        <td class="text-center"><span>{{order_port.fqdn}}</span></td>
+
+                        <td class="text-center">
+
+                            <div class="col-md-12" style="padding-left: 40%">
+                              <div class="row">
+                                <img src="\assets\img\brand\edit_icon.png" (click)="edit_router(router.id)" width="20"
+                                  pTooltip="Router Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                <img src="\assets\img\brand\info_icon.png" width="20" pTooltip="Check Port Conflict"
+                                  tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="check_port_conflict(order_port.fqdn,order_port.slot_number,order_port.port_number)" />
+                              </div>
+                            </div>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+            [rowsPerPageOptions]="[10,20,30]">
+        </p-paginator>
+        </div>
+      </div>
+    </div>
+</div>

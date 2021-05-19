@@ -1,0 +1,251 @@
+<div class="row" style="direction: rtl; text-align: center;">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        عملیات
+      </div>
+      <div class="glowing-border">
+        <div class="card-body">
+          <div class="col-md-12 mb-4">
+            <!-- Nav tabs -->
+            <tabset>
+              <tab>
+                <ng-template tabHeading><i class="icon-calculator"></i> کارت ها </ng-template>
+                <div class="cards" *ngFor="let slot of dslamInfo.slots">
+                  <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="getTemperature(slot)">slot {{slot}}</button>
+                </div>
+                <div class="row">
+                  <div class="card-body col-md-4" *ngFor="let temperature of temperatures">
+
+                    <circle-progress *ngIf="showSpinner" [percent]="temperature.value" [radius]="100"
+                      [outerStrokeWidth]="16" [innerStrokeWidth]="8" [outerStrokeColor]="'#78C000'"
+                      [innerStrokeColor]="'#C7E596'" [animation]="true" [showSubtitle]="false" [showUnits]="false"
+                      [animationDuration]="1000">
+                    </circle-progress>
+                    <button aria-pressed="true" class="btn btn-block btn-outline-primary active"
+                      type="button">{{temperature.name}} = {{temperature.value}}</button>
+                  </div>
+                </div>
+
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-basket-loaded"></i> Dslam Commands</ng-template>
+                <div class="row">
+                  <div class="ng-autocomplete col-md-3" style="direction: ltr;">
+                    <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
+                      (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                      (inputFocused)='onFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+                  <div class="col-md-3">
+                    <button pButton type="button" style="margin-right: 0; float: right;"
+                      (click)="run_command(comm_item)" label="Run" [disabled]="!show_result"></button>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="col-md-12">
+                      <p-card header="Command Result">
+                        <hr />
+                        <div *ngIf="!show_result" class="res_div_disabled border">
+                          <p-progressSpinner></p-progressSpinner>
+                        </div>
+                        <div *ngIf="show_result" class="res_div border">
+
+                          <pre>
+                          {{dslam_lcman}}
+                         </pre>
+                        </div>
+                      </p-card>
+                    </div>
+                  </div>
+
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-pie-chart"></i> ICMP Commands</ng-template>
+                <div class="card">
+                  <div class="card-header">
+                    <span class="icon-settings"></span>
+                    اجرای دستورات ICMP روی DSLAM
+                  </div>
+                  <div class="glowing-border">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="col-md-3 mb-4">
+                            <button aria-pressed="true" style="padding-right: 30%;"
+                              class="btn btn-block btn-outline-primary active card" type="button"
+                              (click)="run_icmp_command()">Trace Route</button>
+                          </div>
+                          <div class="glowing-border" *ngIf="dslam_current_icmp">
+                            <pre style="direction: ltr; padding: 10px;">{{dslam_current_icmp}}</pre>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="col-md-3 mb-4">
+                            <button aria-pressed="true" style="padding-right: 30%;"
+                              class="btn btn-block btn-outline-primary active card" type="button"
+                              (click)="run_ping_on_dslam(4,0.2)">Ping</button>
+                          </div>
+                          <div *ngIf="dslam_ping" class="glowing-border"
+                            style="height: 64%; padding-top: 5px; padding-top: 40px; padding-right: 15%;">
+                            <table>
+                              <tr style="direction: ltr; margin-top: 10px;">
+                                <td>Sent</td>
+                                <td>Received</td>
+                                <td>Packet_loss</td>
+                                <td>Jitter</td>
+                                <td>Max-ping</td>
+                                <td>Min-ping</td>
+                                <td>Avgping</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;" class="cards">{{dslam_ping.sent}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;"
+                                    class="cards">{{dslam_ping.received}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;"
+                                    class="cards">{{dslam_ping.packet_loss}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;" class="cards">{{dslam_ping.jitter}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;" class="cards">{{dslam_ping.maxping}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;" class="cards">{{dslam_ping.minping}}</pre>
+                                </td>
+                                <td>
+                                  <pre style="direction: ltr; padding: 10px;" class="cards">{{dslam_ping.avgping}}</pre>
+                                </td>
+                                <td></td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-pie-chart"></i> وضعیت پورت ها</ng-template>
+                <div class="card">
+                  <div class="card-header">
+                    Line Profile Usage
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-wrapper">
+                      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-pie-chart"></i> لیست پورت ها</ng-template>
+                <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="text-center"> اندیس پورت</th>
+                      <th class="text-center">نام پورت</th>
+                      <th class="text-center">کارت </th>
+                      <th class="text-center"> پورت </th>
+                      <th class="text-center">Up Time</th>
+                      <th class="text-center">نماینده ریسلر</th>
+                      <th class="text-center">Subscriber</th>
+                      <th class="text-center">Oper Status</th>
+                      <th class="text-center">Admin Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let dslamport of listDslamPorts|paginate: pagination_config">
+                      <td>{{dslamport.port_index}}</td>
+                      <td><a [routerLink]="['/dslamport/dslamPortOperation']"
+                          [queryParams]="{portId: [dslamport.id],dslam_id: [dslamport.dslam_info.id]}">{{dslamport.port_name}}</a>
+                      </td>
+                      <td>{{dslamport.slot_number}}</td>
+                      <td>{{dslamport.port_number}}</td>
+                      <td>{{dslamport.uptime}}</td>
+                      <td>{{dslamport.reseller}}</td>
+                      <td>{{dslamport.subscriber}}</td>
+                      <td>{{dslamport.oper_status}}</td>
+                      <td>{{dslamport.admin_status}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="pagination-part pagin">
+                  <pagination-controls (pageChange)="pageChange_srch($event)" nextLabel="Next"
+                    (pageBoundsCorrection)="pageChange_srch($event)"></pagination-controls>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-pie-chart"></i> اطلاعات DSLAM </ng-template>
+                <table class="table table-striped" style="direction: rtl;">
+                  <tbody>
+                    <tr>
+                      <td>DSLAM</td>
+                      <td>{{dslamInfo.name}}</td>
+                    </tr>
+                    <tr>
+                      <td>Availability</td>
+                      <td>{{dslamInfo.dslam_availability}}</td>
+                    </tr>
+                    <tr>
+                      <td>FQDN</td>
+                      <td>{{dslamInfo.fqdn}}</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>{{dslamInfo.status}}</td>
+                    </tr>
+                    <tr>
+                      <td>Active</td>
+                      <td>{{dslamInfo.active}}</td>
+                    </tr>
+                    <tr>
+                      <td>DSLAM Type</td>
+                      <td> <span *ngIf="dslamInfo.dslam_type">{{dslamInfo.dslam_type_info.name}}</span></td>
+                    </tr>
+                    <tr>
+                      <td>IP</td>
+                      <td>{{dslamInfo.ip}}</td>
+                    </tr>
+                    <tr>
+                      <td>SNMP PORT</td>
+                      <td>{{dslamInfo.snmp_port}}</td>
+                    </tr>
+                    <tr>
+                      <td>Connection Type</td>
+                      <td>{{dslamInfo.conn_type}}</td>
+                    </tr>
+                    <tr>
+                      <td>Up Time</td>
+                      <td>{{dslamInfo.uptime}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </tab>
+            </tabset>
+          </div>
+          <!--/.col-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

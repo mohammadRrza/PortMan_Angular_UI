@@ -1,0 +1,57 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class CityService {
+
+    apiURL = environment.APIEndpoint +'city/';
+    token = localStorage.getItem('access_token');
+
+constructor(private _http: HttpClient) { }
+httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Token '+this.token
+
+    })
+ };
+
+ private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); 
+    return Promise.reject(error.message || error);
+  }
+
+  get_cities(page,itemsPerPage): Promise<any> {
+    return this._http
+      .get(this.apiURL, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_city_byName(page,itemsPerPage,city_name): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "?city_name="+city_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  get_province_by_name(city_name): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "?parent=all&city_name="+city_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  get_city_by_name(city_name): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "?parent=undefined&city_name="+city_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+}

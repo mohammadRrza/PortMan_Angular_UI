@@ -1,0 +1,52 @@
+.border {
+    box-shadow: 3px 2px 18px 4px #A2C5FF; 
+    }
+
+    .border-info {
+      box-shadow: 3px 2px 18px 4px #A2C5FF; 
+      padding: 5px;
+      margin-top: 15px;
+      }
+::ng-deep .p-datatable .p-datatable-thead > tr > th{
+        text-align: center;
+        padding: 1rem 1rem;
+        border: 1px solid #e9ecef;
+        border-width: 0 0 1px 0;
+        font-weight: 600;
+        color: #495057;
+        background: #f8f9fa;
+        transition: box-shadow 0.2s;
+      }
+
+      tr ,input {
+        font-family:Iranian_Sans;
+        font-size: smaller;
+      }
+
+      .progressSpinner{
+        position: absolute; 
+        z-index: 1000; 
+        margin-top: 30%;
+        margin-left: 45%;
+      }
+
+      .disabled{
+        position: absolute;
+        z-index: 500;
+        margin-top: 6%;
+        margin-left: 1%;
+        height: 71%;
+        width: 98%;
+        background-color: #85b8eb;
+        opacity: 0.5;
+      }
+   
+      ::ng-deep .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a {
+        padding: 1rem;
+        float: left;
+        font-size: small;
+        color: #2a77c3;
+        border-radius: 3px;
+        -webkit-transition: box-shadow 0.2s;
+        transition: box-shadow 0.2s;
+    }

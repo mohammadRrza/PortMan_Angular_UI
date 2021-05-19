@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="text-align: center;">
+                Permission Profiles Panel
+                <span>
+                    <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;"
+                        pTooltip="Add Profile" tooltipPosition="left" (click)="show_add_Profile()"></i>
+                </span>
+            </div>
+            <div>
+                <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+                  <p-header>Search</p-header>
+                <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
+                  <ng-template pTemplate="header">
+                    <tr class="row-accessories border" style="margin: 10px;" >
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="Profiles" (keyup)="get_dslam_info(Profiles,1)"
+                          placeholder="Search by Profile Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Profile"
+                          tooltipPosition="top">
+                      </th>
+                    </tr>
+                  </ng-template>
+                </p-table>
+                </p-fieldset>
+              </div>
+            <div class="card-body" class="border" style="margin: 10px;">
+                <p-table styleClass="p-datatable-striped" #dt1 [value]="permissions_profiles" selectionMode="single">
+                    <ng-template pTemplate="header">
+
+                        <tr class="row-accessories">
+                            <th pSortableColumn="profile.name">Permission Name</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-profile>
+                        <tr>
+                            <td class="text-center">{{profile.name}}</td>
+
+                            <td class="text-center">
+
+                                <div class="col-md-12" style="padding-left: 40%">
+                                  <div class="row">
+                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                                      pTooltip="Edit Profile" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                    <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Profile"
+                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Profile(Profile.id)" />
+                                  </div>
+                                </div>
+                              </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+                [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+            </div>
+        </div>
+    </div>
+</div>

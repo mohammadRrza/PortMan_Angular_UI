@@ -1,0 +1,162 @@
+<!-- Port Info Dialog---------------------------------------------------------------->
+
+<p-dialog header="Port Info" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+  <div class="row">
+    <div class="col-md-6">
+      <span style="text-align: center; font-family: Iranian_Sans;">
+        <label for="float-input">Admin Status:</label>
+        <div class="p-d-flex" *ngIf="portobj.dslam_info">{{portobj.admin_status}}</div> <hr />
+        <label for="float-input">Downstream Attainable Rate:</label>
+        <div class="p-d-flex" >{{portobj.downstream_attainable_rate}}</div> <hr />
+        <label for="float-input">Downstream Attenuation:</label>
+        <div class="p-d-flex" >{{portobj.downstream_attenuation}}</div> <hr />
+        <label for="float-input">Downstream Attenuation Flag:</label>
+        <div class="p-d-flex" >{{portobj.downstream_attenuation}}</div> <hr />
+        <label for="float-input">Downstream Snr:</label>
+        <div class="p-d-flex" >{{portobj.downstream_snr}}</div> <hr />
+        <label for="float-input">Downstream Tx Rate:</label>
+        <div class="p-d-flex" >{{portobj.downstream_tx_rate}}</div> <hr />
+      </span>
+    </div>
+    <div class="col-md-6">
+      <span>
+      <label for="float-input">Updated At:</label>
+      <div class="p-d-flex">{{portobj.updated_at}}</div> <hr />
+      <label for="float-input">Upstream Attainable Rate:</label>
+      <div class="p-d-flex" >{{portobj.upstream_attainable_rate}}</div> <hr />
+      <label for="float-input">Upstream Attenuation:</label>
+      <div class="p-d-flex" >{{portobj.upstream_attenuation}}</div> <hr />
+      <label for="float-input">Upstream Attenuation Flag:</label>
+      <div class="p-d-flex" >{{portobj.upstream_attenuation}}</div> <hr />
+      <label for="float-input">Upstream Snr:</label>
+      <div class="p-d-flex" >{{portobj.upstream_snr}}</div> <hr />
+      <label for="float-input">Upstream Tx Rate:</label>
+      <div class="p-d-flex" >{{portobj.upstream_tx_rate}}</div> <hr />
+    </span>
+    </div>
+  </div>
+</div>
+</p-dialog>
+
+<div style="position: absolute; z-index: 1000; margin-top: 15%;margin-left: 45%;">
+  <p-progressSpinner *ngIf="progressSpinner"></p-progressSpinner>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        Port Panel
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header" style="direction: rtl; text-align: center;">
+                پنل جستجوی پورت ها
+              </div>
+              <div>
+                <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+                  <p-header>Port Search</p-header>
+                <table style="width: 1000px; margin: 0px;">
+                  <thead>
+                    <tr class="row-accessories border" style="margin: 10px;">
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="province" (keyup)="get_dslam_port_info(province,3)"
+                          placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                          pTooltip="Search by Card" tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="city" (keyup)="get_dslam_port_info(city,4)"
+                          placeholder="Search by City" class="p-column-filter" style="margin: 10px;"
+                          pTooltip="Search by Port" tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="dslam" (keyup)="get_dslam_port_info(dslam,1)"
+                          placeholder="Search by Dslam Name" class="p-column-filter" style="margin: 10px;"
+                          pTooltip="Search by Dslam Name" tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="ip" (keyup)="get_dslam_port_info(ip,2)"
+                          placeholder="Search by Dslam IP" class="p-column-filter" style="margin: 10px;"
+                          pTooltip="Search by Dslam IP" tooltipPosition="top">
+                      </th>
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="slot" (keyup)="get_dslam_port_info(slot,5)"
+                          placeholder="Slot" class="p-column-filter" style="margin: 10px;"
+                          pTooltip=" Slot" tooltipPosition="top">
+                      </th>
+
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="port" (keyup)="get_dslam_port_info(slot,6)"
+                          placeholder="Port" class="p-column-filter" style="margin: 10px;"
+                          pTooltip="Port" tooltipPosition="top">
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </p-fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" class="border" style="margin: 10px; margin-top: 0;">
+          <div class="disabled" *ngIf="progressSpinner"></div>
+          <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslamPotrs" selectionMode="single">
+            <ng-template pTemplate="header">
+
+              <tr class="row-accessories">
+                <th pSortableColumn="dslamport.dslam_info">DSLAM <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="slot_number">Slot<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                </th>
+                <th pSortableColumn="port_number">Port <p-sortIcon field="ip"></p-sortIcon>
+                </th>
+                <th pSortableColumn="dslamport.port_name">Port Name<p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="dslamport.line_profile">Line Profile<p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+                </th>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-dslamport>
+              <tr>
+                <td class="text-center">
+                  <a [routerLink]="['/dslamport/dslamPortOperation']"
+                    [queryParams]="{portId: [dslamport.id],dslam_id: [dslamport.dslam]}">
+                      {{dslamport.dslam_info.name}}
+                  </a>
+                </td>
+                <td class="text-center">{{dslamport.slot_number}}</td>
+                <td class="text-center">{{dslamport.port_number}}</td>
+                <td class="text-center">{{dslamport.port_name}}</td>
+                <td class="text-center">{{dslamport.line_profile}}</td>
+
+                <td class="text-center">
+
+                  <div class="col-md-12" style="padding-left: 40%">
+                    <div class="row" style="margin-left: 35%;">
+                      <img src="\assets\img\brand\info_icon.png" (click)="show_dslam_port_info(dslamport.id)" width="20"
+                        pTooltip="Port info" tooltipPosition="top" style="cursor: pointer; margin: 5px;" />
+                      <img src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                        pTooltip="Port Config" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+            [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--/.col-->
+</div>
+<!--/.row-->

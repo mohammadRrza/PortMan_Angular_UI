@@ -1,0 +1,362 @@
+
+<!--EDIT DSLAM Dialog---------------------------------------------------------------->
+<p-dialog header="DLSMA Edit" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="border-info" style="padding: 10px;">
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <span>
+          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
+
+          </p-autoComplete>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.name">
+          <label for="float-input">Dslam Name</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.get_snmp_community">
+          <label for="float-input">Get Snmp Community</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.set_snmp_community">
+          <label for="float-input">Set Snmp Community</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.telnet_username">
+          <label for="float-input">Telnet Username</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.ip">
+          <label for="float-input">IP</label>
+        </span>
+        <hr />
+      </div>
+      <div class="col-md-6">
+        <span>
+          <p-autoComplete [(ngModel)]="city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
+            (completeMethod)="get_city_by_name($event)" [dropdown]="true" field="name" dataKey="id">
+          </p-autoComplete>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.snmp_port">
+          <label for="float-input">Snmp Port</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.snmp_timeout">
+          <label for="float-input">Snmp Timeout</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.telnet_password">
+          <label for="float-input">Telnet Password</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText [value]="dslam_edit.fqdn">
+          <label for="float-input">Fqdn</label>
+        </span>
+        <hr />
+      </div>
+    </div>
+  </form>
+</div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayMaximizable=false" label="Edit" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+<!--ADD DSLAM Dialog---------------------------------------------------------------->
+<p-dialog header="Add DSLAM" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <form [formGroup]="form" #f="ngForm" (ngSubmit)="add_dslam(this.form)">
+    <div class="row">
+      <div class="col-md-6">
+        <span>
+          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
+
+          </p-autoComplete>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="dslam_Name">
+          <label for="float-input">Dslam Name</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="get_snmp_community">
+          <label for="float-input">Get Snmp Community</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="snmp_port">
+          <label for="float-input">Snmp Port</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="telnet_username">
+          <label for="float-input">Telnet Username</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="ip">
+          <label for="float-input">IP</label>
+        </span>
+        <hr />
+      </div>
+      <div class="col-md-6">
+        <span>
+          <p-autoComplete [(ngModel)]="ci_city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
+            (completeMethod)="get_city_by_name($event)" [dropdown]="true" field="name" dataKey="id">
+          </p-autoComplete>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="set_snmp_community">
+          <label for="float-input">Set Snmp Community</label>
+        </span>
+        <hr />
+
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="snmp_timeout">
+          <label for="float-input">Snmp Timeout</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="password" pInputText formControlName="telnet_password">
+          <label for="float-input">Telnet Password</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" type="text" pInputText formControlName="fqdn">
+          <label for="float-input">Fqdn</label>
+        </span>
+        <hr />
+      </div>
+    </div>
+    <button type="submit" (click)="displayMaximizable2=false;s">Submit</button>
+    <ng-template pTemplate="footer">
+    </ng-template>
+  </form>
+
+</p-dialog>
+
+
+<!-- DSLAM Info Dialog---------------------------------------------------------------->
+<p-dialog header="DSLAM Info" [(visible)]="displayMaximizable3" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+  <div class="row">
+    <div class="col-md-6">
+      <span style="text-align: center; font-family: Iranian_Sans;">
+        <label for="float-input">Dslam Name:</label>
+        <div class="p-d-flex">{{dslam_show_info.name}}</div> <hr />
+        <label for="float-input">Get Snmp Community:</label>
+        <div class="p-d-flex">{{dslam_show_info.get_snmp_community}}</div> <hr />
+        <label for="float-input">Telnet Username:</label>
+        <div class="p-d-flex">{{dslam_show_info.telnet_username}}</div> <hr />
+        <label for="float-input">IP:</label>
+        <div class="p-d-flex">{{dslam_show_info.ip}}</div> <hr />
+        <label for="float-input">Province:</label>
+        <div class="p-d-flex" *ngIf="dslam_show_info.telecom_center_info">{{dslam_show_info.telecom_center_info.city_info.text}}</div> <hr />
+        <label for="float-input">Telecom:</label>
+        <div class="p-d-flex" *ngIf="dslam_show_info.telecom_center_info">{{dslam_show_info.telecom_center_info.name}}</div> <hr />
+        <label for="float-input">FQDN:</label>
+        <div class="p-d-flex">{{dslam_show_info.fqdn}}</div> <hr />
+        <label for="float-input">DSLAM long:</label>
+        <div class="p-d-flex"></div> <hr />
+      </span>
+    </div>
+    <div class="col-md-6">
+      <span style="text-align: center; font-family: Iranian_Sans;">
+        <label for="float-input">DSLAM Type:</label>
+        <div class="p-d-flex" *ngIf="dslam_show_info.dslam_type_info">{{dslam_show_info.dslam_type_info.name}}</div> <hr />
+        <label for="float-input">Set Snmp Community:</label>
+        <div class="p-d-flex">{{dslam_show_info.set_snmp_community}}</div> <hr />
+        <label for="float-input">Telnet Password:</label>
+        <div class="p-d-flex">{{dslam_show_info.telnet_password}}</div> <hr />
+        <label for="float-input">Snmp Port:</label>
+        <div class="p-d-flex">{{dslam_show_info.snmp_port}}</div> <hr />
+        <label for="float-input">City:</label>
+        <div class="p-d-flex" *ngIf="dslam_show_info.telecom_center_info">{{dslam_show_info.telecom_center_info.city_info.name}}</div> <hr />
+        <label for="float-input">Snmp Timeout:</label>
+        <div class="p-d-flex">{{dslam_show_info.snmp_timeout}}</div> <hr />
+        <label for="float-input">Connection Type:</label>
+        <div class="p-d-flex">{{dslam_show_info.conn_type}}</div> <hr />
+        <label for="float-input">DSLAM lat:</label>
+        <div class="p-d-flex"></div> <hr />
+      </span>
+    </div>
+  </div>
+</div>
+</p-dialog>
+<!--DLSMAS Delete-------------------------------------------------------->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div style="position: absolute; z-index: 1000; margin-top: 15%;margin-left: 45%;">
+  <p-progressSpinner *ngIf="progressSpinner"></p-progressSpinner>
+</div>
+
+<!--DLSMAS Panel-------------------------------------------------------->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" style="text-align: center;">
+        DLSMAS Panel
+        <span>
+          <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Dslam"
+            tooltipPosition="left" (click)="show_add_dslam()"></i>
+        </span>
+      </div>
+      <div>
+        <div class="disabled" *ngIf = "progressSpinner"></div>
+        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+          <p-header>DSLAM Search</p-header>
+       <!--<table style="width: 1000px; margin: 10px;">
+          <thead>
+            <tr class="row-accessories border" style="margin: 10px;" >
+              <th>
+                <input pInputText type="text" [(ngModel)]="province" (keyup)="get_dslam_info(province,3)"
+                  placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                  pTooltip="Search by Province" tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="city" (keyup)="get_dslam_info(city,4)"
+                  placeholder="Search by City" class="p-column-filter" style="margin: 10px;" pTooltip="Search by City"
+                  tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="dslam" (keyup)="get_dslam_info(dslam,1)"
+                  placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Name"
+                  tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="ip" (keyup)="get_dslam_info(ip,2)"
+                  placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
+                  tooltipPosition="top">
+              </th>
+            </tr>
+          </thead>
+        </table>--> 
+        <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
+          <ng-template pTemplate="header">
+            <tr class="row-accessories border" style="margin: 10px;" >
+              <th>
+                <input pInputText type="text" [(ngModel)]="province" (keyup)="get_dslam_info(province,3)"
+                  placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                  pTooltip="Search by Province" tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="city" (keyup)="get_dslam_info(city,4)"
+                  placeholder="Search by City" class="p-column-filter" style="margin: 10px;" pTooltip="Search by City"
+                  tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="dslam" (keyup)="get_dslam_info(dslam,1)"
+                  placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Name"
+                  tooltipPosition="top">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="ip" (keyup)="get_dslam_info(ip,2)"
+                  placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
+                  tooltipPosition="top">
+              </th>
+            </tr>
+          </ng-template>
+        </p-table>
+        </p-fieldset>
+      </div>
+      <div class="card-body" class="border" style="margin: 10px;" >
+        <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
+          <ng-template pTemplate="header">
+
+            <tr class="row-accessories">
+              <th pSortableColumn="name">DSLAM<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+              </th>
+              <th pSortableColumn="hostname">IP <p-sortIcon field="ip"></p-sortIcon>
+              </th>
+              <th pSortableColumn="telecom_center_info.name">Telecom <p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="telecom_center_info.city_info.name">City<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="dslam.dslam_type_info.name">Dslam Type<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="uptime">Up Time<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="dslam_availability">Availability<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th>Total/Up/Down<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="address">Status<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="address">Active<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+              </th>
+
+          </ng-template>
+          <ng-template pTemplate="body" let-dslam>
+            <tr>
+              <td class="text-center" ><a [routerLink]="['/dslam/dslamOperation']"
+                  [queryParams]="{dslamId:dslam.id}">{{dslam.name}}</a></td>
+              <td class="text-center">{{dslam.ip}}</td>
+              <td class="text-center">{{dslam.telecom_center_info.name}}</td>
+              <td class="text-center">{{dslam.telecom_center_info.city_info.name}}</td>
+              <td class="text-center">{{dslam.dslam_type_info.name}}</td>
+              <td class="text-center">{{dslam.status}}</td>
+              <td class="text-center">{{dslam.dslam_availability}}</td>
+              <td class="text-center">{{dslam.total_ports_count}}/{{dslam.up_ports_count}}/{{dslam.down_ports_count}}
+              </td>
+
+              <td class="text-center">
+                <img *ngIf="dslam.status == 'updating'" src="\assets\img\brand\updating.gif" width="30"
+                  pTooltip="Updating" tooltipPosition="top" />
+                <img *ngIf="dslam.status == 'ready'" src="\assets\img\brand\ready.png" width="30" title="ready"
+                  pTooltip="ready" tooltipPosition="top" />
+                <img *ngIf="dslam.status == 'new'" src="\assets\img\brand\new.png" width="30" title="new" pTooltip="New"
+                  tooltipPosition="top" />
+                <img *ngIf="dslam.status == 'error'" src="\assets\img\brand\error.png" width="20" title="error"
+                  pTooltip="Error" tooltipPosition="top" />
+
+              </td>
+              <td class="text-center">
+
+                <img *ngIf="dslam.active" src="\assets\img\brand\true.png" width="20" title="Active" pTooltip="Active"
+                  tooltipPosition="top" />
+                <img *ngIf="!dslam.active" src="\assets\img\brand\false.png" width="20" title="Inactive"
+                  pTooltip="Inactive" tooltipPosition="top" />
+
+              </td>
+              <td class="text-center">
+
+                <div class="col-md-12" style="padding-left: 40%">
+                  <div class="row">
+                    <img *ngIf="permission.permissions.includes('view_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
+                      style="cursor: pointer; margin: 5px;" />
+                    <img *ngIf="permission.permissions.includes('edit_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                      pTooltip="Dslam Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                    <img *ngIf="permission.permissions.includes('delete_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Dslam"
+                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_dslam(dslam.id)" />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+          [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          Router Panel
+          <span>
+            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Router"
+              tooltipPosition="left" (click)="show_add_router()"></i>
+          </span>
+        </div>
+        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+            <p-header>Router Search</p-header>
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="routers" selectionMode="single" >
+                <ng-template pTemplate="header">
+                  <tr class="row-accessories border" style="margin: 10px;" >
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="province" (keyup)="search_routers(device_name,1)"
+                        placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                        pTooltip="Search by Province" tooltipPosition="top">
+                    </th>
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="device_ip" (keyup)="search_routers(device_ip,2)"
+                        placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
+                        tooltipPosition="top">
+                    </th>
+                    <th>
+                        <input pInputText type="text" [(ngModel)]="device_fqdn" (keyup)="search_routers(device_fqdn,3)"
+                          placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
+                          tooltipPosition="top">
+                      </th>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-fieldset>
+        <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="routers" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="device_name">Name<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_ip">Router IP<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_fqdn">Router Fqdn<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-router>
+                    <tr>
+                        <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
+                          [queryParams]="{routerId:router.id}">{{router.device_name}}</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
+                          [queryParams]="{routerId:router.id}">{{router.device_ip}}</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
+                          [queryParams]="{routerId:router.id}">{{router.device_fqdn}}</a></span></td>
+                        <td class="text-center">
+
+                            <div class="col-md-12" style="padding-left: 40%">
+                              <div class="row">
+                                <img src="\assets\img\brand\info_icon.png" (click)="show_router_info(router.id)" width="20" pTooltip="Router info" tooltipPosition="top"
+                                  style="cursor: pointer; margin: 5px;" />
+                                <img src="\assets\img\brand\edit_icon.png" (click)="edit_router(router.id)" width="20"
+                                  pTooltip="Router Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Router"
+                                  tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Router(Router.id)" />
+                              </div>
+                            </div>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+            [rowsPerPageOptions]="[10,20,30]">
+        </p-paginator>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,339 @@
+<div class="row" style="direction: rtl; text-align: center;">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        عملیات ({{dslamPort_info.slot_number}} - {{dslamPort_info.port_number}})
+      </div>
+      <div class="glowing-border">
+        <div class="card-body">
+          <div class="col-md-12 mb-4">
+            <!-- Nav tabs -->
+            <tabset>
+              <tab>
+                <ng-template tabHeading><i class="icon-calculator"></i> اطلاعات پورت </ng-template>
+                <div class="row">
+                  <div class="col-md-6"
+                    style="border-radius: 5px; border-style: groove; padding-top: 10px; direction: rtl;">
+                    <table class="table table-striped" style="direction: rtl;">
+                      <tbody>
+                        <tr>
+                          <td>Current Port</td>
+                          <td>{{dslamPort_info.slot_number}} - {{dslamPort_info.port_number}}</td>
+                        </tr>
+                        <tr>
+                          <td>DSLAM</td>
+                          <td><span *ngIf="dslamPort_info.dslam_info">{{dslamPort_info.dslam_info.name}}</span></td>
+                        </tr>
+                        <tr>
+                          <td>نام پورت</td>
+                          <td>{{dslamPort_info.port_name}}</td>
+                        </tr>
+                        <tr>
+                          <td>نوع DSLAM</td>
+                          <td><span
+                              *ngIf="dslamPort_info.dslam_type_info">{{dslamPort_info.dslam_type_info.name}}</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>آدرس MAC</td>
+                          <td>--</td>
+                        </tr>
+                        <tr>
+                          <td>وضعیت پورت</td>
+                          <td>{{dslamPort_info.admin_status}}</td>
+                        </tr>
+                        <tr>
+                          <td>Line Profile</td>
+                          <td>{{dslamPort_info.line_profile}}</td>
+                        </tr>
+                        <tr>
+                          <td>ریسلر</td>
+                          <td>{{dslamPort_info.reseller}}</td>
+                        </tr>
+                        <tr>
+                          <td>مشترک</td>
+                          <td>{{dslamPort_info.subscriber}}</td>
+                        </tr>
+                        <tr>
+                          <td>Up Time</td>
+                          <td>{{dslamPort_info.uptime}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="col-md-6" style="border-radius: 5px; border-style: groove; padding-top: 10px;">
+                    <div class="row">
+                      <table class="table table-striped" style="direction: rtl;">
+                        <tbody>
+                          <tr>
+                            <td>Item</td>
+                            <td>Upstream</td>
+                            <td>Downstream</td>
+                          </tr>
+                          <tr>
+                            <td>tx rate </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>SNR</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Attenuation</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Attainable Rate </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+
+                        </tbody>
+
+                      </table>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <table class="table table-striped" style="direction: rtl;">
+                        <tbody>
+                          <tr>
+                            <td>Item</td>
+                            <td>Upstream</td>
+                            <td>Downstream</td>
+                          </tr>
+                          <tr>
+                            <td>tx rate </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>SNR</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Attenuation</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>Attainable Rate </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+
+                        </tbody>
+
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-calculator"></i> دستورات پورت </ng-template>
+                <div class="row">
+                  <div class="ng-autocomplete col-md-3" style="direction: ltr;">
+                    <ng-autocomplete [data]="commandObj" [disabled]="!show_result" [searchKeyword]="keyword"
+                      placeHolder="Enter the Command" (selected)='selectEvent($event)'
+                      (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                      historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+                  <div class="col-md-3">
+                    <button pButton type="button" style="margin-right: 0; float: right;"
+                      (click)="run_command(comm_item)" label="Run" [disabled]="!show_result"></button>
+                  </div>
+                  <div class="col-md-6">
+                    <p-card header="Command Result">
+                      <hr />
+                      <div *ngIf="!show_result" class="res_div_disabled border">
+                        <p-progressSpinner></p-progressSpinner>
+                      </div>
+                      <div *ngIf="show_result" class="res_div border">
+                        <pre>
+                        {{dslamPortcammand_info}}
+                      </pre>
+                      </div>
+                    </p-card>
+                  </div>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-calculator"></i> تاریخچه </ng-template>
+                <div class="row">
+                  <div class="card">
+                    <div class="card-header">
+                      تاریخچه
+                    </div>
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div class="row" style="margin: 2%;">
+                            <div class="col-md-6">
+                              <dp-date-picker dir="rtl" [(ngModel)]="start_dateObject" mode="day" placeholder="Start"
+                                theme="dp-material">
+                              </dp-date-picker>
+                            </div>
+                            <div class="col-md-6">
+                              <dp-date-picker dir="rtl" [(ngModel)]="end_dateObject" mode="day" placeholder="End"
+                                theme="dp-material" (onChange)="getend_date(end_dateObject)">
+                              </dp-date-picker>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div style="margin-right: 25%;">
+                            <p-chart type="doughnut" [data]="hist_data" width="20vw" height="40vh" *ngIf="show_pichart">
+                            </p-chart>
+                            <p-progressSpinner *ngIf="!show_pichart"
+                              [style]="{width: '150px', height: '150px',opacity: 0.5}" styleClass="custom-spinner"
+                              strokeWidth="4" fill="#EEEEEE" animationDuration="1s"></p-progressSpinner>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div style="margin-right: 25%;">
+                          <highcharts-chart [Highcharts]="port_attainable_rate_change_highcharts" *ngIf="show_pichart"
+                            [options]="his_attainable_rate_chartOptions"
+                            style="width: 100%; height: 400px; display: block;">
+                          </highcharts-chart>
+                          <p-progressSpinner *ngIf="!show_pichart"
+                            [style]="{width: '150px', height: '150px',opacity: 0.5}" styleClass="custom-spinner"
+                            strokeWidth="4" fill="#EEEEEE" animationDuration="1s"></p-progressSpinner>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div style="margin-right: 25%;">
+                          <highcharts-chart [Highcharts]="port_attenuation_change_highcharts" *ngIf="show_pichart"
+                            [options]="his_attenuation_rate_chartOptions"
+                            style="width: 100%; height: 400px; display: block;">
+                          </highcharts-chart>
+                          <p-progressSpinner *ngIf="!show_pichart"
+                            [style]="{width: '150px', height: '150px',opacity: 0.5}" styleClass="custom-spinner"
+                            strokeWidth="4" fill="#EEEEEE" animationDuration="1s"></p-progressSpinner>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div style="margin-right: 25%;">
+                          <highcharts-chart [Highcharts]="port_snr_change_highcharts" *ngIf="show_pichart"
+                            [options]="his_snr_data_rate_chartOptions"
+                            style="width: 100%; height: 400px; display: block;">
+                          </highcharts-chart>
+                          <p-progressSpinner *ngIf="!show_pichart"
+                            [style]="{width: '150px', height: '150px',opacity: 0.5}" styleClass="custom-spinner"
+                            strokeWidth="4" fill="#EEEEEE" animationDuration="1s"></p-progressSpinner>
+                          </div>
+                        </div>
+                        <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                          <div style="margin-right: 25%;">
+                          <highcharts-chart [Highcharts]="port_tx_rate_highcharts" *ngIf="show_pichart"
+                            [options]="his_tx_data_rate_chartOptions" style="width: 100%; height: 400px; display: block;">
+                          </highcharts-chart>
+                          <p-progressSpinner *ngIf="!show_pichart"
+                            [style]="{width: '150px', height: '150px',opacity: 0.5}" styleClass="custom-spinner"
+                            strokeWidth="4" fill="#EEEEEE" animationDuration="1s"></p-progressSpinner>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="icon-calculator" style="direction:ltr;"></i> Live </ng-template>
+                <div class="row">
+                  <div class="col-md-6" style="margin-bottom: 10px;">
+                    <button pButton type="button" [hidden]="!hide_chart" style="margin-right: 0; float: right;"
+                      (click)="get_live_data()" label="Get Live Data"></button>
+                    <button pButton type="button" [hidden]="hide_chart" style="margin-right: 0; float: right;"
+                      (click)="end_live_data()" label="End Live Data"></button>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="card">
+                    <div class="card-header">
+                      Live Charts
+                    </div>
+                    <div class="glowing-border">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-12" style="border-radius: 5px; border-style: groove;">
+                            <highcharts-chart [Highcharts]="port_traffic_highcharts" [options]="chartOptions"
+                              style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                          </div>
+                        </div>
+                        <hr />
+                        <hr />
+
+                        <div class="row">
+                          <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                            <highcharts-chart [Highcharts]="port_attainable_rate_change_highcharts"
+                              [options]="port_attainable_rate_chartOptions"
+                              style="width: 100%; height: 400px; display: block;">
+
+                            </highcharts-chart>
+                          </div>
+                          <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                            <highcharts-chart [Highcharts]="port_attenuation_change_highcharts"
+                              [options]="port_attenuation_change_chartOptions"
+                              style="width: 100%; height: 400px; display: block;">
+
+                            </highcharts-chart>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                            <highcharts-chart [Highcharts]="port_snr_change_highcharts"
+                              [options]="port_snr_change_chartOptions"
+                              style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                          </div>
+                          <div class="col-md-6" style="border-radius: 5px; border-style: groove;">
+                            <highcharts-chart [Highcharts]="port_tx_rate_highcharts"
+                              [options]="port_tx_change_chartOptions"
+                              style="width: 100%; height: 400px; display: block;">
+                            </highcharts-chart>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+
+            </tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+@font-face {
+    font-family:'Yekan';
+    src:url('../assets/font/Yekan.eot');
+    src:local('Yekan'),
+        local('Yekan'),
+        url('../assets/font/yekan-regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/font/yekan-regular.woff') format('woff'),
+        url('../assets/font/yekan-regular.ttf') format('truetype'),
+        url('../assets/font/Yekan.svg?#Yekan') format('svg');
+    font-style:normal;
+    font-weight:normal;
+    font-family:'Iranian_Sans';
+    src:url('../assets/font/Iranian_Sans.ttf');
+}

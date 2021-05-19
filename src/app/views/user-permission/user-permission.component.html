@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="text-align: center;">
+                User Permissions Panel
+                <span>
+                    <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;"
+                        pTooltip="Add Permission" tooltipPosition="left" (click)="show_add_Permission()"></i>
+                </span>
+            </div>
+            <div>
+                <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+                  <p-header>Search</p-header>
+                <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
+                  <ng-template pTemplate="header">
+                    <tr class="row-accessories border" style="margin: 10px;" >
+                      <th>
+                        <input pInputText type="text" [(ngModel)]="permission" (keyup)="get_dslam_info(permission,1)"
+                          placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Name"
+                          tooltipPosition="top">
+                      </th>
+                    </tr>
+                  </ng-template>
+                </p-table>
+                </p-fieldset>
+              </div>
+            <div class="card-body" class="border" style="margin: 10px;">
+                <p-table styleClass="p-datatable-striped" #dt1 [value]="users_permissions" selectionMode="single">
+                    <ng-template pTemplate="header">
+
+                        <tr class="row-accessories">
+                            <th pSortableColumn="user_info.username">Username<p-sortIcon field="user_info.username"
+                                    style="text-align: center;"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="permission_profile_name">Permission Profile <p-sortIcon
+                                    field="permission_profile_name" style="text-align: center;"></p-sortIcon>
+                            </th>
+                            <th>Dslam</th>
+                            <th>Command</th>
+                            <th>Action</th>
+                            <th>Is Active</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-permission>
+                        <tr>
+                            <td class="text-center">{{permission.user_info.username}}</td>
+                            <td class="text-center">{{permission.user_info.username}}</td>
+                            <td class="text-center">
+                              <img src="\assets\img\brand\permission.png" width="30"
+                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />
+                            </td>
+                            <td class="text-center">
+                              <img src="\assets\img\brand\permission.png" width="30"
+                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />
+                            </td>
+                            <td class="text-center">
+                              <img src="\assets\img\brand\permission.png" width="30"
+                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />
+                            </td>
+                            <td class="text-center">
+
+                                <img *ngIf="permission.is_active" src="\assets\img\brand\true.png" width="20"
+                                     pTooltip="Active" tooltipPosition="top" />
+                                <img *ngIf="!permission.is_active" src="\assets\img\brand\false.png" width="20"
+                                pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />
+
+                            </td>
+                            <td class="text-center">
+
+                                <div class="col-md-12" style="padding-left: 40%">
+                                  <div class="row">
+                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                                      pTooltip="Edit Permission" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                    <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Permission"
+                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Permission(Permission.id)" />
+                                  </div>
+                                </div>
+                              </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+                [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+            </div>
+        </div>
+    </div>
+</div>

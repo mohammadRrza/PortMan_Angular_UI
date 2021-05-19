@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          Switch Panel
+          <span>
+            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Switch"
+              tooltipPosition="left" (click)="show_add_switch()"></i>
+          </span>
+        </div>
+        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+            <p-header>Switch Search</p-header>
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="switches" selectionMode="single" >
+                <ng-template pTemplate="header">
+                  <tr class="row-accessories border" style="margin: 10px;" >
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="device_name" (keyup)="search_routers(device_name,1)"
+                        placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                        pTooltip="Search by Province" tooltipPosition="top">
+                    </th>
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="device_ip" (keyup)="search_routers(device_ip,2)"
+                        placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
+                        tooltipPosition="top">
+                    </th>
+                    <th>
+                        <input pInputText type="text" [(ngModel)]="device_fqdn" (keyup)="search_routers(device_fqdn,3)"
+                          placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
+                          tooltipPosition="top">
+                      </th>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-fieldset>
+        <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="switches" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="device_name">Name<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_ip">Switch IP<p-sortIcon field="IP" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_fqdn">Switch Fqdn<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-switch>
+                    <tr>
+                        <td class="text-center"><span><a [routerLink]="['/switch/switchOperation']"
+                          [queryParams]="{switchId:switch.id}">{{switch.device_name}}</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/switch/switchOperation']"
+                          [queryParams]="{switchId:switch.id}">{{switch.device_ip}}</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/switch/switchOperation']"
+                          [queryParams]="{switchId:switch.id}">{{switch.device_fqdn}}</a></span></td>
+                        <td class="text-center">
+
+                            <div class="col-md-12" style="padding-left: 40%">
+                              <div class="row">
+                                <img src="\assets\img\brand\info_icon.png" (click)="show_switch_info(switch.id)" width="20" pTooltip="Switch info" tooltipPosition="top"
+                                  style="cursor: pointer; margin: 5px;" />
+                                <img src="\assets\img\brand\edit_icon.png" (click)="edit_switch(switch.id)" width="20"
+                                  pTooltip="Switch Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Switch"
+                                  tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Switch(switch.id)" />
+                              </div>
+                            </div>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+            [rowsPerPageOptions]="[10,20,30]">
+        </p-paginator>
+        </div>
+      </div>
+    </div>
+</div>
