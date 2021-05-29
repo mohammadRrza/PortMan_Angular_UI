@@ -267,13 +267,10 @@ export class DslamOperationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('CLICK');
     let loggedIn = localStorage.getItem('loggedin');
     console.log(!Boolean(loggedIn));
 
     if(!Boolean(loggedIn)){
-      console.log('CLICK2');
-
       this.router.navigate(['/login']);
     }
      this.getDslamInfo(this.dslam_id);

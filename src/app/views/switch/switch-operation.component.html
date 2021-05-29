@@ -12,14 +12,14 @@
                       <ng-template tabHeading><i class="icon-calculator"></i> اجرای دستور روی سوئیچ </ng-template>
                       <div class="row">
                         <div class="ng-autocomplete col-md-3" style="direction: ltr;">
-                          <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
+                          <ng-autocomplete [data]="switch_commands" [searchKeyword]="keyword" placeHolder="Enter the Command"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                            (inputFocused)='get_switch_commands($event)' historyIdentifier="switch_commands" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
       
                           <ng-template #itemTemplate let-item>
-                            <a [innerHTML]="item.name"></a>
+                            <a [innerHTML]="item.switch_command_text"></a>
                           </ng-template>
       
                           <ng-template #notFoundTemplate let-notFound>
@@ -28,17 +28,20 @@
                         </div>
                         <div class="col-md-3">
                           <button pButton type="button" style="margin-right: 0; float: right;"
-                            (click)="run_command(comm_item)" label="Run" [disabled]="!show_result"></button>
+                            (click)="switch_run_command(switch_id, comm_item.switch_command_text, params)" label="Run" [disabled]="!show_result"></button>
                         </div>
                         <div class="col-md-6">
                           <div class="col-md-12">
                             <p-card header="Command Result">
                               <hr />
-                              <div *ngIf="!show_result" class="res_div_disabled border">
+                              <div *ngIf="show_result" class="res_div_disabled border">
                                 <!--<p-progressSpinner></p-progressSpinner>-->
+                                 <pre *ngIf="commandRes">
+                                   {{commandRes.response}}
+                                 </pre>
                               </div>
                               <div *ngIf="show_result" class="res_div border">
-      
+                                    
                                 <pre>
                                </pre>
                               </div>

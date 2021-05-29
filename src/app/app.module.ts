@@ -60,6 +60,8 @@ import { PermissionService } from '../services/permission.service';
 import { RouterService } from '../services/router.service';
 import { SwitchService } from '../services/switch.service';
 import { ContactService } from '../services/contact.service';
+import { login } from '../app/Classes/login';
+import { SwitchCommandService } from '../services/switch-command.service';
 
 
 
@@ -91,7 +93,7 @@ import { ContactService } from '../services/contact.service';
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
+    APP_CONTAINERS,
     P404Component,
     P500Component,
     LoginComponent,
@@ -113,7 +115,8 @@ import { ContactService } from '../services/contact.service';
     CityService,
     ConfirmationService,
     PermissionService,
-    ContactService
+    ContactService,
+    SwitchCommandService
   ],
 
   bootstrap: [AppComponent]

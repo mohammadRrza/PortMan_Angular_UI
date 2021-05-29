@@ -212,9 +212,9 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <div class="card-header" style="text-align: center;">
+      <div class="card-header" style="text-align: center;" *ngIf="permission.permissions">
         DLSMAS Panel
-        <span>
+        <span *ngIf="permission.permissions.includes('add_dslam') || permission.user_type == 'ADMIN'">
           <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Dslam"
             tooltipPosition="left" (click)="show_add_dslam()"></i>
         </span>
@@ -341,7 +341,7 @@
               <td class="text-center">
 
                 <div class="col-md-12" style="padding-left: 40%">
-                  <div class="row">
+                  <div class="row" *ngIf="permission.permissions">
                     <img *ngIf="permission.permissions.includes('view_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
                       style="cursor: pointer; margin: 5px;" />
                     <img *ngIf="permission.permissions.includes('edit_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"

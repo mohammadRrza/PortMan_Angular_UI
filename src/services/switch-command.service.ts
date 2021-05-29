@@ -6,10 +6,10 @@ import { environment } from './../environments/environment';
   providedIn: 'root'
 })
 
-export class SwitchService {
+export class SwitchCommandService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
-  apiURL = environment.APIEndpoint + 'switch/';
+  apiURL = environment.APIEndpoint + 'switch-command/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -25,28 +25,13 @@ private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }
 
-  get_all_switches(page,itemsPerPage): Promise<any> {
+  get_switch_commands(switch_type_id, limit_row): Promise<any> {
     console.log(this.token);
     return this._http
-      .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
+      .get(this.apiURL + "?switch_type_id="+switch_type_id+"&limit_row="+limit_row, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
   }
 
-  search_switches(page,itemsPerPage,searchStr): Promise<any> {
-    return this._http
-      .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage+"&"+searchStr, this.httpOptions)
-      .toPromise()
-      .then(res => res)
-      .catch(this.handleError);
-  }
-
-  switch_run_command(Switch_dto): Promise<any> {
-    return this._http
-      .post(this.apiURL+'switch_run_command/', Switch_dto, this.httpOptions)
-      .toPromise()
-      .then(res => res)
-      .catch(this.handleError);
-  }
 }
