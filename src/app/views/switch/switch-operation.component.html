@@ -36,9 +36,10 @@
                               <hr />
                               <div *ngIf="show_result" class="res_div_disabled border">
                                 <!--<p-progressSpinner></p-progressSpinner>-->
-                                 <pre *ngIf="commandRes">
-                                   {{commandRes.response}}
-                                 </pre>
+                                 <div *ngIf="commandRes">
+                                   <div *ngFor="let res_item of commandRes" class="command_res">{{res_item}}</div>
+                                   
+                                 </div>
                               </div>
                               <div *ngIf="show_result" class="res_div border">
                                     

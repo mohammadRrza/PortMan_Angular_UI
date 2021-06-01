@@ -54,7 +54,7 @@ export class SwitchOperationComponent implements OnInit {
       this.switch_dto.params = params;
       this.SwitchSrv.switch_run_command(this.switch_dto).then(res=>{
         this.show_result = true;
-        this.commandRes = res;
+        this.commandRes = res.response.split('\n');
         console.log(this.commandRes);
       });
     }

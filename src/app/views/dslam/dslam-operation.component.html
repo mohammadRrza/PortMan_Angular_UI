@@ -55,7 +55,7 @@
                     <div class="col-md-12">
                       <p-card header="Command Result">
                         <hr />
-                        <div *ngIf="!show_result" class="res_div_disabled border">
+                        <div *ngIf="!show_result" class="res_div_disabled border command_res">
                           <p-progressSpinner></p-progressSpinner>
                         </div>
                         <div *ngIf="show_result" class="res_div border">
@@ -159,40 +159,53 @@
               </tab>
               <tab>
                 <ng-template tabHeading><i class="icon-pie-chart"></i> لیست پورت ها</ng-template>
-                <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
-                  <thead class="thead-light">
-                    <tr>
-                      <th class="text-center"> اندیس پورت</th>
-                      <th class="text-center">نام پورت</th>
-                      <th class="text-center">کارت </th>
-                      <th class="text-center"> پورت </th>
-                      <th class="text-center">Up Time</th>
-                      <th class="text-center">نماینده ریسلر</th>
-                      <th class="text-center">Subscriber</th>
-                      <th class="text-center">Oper Status</th>
-                      <th class="text-center">Admin Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let dslamport of listDslamPorts|paginate: pagination_config">
-                      <td>{{dslamport.port_index}}</td>
-                      <td><a [routerLink]="['/dslamport/dslamPortOperation']"
-                          [queryParams]="{portId: [dslamport.id],dslam_id: [dslamport.dslam_info.id]}">{{dslamport.port_name}}</a>
-                      </td>
-                      <td>{{dslamport.slot_number}}</td>
-                      <td>{{dslamport.port_number}}</td>
-                      <td>{{dslamport.uptime}}</td>
-                      <td>{{dslamport.reseller}}</td>
-                      <td>{{dslamport.subscriber}}</td>
-                      <td>{{dslamport.oper_status}}</td>
-                      <td>{{dslamport.admin_status}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="pagination-part pagin">
-                  <pagination-controls (pageChange)="pageChange_srch($event)" nextLabel="Next"
-                    (pageBoundsCorrection)="pageChange_srch($event)"></pagination-controls>
+                <div *ngIf="listDslamPorts?.length > 0; else empty_port_list">
+                  <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="text-center"> اندیس پورت</th>
+                        <th class="text-center">نام پورت</th>
+                        <th class="text-center">کارت </th>
+                        <th class="text-center"> پورت </th>
+                        <th class="text-center">Up Time</th>
+                        <th class="text-center">نماینده ریسلر</th>
+                        <th class="text-center">Subscriber</th>
+                        <th class="text-center">Oper Status</th>
+                        <th class="text-center">Admin Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let dslamport of listDslamPorts|paginate: pagination_config">
+                        <td>{{dslamport.port_index}}</td>
+                        <td><a [routerLink]="['/dslamport/dslamPortOperation']"
+                            [queryParams]="{portId: [dslamport.id],dslam_id: [dslamport.dslam_info.id]}">{{dslamport.port_name}}</a>
+                        </td>
+                        <td>{{dslamport.slot_number}}</td>
+                        <td>{{dslamport.port_number}}</td>
+                        <td>{{dslamport.uptime}}</td>
+                        <td>{{dslamport.reseller}}</td>
+                        <td>{{dslamport.subscriber}}</td>
+                        <td>{{dslamport.oper_status}}</td>
+                        <td>{{dslamport.admin_status}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="pagination-part pagin">
+                    <pagination-controls (pageChange)="pageChange_srch($event)" nextLabel="Next"
+                      (pageBoundsCorrection)="pageChange_srch($event)"></pagination-controls>
+                  </div>
                 </div>
+                <ng-template #empty_port_list>
+                  <div>
+                    <a>
+                      <div class="col-md-2 mb-4">
+                        <button aria-pressed="true" style="padding-right: 30%;"
+                          class="btn btn-block btn-outline-primary active card" type="button"
+                          (click)="reload_dslam_ports()">Load Dslam Ports</button>
+                      </div>
+                    </a>
+                  </div>
+                </ng-template>
               </tab>
               <tab>
                 <ng-template tabHeading><i class="icon-pie-chart"></i> اطلاعات DSLAM </ng-template>

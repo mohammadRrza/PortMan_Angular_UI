@@ -140,4 +140,12 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
-}
+
+  load_dslam_ports(dslam_id, slot_count, port_count):Promise<any> {
+    return this._http
+      .get(this.apiURL+'load_dslam_ports?dslam_id='+dslam_id+'&slot_count='+slot_count+'&port_count='+port_count, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  }

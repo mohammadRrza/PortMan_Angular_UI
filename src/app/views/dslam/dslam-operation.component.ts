@@ -265,7 +265,14 @@ export class DslamOperationComponent implements OnInit {
       this.fifty_five_precntage = res
     });
   }
-
+  load_dslam_ports(dslam_id, slot_count, port_count){
+    this.dslamSrv.load_dslam_ports(dslam_id, slot_count, port_count).then(res =>{
+    this.get_dslam_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id);
+    });
+  }
+  reload_dslam_ports(){
+    this.load_dslam_ports(this.dslam_id,17,72);
+  }
   ngOnInit(): void {
     let loggedIn = localStorage.getItem('loggedin');
     console.log(!Boolean(loggedIn));
