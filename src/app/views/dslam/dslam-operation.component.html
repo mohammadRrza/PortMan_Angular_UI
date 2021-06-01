@@ -160,6 +160,18 @@
               <tab>
                 <ng-template tabHeading><i class="icon-pie-chart"></i> لیست پورت ها</ng-template>
                 <div *ngIf="listDslamPorts?.length > 0; else empty_port_list">
+                  <div class="row">
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="S_count" (keyup)="search_ports(S_count,1)"
+                    placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Slot"
+                    tooltipPosition="top">
+                    </div>
+                    <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="P_count" (keyup)="search_ports(P_count,2)"
+                    placeholder="Search by Port" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
+                    tooltipPosition="top">
+                  </div>    
+                </div>
                   <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
                     <thead class="thead-light">
                       <tr>
@@ -197,14 +209,34 @@
                 </div>
                 <ng-template #empty_port_list>
                   <div>
-                    <a>
                       <div class="col-md-2 mb-4">
                         <button aria-pressed="true" style="padding-right: 30%;"
                           class="btn btn-block btn-outline-primary active card" type="button"
-                          (click)="reload_dslam_ports()">Load Dslam Ports</button>
-                      </div>
-                    </a>
+                          (click)="show_port_count_func()">Get Dslam Ports</button>
+                      </div>                   
                   </div>
+                  <div *ngIf="show_port_count">
+                    <hr/>
+                    <div class="row">
+                      <div class="col-md-1 mb-4">
+                        <input pInputText type="text" [(ngModel)]="S_count" (keyup)="search_ports(S_count,1)"
+                        placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Slot"
+                        tooltipPosition="top">
+                        </div>
+                        <div class="col-md-1 mb-4">
+                        <input pInputText type="text" [(ngModel)]="P_count" (keyup)="search_ports(P_count,2)"
+                        placeholder="Search by Port" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
+                        tooltipPosition="top">
+                      </div> 
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2 mb-4">
+                        <button aria-pressed="true" style="padding-right: 30%;"
+                        class="btn btn-block btn-outline-primary active card" type="button"
+                        (click)="reload_dslam_ports()">Load Dslam Ports</button>
+                      </div>  
+                     </div>                
+                </div>
                 </ng-template>
               </tab>
               <tab>

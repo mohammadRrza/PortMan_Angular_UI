@@ -43,6 +43,7 @@ export class DslamOperationComponent implements OnInit {
   commandObj = [];
   keyword = 'name';
   show_result: boolean = false;
+  show_port_count: boolean = false;
   pagination_config: any;
   listDslamPorts = [];
   dslamInfo = {};
@@ -68,6 +69,9 @@ export class DslamOperationComponent implements OnInit {
   zabbix_item_id:number = 60282;
   zabbix_histories = [];
   fifty_five_precntage = [];
+  slot_count: string;
+  port_count: string;
+
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -83,8 +87,12 @@ export class DslamOperationComponent implements OnInit {
       this.dslamInfo = res;
     });
   }
+  ///////////////////////
+  show_port_count_func(){
+    this.show_port_count = true;
+  }
 
-  /////////////
+  ///////////////////////
   showToasterSuccess() {
     this.notifySrv.showSuccess("Data shown successfully !!", "ItSolutionStuff.com")
   }
@@ -271,7 +279,18 @@ export class DslamOperationComponent implements OnInit {
     });
   }
   reload_dslam_ports(){
-    this.load_dslam_ports(this.dslam_id,17,72);
+    this.load_dslam_ports(this.dslam_id,this.slot_count,this.port_count);
+  }
+
+  search_ports(count, type){
+    if(type == "1"){
+      this.slot_count = count;
+      console.log(count);
+    }    
+    if(type == "2"){
+      this.port_count = count;
+      console.log(count);
+    }  
   }
   ngOnInit(): void {
     let loggedIn = localStorage.getItem('loggedin');
