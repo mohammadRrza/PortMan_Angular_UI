@@ -5,65 +5,64 @@ export const navItems: INavData[] = [
     name: 'داشبورد',
     url: '/dashboard',
     icon: 'icon-speedometer',
-    attributes: {hidden: null}
-
+    attributes: {hidden: null, who: ['ADMIN']},
   },
 
   {
     name: 'مدیریت مراکز مخابراتی',
     url: '/telecom-center/telecom-center',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: ' هزینه های مرکز',
     url: '/telecom_costs',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
 
      },
   {
     name: 'مدیریت روترها',
     url: '/router/router',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
 
   },
   {
     name: 'مدیریت سوئیچ ها',
     url: '/switch/switch',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
      },
   {
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
   },
   {
     name: 'وضعیت پورت ها',
     url: '/icons/coreui-icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
    },
   {
     name: 'پورت مپ',
     url: '/contact/port-map',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'جستجو',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'نماینده ریسلر',
@@ -83,37 +82,37 @@ export const navItems: INavData[] = [
 
       }
     ],
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'مدیریت کاربران',
     url: '/userManagement',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'مدیریت اعضا',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: ' مدیریت شهر و استان',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: ' مدیریت وی لن ها',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: ' مدیریت پروفایل خط',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
 
   },
   {
@@ -134,14 +133,13 @@ export const navItems: INavData[] = [
 
       }
     ],
-    attributes: {hidden: null}
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'آیکون ها',
     url: '/icons',
     icon: 'icon-settings',
-
-
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'Widgets',
@@ -150,7 +148,9 @@ export const navItems: INavData[] = [
     badge: {
       variant: 'info',
       text: 'NEW'
-    }
+    },
+    attributes: {hidden: null, who: ['ADMIN']},
+
   },
   {
     divider: true
@@ -158,6 +158,7 @@ export const navItems: INavData[] = [
   {
     title: true,
     name: 'Extras',
+    attributes: {hidden: null, who: ['ADMIN']},
   },
   {
     name: 'Pages',
@@ -184,7 +185,9 @@ export const navItems: INavData[] = [
         url: '/500',
         icon: 'icon-star'
       }
-    ]
+    ],
+    attributes: {hidden: null, who: ['ADMIN']},
+
   },
   {
     name: 'Disabled',
@@ -194,7 +197,7 @@ export const navItems: INavData[] = [
       variant: 'secondary',
       text: 'NEW'
     },
-    attributes: { disabled: true },
+    attributes: {hidden: null, who: ['ADMIN']},
 
   }
 ];

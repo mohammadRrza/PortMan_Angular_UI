@@ -420,7 +420,7 @@ export class DslamPortOperationComponent implements OnInit {
         setTimeout(() => {
             this.hide_chart = false;
             this.message = '{"action": "port_status", "params": {"port":{"port_index":' + this.dslamPort_info2.port_index + ',"port_number":' + this.dslamPort_info2.port_number + ',"slot_number":' + this.dslamPort_info2.slot_number + ' }}, "dslam_id":' + this.dslam_id + '}';
-            this.ws = webSocket('ws://5.202.129.160:2083/ws/');
+            this.ws = webSocket('ws://172.28.238.114:2083/ws/');
             this.ws.next({ message: this.message });
             this.ws.subscribe(
                 data => {

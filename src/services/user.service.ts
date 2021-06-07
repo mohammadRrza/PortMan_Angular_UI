@@ -14,6 +14,8 @@ export class UserService {
     helper = new JwtHelperService();
 
     constructor(private _http: HttpClient, private notSrv: NotificationService) {
+        this.token = localStorage.getItem('access_token');
+
     }
 
     httpOptions = {
@@ -40,6 +42,14 @@ export class UserService {
     }
 
     get_permission(): Promise<any> {
+        this.token = localStorage.getItem('access_token');
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + this.token
+    
+            })
+        }; 
         return this._http
             .get(this.apiURL + 'get_permission/', this.httpOptions)
             .toPromise()
@@ -55,6 +65,14 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    get_users(page,itemsPerPage): Promise<any> {
+        return this._http
+            .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+    
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

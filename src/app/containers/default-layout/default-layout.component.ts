@@ -38,11 +38,11 @@ export class DefaultLayoutComponent implements OnInit {
     var permissions = JSON.parse(localStorage.getItem("permissions"));
     var role = permissions.user_type;
     this.navItems.forEach(function (value) {
-      if (value.attributes) {
-        if (role == 'Admin') {
+      if (value.attributes && value.attributes.who) {
+        if(value.attributes.who.includes(role)){
           value.attributes.hidden = null;
         }
-        else if (role == 'RESELLER') {
+        else{
           value.attributes.hidden = true;
         }
       }

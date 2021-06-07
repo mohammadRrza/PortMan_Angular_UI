@@ -1,1 +1,60 @@
-<p>user-management works!</p>
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          User Management Panel
+        </div>
+        <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="username">User Name<p-sortIcon field="username" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="first_name">First Name <p-sortIcon field="first_name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="last_name">Last Name <p-sortIcon field="last_name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="reseller_info.text">Reseller<p-sortIcon field="reseller_info.text"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="type">Type<p-sortIcon field="type"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="is_active">Active<p-sortIcon field="is_active"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="last_login">Last Login<p-sortIcon field="last_login"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                  <tr>
+                    <td class="text-center">{{user.username}}</td>
+                    <td class="text-center">{{user.first_name}}</td>
+                    <td class="text-center">{{user.last_name}}</td>
+                    <td class="text-center" *ngIf="user.reseller_info">{{user.reseller_info.text}}</td>
+                    <td class="text-center" *ngIf="!user.reseller_info">--</td>
+                    <td class="text-center">{{user.type}}</td>
+                    <td class="text-center">{{user.is_active}}</td>
+                    <td class="text-center">{{user.last_login}}</td>
+                    <td class="text-center">
+      
+                      <div class="col-md-12" style="padding-left: 40%">
+                        <div class="row" *ngIf="permission.permissions">
+                          <img *ngIf="permission.permissions.includes('view_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
+                            style="cursor: pointer; margin: 5px;" />
+                          <img *ngIf="permission.permissions.includes('edit_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                            pTooltip="Dslam Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                          <img *ngIf="permission.permissions.includes('delete_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Dslam"
+                            tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_dslam(dslam.id)" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="pageChange_srch($event)"
+                [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+        </div>
+    </div>
+</div>
+</div>
