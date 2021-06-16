@@ -1,3 +1,9 @@
+<p-dialog header="Add Permission Profile" [(visible)]="add_permission_profile" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+</p-dialog>
+
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -45,8 +51,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-permission>
                         <tr>
-                            <td class="text-center">{{permission.user_info.username}}</td>
-                            <td class="text-center">{{permission.user_info.username}}</td>
+                            <td class="text-center">{{permission.username}}</td>
+                            <td class="text-center">{{permission.username}}</td>
                             <td class="text-center">
                               <img src="\assets\img\brand\permission.png" width="30"
                               pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />

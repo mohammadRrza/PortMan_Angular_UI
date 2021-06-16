@@ -145,7 +145,7 @@
         <hr />
       </div>
     </div>
-    <button type="submit" (click)="displayMaximizable2=false;s">Submit</button>
+    <button type="submit" (click)="displayMaximizable2=false;">Submit</button>
     <ng-template pTemplate="footer">
     </ng-template>
   </form>
@@ -339,7 +339,6 @@
 
               </td>
               <td class="text-center">
-
                 <div class="col-md-12" style="padding-left: 40%">
                   <div class="row" *ngIf="permission.permissions">
                     <img *ngIf="permission.permissions.includes('view_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"

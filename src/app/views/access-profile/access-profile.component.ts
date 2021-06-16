@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PermissionService} from '../../../services/permission.service';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-access-profile',
@@ -8,7 +9,9 @@ import { PermissionService} from '../../../services/permission.service';
 })
 export class AccessProfileComponent implements OnInit {
 
-  constructor(private prmSrv:PermissionService) { 
+  constructor(private prmSrv:PermissionService,
+              private confirmationsrv: ConfirmationService,
+                        ) { 
     this.pagination_config = {
       itemsPerPage: 10,
       currentPage: 1,
@@ -17,6 +20,10 @@ export class AccessProfileComponent implements OnInit {
   }
   pagination_config;
   permissions_profiles;
+  add_permission_dialog;
+  edit_profile_dialog;
+  delete_profile_dialog;
+
   get_permissions_profiles(page, page_size){
     this.prmSrv.get_permissions_profiles(page, page_size).then(res=>{
       this.permissions_profiles= res.results
@@ -24,14 +31,34 @@ export class AccessProfileComponent implements OnInit {
 
     });
   }
+  show_permission_profile(){
+    this.add_permission_dialog = true;
+  }
 
+  edit_permission_profile(profile_id){
+    this.edit_profile_dialog = true;
+  }
+
+
+
+  remove_Profile(profile_id){
+    this.confirmationsrv.confirm({
+      message: 'Are you sure that you want to delete this Profile?',
+      accept: () => {
+        this.prmSrv.delete_permission_profile(profile_id).then(res=>{
+          this.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+        });
+      }
+  });
+
+  }
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
     this.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
   }
   ngOnInit(): void {
-    this.get_permissions_profiles(1,10);
+    this.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 
 }

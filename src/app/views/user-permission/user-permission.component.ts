@@ -17,7 +17,7 @@ export class UserPermissionComponent implements OnInit {
   }
   pagination_config;
   users_permissions = [];
-
+  add_permission_profile : boolean = false;
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -31,10 +31,10 @@ export class UserPermissionComponent implements OnInit {
   }
 
   show_add_Permission(){
-    
+    this.add_permission_profile = true;
   }
   ngOnInit(): void {
-    this.get_users_permission(1,10);
+    this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 
 }

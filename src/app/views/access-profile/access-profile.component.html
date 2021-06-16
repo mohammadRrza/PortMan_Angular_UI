@@ -1,3 +1,19 @@
+<p-dialog header="Add Permission Profile" [(visible)]="add_permission_dialog" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="border-info" style="padding: 10px;">
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Edit Permission Profile" [(visible)]="edit_profile_dialog" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="border-info" style="padding: 10px;">
+  </div>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -5,7 +21,7 @@
                 Permission Profiles Panel
                 <span>
                     <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;"
-                        pTooltip="Add Profile" tooltipPosition="left" (click)="show_add_Profile()"></i>
+                        pTooltip="Add Profile" tooltipPosition="left" (click)="show_permission_profile()"></i>
                 </span>
             </div>
             <div>
@@ -42,10 +58,10 @@
 
                                 <div class="col-md-12" style="padding-left: 40%">
                                   <div class="row">
-                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_permission_profile(profile.id)" width="20"
                                       pTooltip="Edit Profile" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
                                     <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Profile"
-                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Profile(Profile.id)" />
+                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Profile(profile.id)" />
                                   </div>
                                 </div>
                               </td>

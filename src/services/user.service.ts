@@ -59,7 +59,7 @@ export class UserService {
 
     get_users_permission(page,itemsPerPage): Promise<any> {
         return this._http
-            .get(this.apiURL + 'permission-profile/?page='+page, this.httpOptions)
+            .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);

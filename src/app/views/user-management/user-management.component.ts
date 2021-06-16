@@ -31,9 +31,13 @@ export class UserManagementComponent implements OnInit {
     this.pagination_config.itemsPerPage = event.rows;
     this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
+
+  search_user(item, _search_id){
+
+  }
+
   ngOnInit(): void {
     this.permission = JSON.parse(localStorage.getItem("permissions"));
-    console.log(this.permission);
     this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
 
   }

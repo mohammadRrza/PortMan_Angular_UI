@@ -49,4 +49,12 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  get_backup_files_name(switch_id: number): Promise<any> {
+    return this._http
+      .post(this.apiURL+'get_backup_files_name/', {'switch_id':switch_id}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 }

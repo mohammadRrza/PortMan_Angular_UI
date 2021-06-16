@@ -32,6 +32,10 @@ export class RoutersComponent implements OnInit {
     });
   }
 
+  download_router_backup(router_ip){
+console.log(router_ip);
+  }
+
   search_routers(search_elem,type){
     if(type == 1){
     }

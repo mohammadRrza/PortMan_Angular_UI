@@ -9,6 +9,7 @@ import { NotificationService } from './notification.service'
 
 export class PermissionService {
     apiURL = environment.APIEndpoint + 'profile/';
+    apiURL2 = environment.APIEndpoint + 'permission-profile/';
     token = localStorage.getItem('access_token');
 
     constructor(private _http: HttpClient, private notSrv: NotificationService) {
@@ -29,6 +30,15 @@ export class PermissionService {
             .then(res => res)
             .catch(this.handleError);
     }
+
+    delete_permission_profile(permission_profile_id){
+        return this._http
+            .post(this.apiURL2+'delete_permission_profile/', {'permission_profile_id': permission_profile_id} , this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

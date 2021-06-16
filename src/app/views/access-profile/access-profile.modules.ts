@@ -7,6 +7,8 @@ import {PaginatorModule} from 'primeng/paginator';
 import {TableModule} from 'primeng/table';
 import {TooltipModule} from 'primeng/tooltip';
 import {FieldsetModule} from 'primeng/fieldset';
+import { DialogModule } from 'primeng/dialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
     imports: [
@@ -16,7 +18,9 @@ import {FieldsetModule} from 'primeng/fieldset';
         PaginatorModule,
         TableModule,
         TooltipModule,
-        FieldsetModule
+        FieldsetModule,
+        DialogModule,
+        ConfirmDialogModule
     ],
     declarations: [ 
         AccessProfileComponent,

@@ -6,3 +6,18 @@
     background-color: black;
     color: chartreuse;
 }
+
+.trclass{
+    cursor: pointer;
+}
+
+.trclass:hover{
+    cursor: pointer;
+    background-color:rgb(154, 182, 199);
+}
+
+.border-info {
+    box-shadow: 3px 2px 18px 4px #A2C5FF; 
+    padding: 5px;
+    margin-top: 15px;
+    }

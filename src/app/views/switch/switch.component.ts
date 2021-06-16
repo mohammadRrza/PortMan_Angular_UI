@@ -44,6 +44,9 @@ export class SwitchComponent implements OnInit {
   }
 }
 
+download_switch_backup(switch_ip){
+  console.log(switch_ip);
+}
  get_all_switches(page,itemsPerPage){
    this.switchSrv.get_all_switches(page,itemsPerPage).then(res=>{
      this.switches =  res.results;

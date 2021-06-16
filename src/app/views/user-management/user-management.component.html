@@ -4,6 +4,33 @@
         <div class="card-header" style="text-align: center;">
           User Management Panel
         </div>
+        <div>
+            <div class="disabled" *ngIf = "progressSpinner"></div>
+            <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+              <p-header>User Search</p-header>
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
+              <ng-template pTemplate="header">
+                <tr class="row-accessories border" style="margin: 10px;" >
+                  <th>
+                    <input pInputText type="text" [(ngModel)]="username" (keyup)="search_user(username,1)"
+                      placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
+                      pTooltip="Search by Username" tooltipPosition="top">
+                  </th>
+                  <th>
+                    <input pInputText type="text" [(ngModel)]="first_name" (keyup)="search_user(first_name,2)"
+                      placeholder="Search by City" class="p-column-filter" style="margin: 10px;" pTooltip="Search by First Name"
+                      tooltipPosition="top">
+                  </th>
+                  <th>
+                    <input pInputText type="text" [(ngModel)]="last_name" (keyup)="search_user(last_name,3)"
+                      placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Last Name"
+                      tooltipPosition="top">
+                  </th>
+                </tr>
+              </ng-template>
+            </p-table>
+            </p-fieldset>
+          </div>
         <div class="card-body" class="border" style="margin: 10px;" >
             <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
                 <ng-template pTemplate="header">

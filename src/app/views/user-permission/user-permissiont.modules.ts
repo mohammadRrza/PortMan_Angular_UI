@@ -7,6 +7,7 @@ import {TableModule} from 'primeng/table';
 import {TooltipModule} from 'primeng/tooltip';
 import {PaginatorModule} from 'primeng/paginator';
 import {FieldsetModule} from 'primeng/fieldset';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {FieldsetModule} from 'primeng/fieldset';
         TableModule,
         TooltipModule,
         PaginatorModule,
-        FieldsetModule
+        FieldsetModule,
+        DialogModule
     ],
     declarations: [ 
         UserPermissionComponent

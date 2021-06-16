@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import {NgxPaginationModule} from 'ngx-pagination';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
+import {FieldsetModule} from 'primeng/fieldset';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {PaginatorModule} from 'primeng/paginator';
         CommonModule,
         NgxPaginationModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        FieldsetModule
     ],
     declarations: [ UserManagementComponent ]
   })
