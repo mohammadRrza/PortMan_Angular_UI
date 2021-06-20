@@ -62,6 +62,7 @@ import { SwitchService } from '../services/switch.service';
 import { ContactService } from '../services/contact.service';
 import { login } from '../app/Classes/login';
 import { SwitchCommandService } from '../services/switch-command.service';
+import { RouterCommandService } from '../services/router-command.service';
 
 
 
@@ -116,7 +117,8 @@ import { SwitchCommandService } from '../services/switch-command.service';
     ConfirmationService,
     PermissionService,
     ContactService,
-    SwitchCommandService
+    SwitchCommandService,
+    RouterCommandService
   ],
 
   bootstrap: [AppComponent]

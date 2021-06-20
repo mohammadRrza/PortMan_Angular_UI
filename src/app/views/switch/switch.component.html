@@ -14,17 +14,17 @@
                 <ng-template pTemplate="header">
                   <tr class="row-accessories border" style="margin: 10px;" >
                     <th>
-                      <input pInputText type="text" [(ngModel)]="device_name" (keyup)="search_routers(device_name,1)"
+                      <input pInputText type="text" [(ngModel)]="device_name" (keyup)="search_switches(device_name,1)"
                         placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
                         pTooltip="Search by Province" tooltipPosition="top">
                     </th>
                     <th>
-                      <input pInputText type="text" [(ngModel)]="device_ip" (keyup)="search_routers(device_ip,2)"
+                      <input pInputText type="text" [(ngModel)]="device_ip" (keyup)="search_switches(device_ip,2)"
                         placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
                         tooltipPosition="top">
                     </th>
                     <th>
-                        <input pInputText type="text" [(ngModel)]="device_fqdn" (keyup)="search_routers(device_fqdn,3)"
+                        <input pInputText type="text" [(ngModel)]="device_fqdn" (keyup)="search_switches(device_fqdn,3)"
                           placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
                           tooltipPosition="top">
                       </th>

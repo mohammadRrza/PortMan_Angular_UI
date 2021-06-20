@@ -55,7 +55,7 @@
                         <hr />
                       </div>
                       <div class="row" style="margin: 10px;" *ngIf="show_backup_files">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-lg-12" >
                           <p-card header="Backup Files">
                             <hr />
                               <div class="row">
@@ -70,16 +70,16 @@
                                   <tbody>
                                     <tr *ngFor="let filename of filenames" class="trclass">
                                       <td>{{filename}}</td>
-                                      <td>{{filename}}</td>
+                                      <td>{{filename.split('_')[1].split('.')[0]}}</td>
                                       <td>
-                                        <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Backup File"
-                                        tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_backup(filename)" />
+                                          <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Backup File"
+                                          tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_backup(filename)" download />
+                                
                                       </td>
                                     </tr>
                                   </tbody>
                                 </table>
                                 <div class="col-md-4" >
-
                                 </div>
                               </div>
                           </p-card>
@@ -99,7 +99,11 @@
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
   <div class="border-info">
     <div class="row">
-      
+      <div class="col-md-12">
+      <pre>
+        {{bakup_text}}
+      </pre>
+      </div>
     </div>
   </div>
 </p-dialog>

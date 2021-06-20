@@ -12,14 +12,14 @@
                       <ng-template tabHeading><i class="icon-calculator"></i> اجرای دستور روی روتر </ng-template>
                       <div class="row">
                         <div class="ng-autocomplete col-md-3" style="direction: ltr;">
-                          <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
+                          <ng-autocomplete [data]="router_commands" [searchKeyword]="keyword" placeHolder="Enter the Command"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                            (inputFocused)='get_router_commands($event)' historyIdentifier="router_commands" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
       
                           <ng-template #itemTemplate let-item>
-                            <a [innerHTML]="item.name"></a>
+                            <a [innerHTML]="item.router_command_text"></a>
                           </ng-template>
       
                           <ng-template #notFoundTemplate let-notFound>
@@ -28,14 +28,13 @@
                         </div>
                         <div class="col-md-3">
                           <button pButton type="button" style="margin-right: 0; float: right;"
-                            (click)="run_command(comm_item)" label="Run" [disabled]="!show_result"></button>
+                            (click)="router_run_command(router_id, comm_item.switch_command_text, params)" label="Run"></button>
                         </div>
                         <div class="col-md-6">
                           <div class="col-md-12">
                             <p-card header="Command Result">
                               <hr />
-                              <div *ngIf="!show_result" class="res_div_disabled border">
-                                <p-progressSpinner></p-progressSpinner>
+                              <div class="res_div_disabled border">
                               </div>
                               <div *ngIf="show_result" class="res_div border">
       
@@ -46,6 +45,40 @@
                           </div>
                         </div>
       
+                      </div>
+                      <div *ngIf="show_backup_files">
+                        <hr />
+                      </div>
+                      <div class="row" style="margin: 10px;" *ngIf="show_backup_files">
+                        <div class="col-md-6 col-lg-12" >
+                          <p-card header="Backup Files">
+                            <hr />
+                              <div class="row">
+                                <table class="table table-striped" style="direction: rtl;">
+                                  <thead>
+                                    <tr>
+                                      <th>File Name</th>
+                                      <th>Date</th>
+                                      <th>File</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let filename of filenames" class="trclass">
+                                      <td>{{filename}}</td>
+                                      <td>{{filename.split('_')[1].split('.')[0]}}</td>
+                                      <td>
+                                          <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Backup File"
+                                          tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_backup(filename)" download />
+                                
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <div class="col-md-4" >
+                                </div>
+                              </div>
+                          </p-card>
+                        </div>
                       </div>
                     </tab>
                 </tabset>

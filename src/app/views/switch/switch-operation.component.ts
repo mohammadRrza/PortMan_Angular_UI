@@ -28,7 +28,7 @@ export class SwitchOperationComponent implements OnInit {
     show_result: boolean = false;
     show_backup_files: boolean = false;
     view_backup_file:boolean = false;
-
+    bakup_text:string;
 
     get_switch_commands(switch_type_id, limit_row){
       this.SwitchCommandSrv.get_switch_commands(switch_type_id, limit_row).then(res=>{
@@ -72,10 +72,17 @@ export class SwitchOperationComponent implements OnInit {
       this.SwitchSrv.switch_run_command(this.switch_dto).then(res=>{
         this.show_result = true;
         this.commandRes = res.response.split('\n');
+        if(command=='show run'){
+          this.get_backup_files_name(this.switch_id);
+        }
       });
+
     }
     view_backup(filename){
       this.view_backup_file = true;
+      this.SwitchSrv.download_backup_file(filename).then(res=>{
+         this.bakup_text = res.response;
+      });
     }
     ngOnInit(): void {
       this.get_switch_commands(4,10);
