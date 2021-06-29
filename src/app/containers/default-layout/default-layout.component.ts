@@ -19,6 +19,7 @@ export class DefaultLayoutComponent implements OnInit {
   logout() {
     localStorage.removeItem('loggedin');
     localStorage.removeItem('access_token');
+    localStorage.removeItem('role');
     this.router.navigate(['/login']);
 
   }

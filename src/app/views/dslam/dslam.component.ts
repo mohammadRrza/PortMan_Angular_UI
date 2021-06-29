@@ -216,7 +216,6 @@ export class DslamComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.get_permission();
-    console.log("this.user_permission:"+this.user_permission);
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     this.primengConfig.ripple = true;
   }

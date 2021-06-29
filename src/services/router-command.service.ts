@@ -34,12 +34,13 @@ private handleError(error: any): Promise<any> {
   }
 
   get_router_commands(router_type_id, limit_row): Promise<any> {
-    console.log(this.token);
     return this._http
       .get(this.apiURL + "?router_type_id="+router_type_id+"&limit_row="+limit_row, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
   }
+
+
 
 }

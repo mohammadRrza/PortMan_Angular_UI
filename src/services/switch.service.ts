@@ -64,5 +64,21 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  get_backup_error_file(): Promise<any> {
+    return this._http
+      .post(this.apiURL+'get_backup_error_file/',{}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_backup_error_text(backup_file_name: string): Promise<any> {
+    return this._http
+      .post(this.apiURL+'get_backup_error_text/',{'backup_file_name': backup_file_name}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
   
 }

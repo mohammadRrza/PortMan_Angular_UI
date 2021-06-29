@@ -41,11 +41,11 @@ export class AccessProfileComponent implements OnInit {
 
 
 
-  remove_Profile(profile_id){
+  remove_Profile(permission_profile_id){
     this.confirmationsrv.confirm({
       message: 'Are you sure that you want to delete this Profile?',
       accept: () => {
-        this.prmSrv.delete_permission_profile(profile_id).then(res=>{
+        this.prmSrv.delete_permission_profile(permission_profile_id).then(res=>{
           this.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
         });
       }

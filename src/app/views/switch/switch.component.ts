@@ -28,6 +28,7 @@ export class SwitchComponent implements OnInit {
 
  search_switches(search_elem,type){
   if(type == 1){
+    
   }
   else if(type == 2){
     this.switchSrv.search_switches(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,"search_ip="+search_elem).then(res=>{

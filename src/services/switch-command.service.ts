@@ -26,7 +26,7 @@ private handleError(error: any): Promise<any> {
   }
 
   get_switch_commands(switch_type_id, limit_row): Promise<any> {
-    console.log(this.token);
+    console.log(switch_type_id +" - "+ limit_row);
     return this._http
       .get(this.apiURL + "?switch_type_id="+switch_type_id+"&limit_row="+limit_row, this.httpOptions)
       .toPromise()

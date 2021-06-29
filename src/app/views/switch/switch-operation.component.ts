@@ -31,14 +31,14 @@ export class SwitchOperationComponent implements OnInit {
     bakup_text:string;
 
     get_switch_commands(switch_type_id, limit_row){
-      this.SwitchCommandSrv.get_switch_commands(switch_type_id, limit_row).then(res=>{
+      this.SwitchCommandSrv.get_switch_commands(4, 10).then(res=>{
         this.switch_commands = res;
       });
     }
     selectEvent(item) {
       this.show_result = true;
       this.comm_item = item;
-      if(item.switch_command_text == 'show run'){
+      if(item.switch_command_text == 'Get BackUp'){
         this.show_backup_files = true;
         this.get_backup_files_name(this.switch_id);
       }
@@ -55,12 +55,10 @@ export class SwitchOperationComponent implements OnInit {
     }
 
     onChangeSearch(search: string) {
-      console.log(search);
   
     }
   
     onFocused(e) {
-      console.log('onFocused');
   
     }
     switch_run_command(switch_id, command, params){
@@ -85,6 +83,5 @@ export class SwitchOperationComponent implements OnInit {
       });
     }
     ngOnInit(): void {
-      this.get_switch_commands(4,10);
       }
 }

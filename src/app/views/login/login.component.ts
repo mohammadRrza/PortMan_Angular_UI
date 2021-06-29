@@ -24,17 +24,24 @@ export class LoginComponent implements OnInit{
   errorMessage = '';
   @Output() send_username = new EventEmitter<String>();
   username = '';
+  permission;
+  role: string = "";
+  show_reset_password:boolean = false;
+
+
   login(loginForm){
     let loggedin = this.usrSrv.loggedin();
     this.usrSrv.login(loginForm).then(res => {
       this.token = res.token;
       if (this.token) {
+
         localStorage.setItem('access_token', this.token);
         this.username = res.username;
         this.send_username.emit(this.username);
         localStorage.setItem('username', this.username);
         this.notifySrv.showSuccess('Login is Successfull','Login');
-        this.router.navigate(['/dslam/dslam']);
+        this.role = localStorage.getItem('role')
+        this.get_permission();
       }
       else {
         this.router.navigate(['/login']);
@@ -43,6 +50,24 @@ export class LoginComponent implements OnInit{
    (error) => {
     this.show_errors(error);
   });
+  }
+
+  send_reset_password_link(email)
+  {
+    var valid_email_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    
+    if (valid_email_regex.test(email)){
+      this.usrSrv.send_reset_password_link(email).then(res=>{
+        
+      });
+    }
+    else{
+      console.log('No')
+    }
+  }
+
+  show_reset_password_func(){
+    this.show_reset_password = true;
   }
 
   show_errors(error){
@@ -56,6 +81,21 @@ export class LoginComponent implements OnInit{
     else{
       this.notifySrv.showError(this.errorHandler.errorMessage,'Error')
     }
+  }
+
+  get_permission(){
+    this.usrSrv.get_permission().then(perm_res => {
+      this.permission = perm_res;
+      localStorage.setItem("permissions", JSON.stringify(this.permission));
+      this.role = this.permission.user_type;
+      localStorage.setItem('role', this.role);
+      if(this.role == "COREUSER"){
+        this.router.navigate(['/router/router']);
+      }
+      else{
+        this.router.navigate(['/dslam/dslam']);
+      }
+    });
   }
 
   ngOnInit() {

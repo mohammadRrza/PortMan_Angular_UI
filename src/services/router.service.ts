@@ -43,17 +43,19 @@ search_routers(page,itemsPerPage,searchStr): Promise<any> {
     .catch(this.handleError);
 }
 
-get_backup_files_name(switch_id: number): Promise<any> {
+
+get_backup_files_name(router_id): Promise<any> {
   return this._http
-    .post(this.apiURL+'get_backup_files_name/', {'switch_id':switch_id}, this.httpOptions)
+    .post(this.apiURL+'get_router_backup_files_name/', {'router_id':router_id}, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);
 }
 
+
 download_backup_file(backup_file_name: string): Promise<any> {
   return this._http
-    .post(this.apiURL+'download_backup_file/', {'backup_file_name':backup_file_name}, this.httpOptions)
+    .post(this.apiURL+'download_router_backup_file/', {'backup_file_name':backup_file_name}, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);

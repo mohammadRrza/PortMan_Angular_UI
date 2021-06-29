@@ -1,3 +1,9 @@
 .background{
     background-color: #cccccc;
 }
+
+.border-info {
+    box-shadow: 3px 2px 18px 4px #A2C5FF; 
+    padding: 5px;
+    margin-top: 15px;
+    }

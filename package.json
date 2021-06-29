@@ -58,7 +58,7 @@
     "flag-icon-css": "^3.4.5",
     "font-awesome": "^4.7.0",
     "highcharts": "^8.0.4",
-    "highcharts-angular": "^2.4.0",
+    "highcharts-angular": "2.10.0",
     "igniteui-angular": "10.1.10",
     "mapbox-gl": "1.13.0",
     "moment": "^2.24.0",

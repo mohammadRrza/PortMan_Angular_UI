@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-md-3">
                           <button pButton type="button" style="margin-right: 0; float: right;"
-                            (click)="router_run_command(router_id, comm_item.switch_command_text, params)" label="Run"></button>
+                            (click)="router_run_command(router_id, comm_item.router_command_text, params)" label="Run"></button>
                         </div>
                         <div class="col-md-6">
                           <div class="col-md-12">
@@ -36,9 +36,9 @@
                               <hr />
                               <div class="res_div_disabled border">
                               </div>
-                              <div *ngIf="show_result" class="res_div border">
-      
+                              <div class="res_div border">
                                 <pre>
+                                  {{commandRes}}
                                </pre>
                               </div>
                             </p-card>
@@ -88,3 +88,17 @@
         </div>
     </div>
 </div>
+
+
+<p-dialog header="Switch Backup" [(visible)]="view_backup_file" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+      <pre>
+        {{bakup_text}}
+      </pre>
+      </div>
+    </div>
+  </div>
+</p-dialog>

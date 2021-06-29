@@ -62,7 +62,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: 'telecom_costs',
+        path: 'back_up_errors',
         loadChildren: () => import('./views/telecom-costs/telecom-costs.module').then(m => m.TelecomCostsModule)
       },
       {

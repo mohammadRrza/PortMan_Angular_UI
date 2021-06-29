@@ -5,64 +5,71 @@ export const navItems: INavData[] = [
     name: 'داشبورد',
     url: '/dashboard',
     icon: 'icon-speedometer',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
   },
 
   {
     name: 'مدیریت مراکز مخابراتی',
     url: '/telecom-center/telecom-center',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
   },
   {
     name: ' هزینه های مرکز',
     url: '/telecom_costs',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
 
      },
+     {
+      name: 'Back Up Errors',
+      url: '/back_up_errors',
+      icon: 'icon-settings',
+      attributes: {hidden: null, who: ['ADMIN', 'COREUSER','SUPERVISOR']},
+  
+       },
   {
     name: 'مدیریت روترها',
     url: '/router/router',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
 
   },
   {
     name: 'مدیریت سوئیچ ها',
     url: '/switch/switch',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
   },
   {
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
-     },
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+  },
   {
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER','SUPERVISOR']},
   },
   {
     name: 'وضعیت پورت ها',
     url: '/icons/coreui-icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    attributes: {hidden: null, who: []},
    },
   {
     name: 'پورت مپ',
     url: '/contact/port-map',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
   },
   {
     name: 'جستجو',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: 'نماینده ریسلر',
@@ -82,37 +89,37 @@ export const navItems: INavData[] = [
 
       }
     ],
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: 'مدیریت کاربران',
     url: '/userManagement',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: 'مدیریت اعضا',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت شهر و استان',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت وی لن ها',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت پروفایل خط',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
 
   },
   {
@@ -133,13 +140,13 @@ export const navItems: INavData[] = [
 
       }
     ],
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
   },
   {
     name: 'آیکون ها',
     url: '/icons',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: 'Widgets',
@@ -149,7 +156,7 @@ export const navItems: INavData[] = [
       variant: 'info',
       text: 'NEW'
     },
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
 
   },
   {
@@ -158,7 +165,7 @@ export const navItems: INavData[] = [
   {
     title: true,
     name: 'Extras',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
   },
   {
     name: 'Pages',
@@ -186,7 +193,7 @@ export const navItems: INavData[] = [
         icon: 'icon-star'
       }
     ],
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
 
   },
   {
@@ -197,7 +204,7 @@ export const navItems: INavData[] = [
       variant: 'secondary',
       text: 'NEW'
     },
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: []},
 
   }
 ];

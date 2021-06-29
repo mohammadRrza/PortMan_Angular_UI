@@ -63,6 +63,9 @@ import { ContactService } from '../services/contact.service';
 import { login } from '../app/Classes/login';
 import { SwitchCommandService } from '../services/switch-command.service';
 import { RouterCommandService } from '../services/router-command.service';
+import { DialogModule } from 'primeng/dialog';
+import {InputTextModule} from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -90,7 +93,10 @@ import { RouterCommandService } from '../services/router-command.service';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    NgbModule
+    DialogModule,
+    NgbModule,
+    InputTextModule,
+    ButtonModule
   ],
   declarations: [
     AppComponent,

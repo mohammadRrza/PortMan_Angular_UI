@@ -32,7 +32,7 @@
                       <button type="submit" class="btn btn-primary px-4">ورود</button>
                     </div>
                     <div class="col-6 text-right">
-                      <button type="button" class="btn btn-link px-0">فراموشی رمز عبور؟</button>
+                      <button type="button" class="btn btn-link px-0" (click)="show_reset_password_func()">فراموشی رمز عبور؟</button>
 
                     </div>
                   </div>
@@ -48,8 +48,6 @@
                       <img src="../../../assets/img//brand/portman_title.png" width="60%" style="margin-top: 10%;">
                     </div>
                     <div style="margin-top: 10%;">
-
-
                     </div>
                   </div>
                 </div>
@@ -65,3 +63,19 @@
 
 </div>
 </div>
+
+<p-dialog header="Reset Password" [(visible)]="show_reset_password" [modal]="true" [style]="{width: '40vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="row border-info" style="padding: 10px;">
+    <div class="col-md-0 col-sm-1"></div>
+    <div class="col-md-7 col-sm-10">
+    <input pInputText type="text" [(ngModel)]="email"
+    placeholder="Please enter your email" class="p-column-filter" style="margin: 10px; width: 100%;" pTooltip="Reset Password"
+    tooltipPosition="top">
+    </div>
+    <div class="col-md-3 col-sm-1">
+      <button pButton type="button" style="margin: 10px; width: 100%;" label="Reset Password" (click)="send_reset_password_link(email)" ></button>
+    </div>
+
+  </div>
+  </p-dialog>

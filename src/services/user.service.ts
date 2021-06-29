@@ -27,7 +27,6 @@ export class UserService {
     };
 
     login(userInfo): Promise<any> {
-        console.log(userInfo);
         return this._http
             .post(this.apiURL + 'login/', userInfo, this.httpOptions)
             .toPromise()
@@ -68,6 +67,14 @@ export class UserService {
     get_users(page,itemsPerPage): Promise<any> {
         return this._http
             .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    send_reset_password_link(email): Promise<any> {
+        return this._http
+            .post(this.apiURL+'SendResetPasswordLink/', {'email':email},this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);

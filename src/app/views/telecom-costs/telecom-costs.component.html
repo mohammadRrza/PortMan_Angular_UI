@@ -2,11 +2,79 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" style="text-align: center;">
-          Telecom Costs Panel
+          Back Up Error List
+          <span pTooltip="See Errors Text File"
+          tooltipPosition="left">
+            <img src="\assets\img\brand\view.png" width="30" style="font-size: 2rem; float: right; cursor: pointer; margin: 5px;" 
+           label="Confirm" (click)="see_errors_text_file()"   />
+          </span>
         </div>
-        <div class="card-body" class="border" style="margin: 10px;" >
+          <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="backup_errors" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="device_name">FileName<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_ip">Back Up Date<p-sortIcon field="IP" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="address">View Error<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-backup_error>
+                    <tr>
+                        <td class="text-center"><span>{{backup_error}}</span></td>
+                        <td class="text-center"><span>{{backup_error.split('_')[2].split('.')[0]}}</span></td>
+                        <td class="text-center">
+
+                            <div class="col-md-12" style="padding-left: 40%">
+                              <div class="row">
+                                  <img src="\assets\img\brand\Backup.png" width="20" pTooltip="Download Switch Backup"
+                                  tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="get_SSH_Error(backup_error)" />
+                              </div>
+                            </div>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
 
         </div>
+    
     </div>
 </div>
 </div>
+
+
+<p-dialog header="Errors" [(visible)]="view_backup_Error" [modal]="true" [style]="{width: '40vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info" >
+    <pre>
+      {{backup_error_text}}
+    </pre>
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Errors" [(visible)]="view_error_text" [modal]="true" [style]="{width: '80vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info" >
+    <div class="row" *ngFor="let backup_error of backup_errors">
+      <div class="col-md-4" >
+      <pre>
+        {{backup_error}}
+        </pre>
+      </div>
+      <div class="col-md-4" >
+        <pre>
+          {{backup_error.split('_')[2].split('.')[0]}}
+          </pre>
+        </div>
+        <div class="col-md-4" >
+          <pre>
+            {{backup_error}}
+            </pre>
+          </div>
+    </div>
+  </div>
+</p-dialog>
