@@ -8,11 +8,11 @@
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3">
+    <!--<li class="nav-item px-3">
       <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
-    </li>
+    </li>-->
     <li class="nav-item px-3">
-      <a class="nav-link" [routerLink]="['/dashboard']">{{username}}</a>
+      <a class="nav-link" [routerLink]="">{{username}}</a>
     </li>
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#" (click)= "logout()">Logout</a>
@@ -37,8 +37,8 @@
       <!-- Breadcrumb Menu-->
       <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
-          <a class="btn" href="#" [routerLink]="['/dashboard']"><i class="icon-settings"></i> &nbsp;Settings</a>
+          <a class="btn" [routerLink]=""><i class="icon-graph"></i> &nbsp;Dashboard</a>
+          <a class="btn" href="#" [routerLink]=""><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
       </li>
     </cui-breadcrumb>

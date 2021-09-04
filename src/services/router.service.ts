@@ -10,6 +10,8 @@ export class RouterService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'router/';
+  apiURL2 = environment.APIEndpoint + 'router-command/';
+
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -26,7 +28,6 @@ private handleError(error: any): Promise<any> {
   }
 
 get_all_routers(page,itemsPerPage): Promise<any> {
-    console.log(this.token);
     return this._http
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
       .toPromise()
@@ -52,10 +53,27 @@ get_backup_files_name(router_id): Promise<any> {
     .catch(this.handleError);
 }
 
+get_backup_files_name2(router_id): Promise<any> {
+  return this._http
+    .post(this.apiURL+'get_router_backup_files_name2/', {'router_id':router_id}, this.httpOptions)
+    .toPromise()
+    .then(res => res)
+    .catch(this.handleError);
+}
+
+
 
 download_backup_file(backup_file_name: string): Promise<any> {
   return this._http
     .post(this.apiURL+'download_router_backup_file/', {'backup_file_name':backup_file_name}, this.httpOptions)
+    .toPromise()
+    .then(res => res)
+    .catch(this.handleError);
+}
+
+show_router_backup_error(): Promise<any> {
+  return this._http
+    .post(this.apiURL2+'read_router_backup_error_files_name/', {}, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);

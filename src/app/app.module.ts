@@ -66,6 +66,7 @@ import { RouterCommandService } from '../services/router-command.service';
 import { DialogModule } from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 
 
@@ -103,9 +104,8 @@ import { ButtonModule } from 'primeng/button';
     APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
-    
-  ],
+    LoginComponent
+      ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
@@ -124,7 +124,9 @@ import { ButtonModule } from 'primeng/button';
     PermissionService,
     ContactService,
     SwitchCommandService,
-    RouterCommandService
+    RouterCommandService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
   ],
 
   bootstrap: [AppComponent]

@@ -1,0 +1,54 @@
+.glowing-border {
+    outline: none;
+    border-color: #caddec;
+    box-shadow: 0 0 10px #caddec;
+    margin: 10px;
+    
+}
+
+.cards{
+    width: 100px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.card{
+    width: 100%;
+    padding-right: 30px;
+}
+
+tr ,input {
+    font-family:Iranian_Sans;
+    font-size: smaller;
+  }
+
+
+  .res_div{
+    border-style: double;
+    width: 100%;
+    height: 100%;
+}
+
+.res_div_disabled{
+    z-index: 2;
+    background-color: #85b8eb;
+    opacity: 0.3;
+    height: 100%;
+    width: 100%;
+    top: 120px;
+    left: 260px;
+
+}
+.border {
+    box-shadow: 3px 2px 18px 4px #A2C5FF; 
+    }
+
+
+.command_res{
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        direction: ltr;
+        text-align: left;
+        padding-left: 10px;
+        background-color: black;
+        color: chartreuse;
+}

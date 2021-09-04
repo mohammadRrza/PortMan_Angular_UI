@@ -48,38 +48,33 @@
                       </div>
                       <div *ngIf="show_backup_files">
                         <hr />
+                        <div class="card-body" class="border" style="margin: 10px;" >
+                          <p-table styleClass="p-datatable-striped" #dt1 [value]="filenames" selectionMode="single">
+                              <ng-template pTemplate="header">         
+                                <tr class="row-accessories" style="text-align:center;">
+                                  <th pSortableColumn="file_name" style="text-align:center;">Name<p-sortIcon field="file_name" style="text-align: center;"></p-sortIcon>
+                                  </th>
+                                  <th pSortableColumn="file_date" style="text-align:center;">Date<p-sortIcon field="file_date" style="text-align: center;"></p-sortIcon>
+                                  </th>
+                                  <th style="text-align:center;">File
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-filename>
+                                  <tr>
+                                    <td class="text-center" style="direction: ltr;">{{filename.file_name}}</td>
+                                    <td class="text-center"> {{filename.file_date}}</td>
+                                    <td style="text-align:center;">
+                                      <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Backup File"
+                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_backup(filename.file_name)" download />
+                                  </td>
+                                </tr>
+                              </ng-template>
+                          </p-table>
                       </div>
-                      <div class="row" style="margin: 10px;" *ngIf="show_backup_files">
-                        <div class="col-md-6 col-lg-12" >
-                          <p-card header="Backup Files">
-                            <hr />
-                              <div class="row">
-                                <table class="table table-striped" style="direction: rtl;">
-                                  <thead>
-                                    <tr>
-                                      <th>File Name</th>
-                                      <th>Date</th>
-                                      <th>File</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr *ngFor="let filename of filenames" class="trclass">
-                                      <td>{{filename}}</td>
-                                      <td>{{filename.split('_')[1].split('.')[0]}}</td>
-                                      <td>
-                                          <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Backup File"
-                                          tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_backup(filename)" download />
-                                
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                                <div class="col-md-4" >
-                                </div>
-                              </div>
-                          </p-card>
-                        </div>
+                        <hr />
                       </div>
+
                     </tab>
                 </tabset>
             </div>
@@ -90,7 +85,7 @@
 </div>
 
 
-<p-dialog header="Switch Backup" [(visible)]="view_backup_file" [modal]="true" [style]="{width: '30vw'}"
+<p-dialog header="Router Backup" [(visible)]="view_backup_file" [modal]="true" [style]="{width: '40vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
   <div class="border-info">
     <div class="row">

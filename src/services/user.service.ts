@@ -80,6 +80,14 @@ export class UserService {
             .catch(this.handleError);
     }
     
+    get_user_permission_profile(permission_profile_id){
+        return this._http
+            .get(this.apiURL+'permission-profile/'+permission_profile_id+'/objects/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

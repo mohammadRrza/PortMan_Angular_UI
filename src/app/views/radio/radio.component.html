@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          Radio Panel
+          <span>
+            <i class="pi pi-cloud-download" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Switch Backup Error"
+              tooltipPosition="left" (click)="show_switch_backup_error()"></i>
+          </span>
+        </div>
+        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+            <p-header>Radio Search</p-header>
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="switches" selectionMode="single" >
+                <ng-template pTemplate="header">
+                  <tr class="row-accessories border" style="margin: 10px;" >
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="device_name" (keyup)="search_radios(device_name,1)"
+                        placeholder="Search by Name" class="p-column-filter" style="margin: 10px;"
+                        pTooltip="Search by Name" tooltipPosition="top">
+                    </th>
+                    <th>
+                      <input pInputText type="text" [(ngModel)]="device_ip" (keyup)="search_radios(device_ip,2)"
+                        placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
+                        tooltipPosition="top">
+                    </th>
+                    <th>
+                        <input pInputText type="text" [(ngModel)]="device_fqdn" (keyup)="search_radios(device_fqdn,3)"
+                          placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
+                          tooltipPosition="top">
+                      </th>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-fieldset>
+        <div class="card-body" class="border" style="margin: 10px;" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="radios" selectionMode="single" >
+                <ng-template pTemplate="header">
+      
+                  <tr class="row-accessories">
+                    <th pSortableColumn="device_name">Name<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_ip">Radio IP<p-sortIcon field="IP" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="device_fqdn">Radio Fqdn<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-radio>
+                    <tr>
+                        <td class="text-center"><span><a [routerLink]="['/radio/radioOperation']"
+                          [queryParams]="{radio_Id:radio.id}">Radio</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/radio/radioOperation']"
+                          [queryParams]="{radio_Id:radio.id}">{{radio.device_ip}}</a></span></td>
+                        <td class="text-center"><span><a [routerLink]="['/radio/radioOperation']"
+                          [queryParams]="{radio_Id:radio.id}">{{radio.device_fqdn}}</a></span></td>
+                        <td class="text-center">
+
+                            <div class="col-md-12" style="padding-left: 40%">
+                              <div class="row">
+                                <img src="\assets\img\brand\info_icon.png" (click)="show_radio_info(switch.id)" width="20" pTooltip="Switch info" tooltipPosition="top"
+                                  style="cursor: pointer; margin: 5px;" />
+                                  <img src="\assets\img\brand\Backup.png" width="20" pTooltip="Download radio Backup"
+                                  tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="download_radio_backup(radio.device_ip)" />
+                              </div>
+                            </div>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+            [rowsPerPageOptions]="[10,20,30]">
+        </p-paginator>
+        </div>
+        </div>
+    </div>
+    </div>

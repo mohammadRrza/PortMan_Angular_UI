@@ -40,7 +40,7 @@ export class SwitchOperationComponent implements OnInit {
       this.comm_item = item;
       if(item.switch_command_text == 'Get BackUp'){
         this.show_backup_files = true;
-        this.get_backup_files_name(this.switch_id);
+        this.get_switch_backup_files_name(this.switch_id);
       }
       else{
         this.show_backup_files = false;
@@ -48,9 +48,12 @@ export class SwitchOperationComponent implements OnInit {
   
     }
   
-    get_backup_files_name(switch_id: number){
-      this.SwitchSrv.get_backup_files_name(switch_id).then(res=>{
-        this.filenames = res.response;
+    get_switch_backup_files_name(switch_id: number){
+      this.SwitchSrv.get_switch_backup_files_name(switch_id).then(res=>{
+        let obj = JSON.parse(res.response);
+        console.log(obj[0])
+        this.filenames = obj[0];
+        console.log(this.filenames);
       });
     }
 
@@ -71,7 +74,7 @@ export class SwitchOperationComponent implements OnInit {
         this.show_result = true;
         this.commandRes = res.response.split('\n');
         if(command=='show run'){
-          this.get_backup_files_name(this.switch_id);
+          this.get_switch_backup_files_name(this.switch_id);
         }
       });
 

@@ -62,7 +62,7 @@ private handleError(error: any): Promise<any> {
   }
   run_command(command_obj): Promise<any> {
     return this._http
-      .post(this.apiURL2, command_obj, this.httpOptions)
+      .post(this.apiURL4+'dslam_commandsV2/', command_obj, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
@@ -90,5 +90,13 @@ private handleError(error: any): Promise<any> {
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
+  }
+
+  get_port_count_func():Promise<any>{
+    return this._http
+    .post(this.apiURL+'get_port_count/', this.httpOptions)
+    .toPromise()
+    .then(res => res)
+    .catch(this.handleError);
   }
 }

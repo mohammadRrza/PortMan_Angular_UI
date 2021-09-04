@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterService } from '../../../services/router.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-router',
@@ -8,7 +10,9 @@ import { RouterService } from '../../../services/router.service';
 })
 export class RoutersComponent implements OnInit {
 
-  constructor(private routSrv: RouterService) {   
+  constructor(private routSrv: RouterService,
+    private jwtHelper: JwtHelperService,
+    private router: Router) {   
      this.pagination_config = {
     itemsPerPage: 10,
     currentPage: 1,
@@ -18,7 +22,8 @@ export class RoutersComponent implements OnInit {
 
   routers = [];
   pagination_config;
-
+  router_backup_errors = [];
+  view_backup_error_file:boolean = false;
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -33,7 +38,7 @@ export class RoutersComponent implements OnInit {
   }
 
   download_router_backup(router_ip){
-console.log(router_ip);
+    console.log(router_ip);
   }
 
   search_routers(search_elem,type){
@@ -54,7 +59,19 @@ console.log(router_ip);
     }
   }
 
+  show_router_backup_error(){
+    this.routSrv.show_router_backup_error().then(res=>{
+      this.view_backup_error_file = true;
+      this.router_backup_errors = res.response;
+    });
+  }
+
   ngOnInit(): void {
+    if (this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))) {
+      this.router.navigate(['/login']);
+    } else {
+      console.log("token not expired"); 
+    }
     this.get_all_routers(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 }

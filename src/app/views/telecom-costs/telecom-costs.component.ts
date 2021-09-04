@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../../../services/switch.service';
+import { BackupService } from '../../../services/backup.serveice';
 
 @Component({
   selector: 'app-telecom-costs',
@@ -8,7 +9,8 @@ import { SwitchService } from '../../../services/switch.service';
 })
 export class TelecomCostsComponent implements OnInit {
 
-  constructor(private switchSrv:SwitchService) { }
+  constructor(private switchSrv:SwitchService,
+              private BackupSrv:BackupService) { }
 
   backup_errors = [];
   view_backup_Error: boolean = false;
@@ -25,7 +27,12 @@ export class TelecomCostsComponent implements OnInit {
   see_errors_text_file(){
     this.view_error_text = true;
   }
-
+  send_errors_text_file(backup_error){
+    this.BackupSrv.send_router_errors_text_file().then(res=>{
+      this.BackupSrv.send_switch_errors_text_file().then(res=>{
+      });
+    });
+  }
   ngOnInit(): void {
     this.switchSrv.get_backup_error_file().then(res=>{
       this.backup_errors = res.response;

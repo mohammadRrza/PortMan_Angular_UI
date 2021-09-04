@@ -19,7 +19,8 @@ export class SwitchComponent implements OnInit {
 
  switches = [];
  pagination_config;
-
+ switch_backup_errors = [];
+ view_backup_error_file:boolean = false;
  paginate(event) {
    this.pagination_config.currentPage = event.page + 1;
    this.pagination_config.itemsPerPage = event.rows;
@@ -56,6 +57,14 @@ download_switch_backup(switch_ip){
      this.pagination_config.totalItems = res.count;
    });
  }
+
+ show_switch_backup_error(){
+  this.view_backup_error_file = true;
+  this.switchSrv.show_switch_backup_error().then(res=>{
+    this.switch_backup_errors = res.response;
+  });
+}
+
  ngOnInit(): void {
    this.get_all_switches(1,10);
  }

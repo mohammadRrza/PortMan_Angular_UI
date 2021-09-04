@@ -3,16 +3,6 @@
       <div class="card">
         <div class="card-header" style="text-align: center;">
           Back Up Error List
-          <span pTooltip="See Errors Text File"
-          tooltipPosition="left">
-            <img src="\assets\img\brand\view.png" width="30" style="font-size: 2rem; float: right; cursor: pointer; margin: 5px;" 
-           label="Confirm" (click)="see_errors_text_file()"   />
-          </span>
-          <span pTooltip="See Errors Text File"
-          tooltipPosition="left">
-            <img src="\assets\img\brand\view.png" width="30" style="font-size: 2rem; float: right; cursor: pointer; margin: 5px;" 
-           label="Confirm" (click)="send_errors_text_file()"   />
-          </span>
         </div>
           <div class="card-body" class="border" style="margin: 10px;" >
             <p-table styleClass="p-datatable-striped" #dt1 [value]="backup_errors" selectionMode="single" >

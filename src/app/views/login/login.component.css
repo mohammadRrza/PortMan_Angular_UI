@@ -7,3 +7,12 @@
     padding: 5px;
     margin-top: 15px;
     }
+
+.version {
+    margin-top: -9%;
+    width: 22%;
+    margin-left: 80%;
+    text-align: center;
+    box-shadow: -4px 4px 8px 0px #2d1dad;
+
+    }

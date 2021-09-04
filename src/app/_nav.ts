@@ -22,10 +22,17 @@ export const navItems: INavData[] = [
 
      },
      {
+      name: 'Backup Management',
+      url: '/backup-management',
+      icon: 'icon-settings',
+      attributes: {hidden: null, who: []},
+  
+       },
+     {
       name: 'Back Up Errors',
       url: '/back_up_errors',
       icon: 'icon-settings',
-      attributes: {hidden: null, who: ['ADMIN', 'COREUSER','SUPERVISOR']},
+      attributes: {hidden: null, who: []},
   
        },
   {
@@ -33,6 +40,13 @@ export const navItems: INavData[] = [
     url: '/router/router',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
+
+  },
+  {
+    name: 'مدیریت رادیو ها',
+    url: '/radio/radio',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN']},
 
   },
   {
@@ -45,13 +59,13 @@ export const navItems: INavData[] = [
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
   },
   {
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER','SUPERVISOR']},
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER','SUPERVISOR','DIRECTRESELLER']},
   },
   {
     name: 'وضعیت پورت ها',

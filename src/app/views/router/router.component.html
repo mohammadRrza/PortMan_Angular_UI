@@ -4,8 +4,8 @@
         <div class="card-header" style="text-align: center;">
           Router Panel
           <span>
-            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Router"
-              tooltipPosition="left" (click)="show_add_router()"></i>
+            <i class="pi pi-cloud-download" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="View Router Backup Error"
+              tooltipPosition="left" (click)="show_router_backup_error()"></i>
           </span>
         </div>
         <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
@@ -50,7 +50,7 @@
                 <ng-template pTemplate="body" let-router>
                     <tr>
                         <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
-                          [queryParams]="{routerId:router.id}">{{router.device_name}}</a></span></td>
+                          [queryParams]="{routerId:router.id}">Router Board</a></span></td>
                         <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
                           [queryParams]="{routerId:router.id}">{{router.device_ip}}</a></span></td>
                         <td class="text-center"><span><a [routerLink]="['/router/routerOperation']"
@@ -80,3 +80,21 @@
       </div>
     </div>
 </div>
+
+<p-dialog header="Router Backup Errors" [(visible)]="view_backup_error_file" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table>
+            <tr *ngFor="let router_backup_error of router_backup_errors">
+              <td>{{router_backup_error.split('|')[0]}}</td>
+              <td>{{router_backup_error.split('|')[1]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

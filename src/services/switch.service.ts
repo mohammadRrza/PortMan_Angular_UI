@@ -73,9 +73,25 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  get_switch_backup_files_name(switch_id): Promise<any> {
+    return this._http
+      .post(this.apiURL+'get_switch_backup_files_name/',{'switch_id':switch_id}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   get_backup_error_text(backup_file_name: string): Promise<any> {
     return this._http
       .post(this.apiURL+'get_backup_error_text/',{'backup_file_name': backup_file_name}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  show_switch_backup_error(): Promise<any> {
+    return this._http
+      .post(this.apiURL+'read_switch_backup_error_files_name/',{}, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

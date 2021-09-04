@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class DefaultLayoutComponent implements OnInit {
   constructor(private router: Router) {
+    console.log(this.username);
 
   }
 

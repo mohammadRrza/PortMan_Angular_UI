@@ -25,10 +25,12 @@ export class RoutersOperationComponent implements OnInit {
     commandRes;
     router_id:string;
     show_backup_files = false;
-    filenames: string;
+    filenames = [];
+    filenames_obj = [];
+    obj_data = {} as dataObj;
     view_backup_file :boolean = false;
     bakup_text: string;
-    get_switch_commands(switch_type_id, limit_row){
+    get_router_commands(switch_type_id, limit_row){
       this.routerCommandSrv.get_router_commands(switch_type_id, limit_row).then(res=>{
         this.router_commands = res;
       });
@@ -58,8 +60,10 @@ export class RoutersOperationComponent implements OnInit {
     }
 
     get_backup_files_name(router_id){
-      this.routerSrv.get_backup_files_name(router_id).then(res=>{
-        this.filenames = res.response;
+      this.routerSrv.get_backup_files_name2(router_id).then(res=>{
+        let obj = JSON.parse(res.response);
+        console.log(obj[0])
+        this.filenames = obj[0];
       });
     }
 
@@ -86,10 +90,13 @@ export class RoutersOperationComponent implements OnInit {
       console.log('onFocused');
   
     }
-    get_router_commands(event){
 
-    }
     ngOnInit(): void {
-      this.get_switch_commands(30,10);
+      this.get_router_commands(30,10);
       }
+}
+
+export interface dataObj {
+  name: string;
+  date: Date;
 }

@@ -59,9 +59,10 @@
                           <p-progressSpinner></p-progressSpinner>
                         </div>
                         <div *ngIf="show_result" class="res_div border">
-
                           <pre>
-                          {{dslam_lcman}}
+                            <div  *ngFor="let shelf of dslam_shelf">
+                              {{shelf}}
+                            </div>
                          </pre>
                         </div>
                       </p-card>
@@ -208,13 +209,28 @@
                   </div>
                 </div>
                 <ng-template #empty_port_list>
+                  <tabset>
+                    <tab>
+                      <ng-template tabHeading><i class="icon-calculator"></i> Get Dslam Ports Automatically</ng-template>
                   <div>
                       <div class="col-md-2 mb-4">
                         <button aria-pressed="true" style="padding-right: 30%;"
                           class="btn btn-block btn-outline-primary active card" type="button"
-                          (click)="show_port_count_func()">Get Dslam Ports</button>
+                          (click)="show_port_count_func()">Get Dslam Ports Automatically</button>
                       </div>                   
                   </div>
+                    </tab>
+                    <tab>
+                      <ng-template tabHeading><i class="icon-calculator"></i> Get Dslam Ports Manually </ng-template>
+                      <div>
+                          <div class="col-md-2 mb-4">
+                            <button aria-pressed="true" style="padding-right: 30%;"
+                              class="btn btn-block btn-outline-primary active card" type="button"
+                              (click)="get_port_count_func()">Get Dslam Ports Manually</button>
+                          </div>                   
+                      </div>
+                    </tab>
+                  </tabset>
                   <div *ngIf="show_port_count">
                     <hr/>
                     <div class="row">

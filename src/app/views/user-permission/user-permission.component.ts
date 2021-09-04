@@ -18,15 +18,23 @@ export class UserPermissionComponent implements OnInit {
   pagination_config;
   users_permissions = [];
   add_permission_profile : boolean = false;
+  view_user_permission_profile: boolean = false;
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
     this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
   }
+
   get_users_permission(page,itemsPerPage) {
     this.usrSrv.get_users_permission(page,itemsPerPage).then(res => {
       this.users_permissions = res.results;
       this.pagination_config.totalItems = res.count;
+    });
+  }
+
+  get_user_permission_profile(permission_profile_id){
+    this.usrSrv.get_user_permission_profile(permission_profile_id).then(res => {
+      this.view_user_permission_profile = true;
     });
   }
 

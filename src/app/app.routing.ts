@@ -66,12 +66,20 @@ export const routes: Routes = [
         loadChildren: () => import('./views/telecom-costs/telecom-costs.module').then(m => m.TelecomCostsModule)
       },
       {
+        path: 'backup-management',
+        loadChildren: () => import('./views/backup-management/backup-management.madules').then(m => m.BackupManagementModule)
+      },
+      {
         path: 'router',
         loadChildren: () => import('./views/router/router.modules').then(m => m.RoutersModule)
       },
       {
         path: 'switch',
         loadChildren: () => import('./views/switch/switch.modules').then(m => m.SwitchModule)
+      },
+      {
+        path: 'radio',
+        loadChildren: () => import('./views/radio/radio.madules').then(m => m.RadioModule)
       },
       {
         path: 'dslam',

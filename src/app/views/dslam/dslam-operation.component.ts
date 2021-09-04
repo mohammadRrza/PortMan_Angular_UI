@@ -53,7 +53,8 @@ export class DslamOperationComponent implements OnInit {
   dslamPort_info;
   dslam_ping;
   profile_adsl_show = false;
-  lcman_show = false;
+  lcman_show : boolean = false;
+  show_shelf : boolean = false;
   public pieChartLabels: string[];
   public pieChartData: number[] = [21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 16, 17, 17, 12, 12, 19, 18, 15, 256, 21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 21, 39, 10, 14, 16, 17, 17, 12, 12, 19, 18, 15, 256, 16, 17, 17, 12, 12, 19, 18, 15, 256];
   public pieChartType: string = 'pie';
@@ -71,7 +72,7 @@ export class DslamOperationComponent implements OnInit {
   fifty_five_precntage = [];
   slot_count: string;
   port_count: string;
-
+  dslam_shelf = [];
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -122,26 +123,33 @@ export class DslamOperationComponent implements OnInit {
   }
 
   run_command(command_obj) {
+    alert(command_obj.name)
     this.show_result = false;
-    var command_str = '{"dslam_id":"' + this.dslam_id + '","params":{"type":"dslam","dslam_id":"' + this.dslam_id + '","is_queue":false},"command":"' + command_obj.name + '"}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     this.dslamSrv.run_command(command_str).then(res => {
+      
       if(command_obj.name = 'profile adsl show'){
         this.profile_adsl_show = true;
         this.dslam_profiles = res.result.result;
         this.show_result = true;
       }
       else if(command_obj.name ='lcman show'){
-        console.log(res.result.result);
         this.lcman_show = true;
         this.dslam_lcman = res.result.result;
+        this.show_result = true;
+      }
+      else if(command_obj.name ='Show Shelf'){
+        this.show_shelf = true;
+        console.log(res.result);
+        this.dslam_shelf = res.result;
         this.show_result = true;
       }
       else{
         this.dslamPort_info = res.result.result;
         this.show_result = true;
       }
-
     });
+    command_str = '';
   }
   getDslamReport(dslam_id) {
     this.dslamSrv.getDslamReport(dslam_id).then(res => {
@@ -248,6 +256,13 @@ export class DslamOperationComponent implements OnInit {
     else {
       this.notifySrv.showError(this.errorHandler.errorMessage, 'Error')
     }
+  }
+
+
+  get_port_count_func(){
+    this.dslamPSrv.get_port_count_func().then(res=>{
+      
+    });
   }
 
   get_last_command(dslam_id) {

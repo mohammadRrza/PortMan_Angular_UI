@@ -395,7 +395,7 @@ export class DslamPortOperationComponent implements OnInit {
                 console.log(this.dslamPortcammand_info);
             }
 
-            this.show_result = true;
+            //this.show_result = true;
         });
     }
 

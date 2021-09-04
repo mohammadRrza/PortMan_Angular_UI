@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  APIEndpoint: 'https://172.28.238.114:2080/api/v1/'
+  APIEndpoint: 'https://portman.pishgaman.net/api/v1/'
 };
