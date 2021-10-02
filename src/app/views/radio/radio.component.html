@@ -4,13 +4,13 @@
         <div class="card-header" style="text-align: center;">
           Radio Panel
           <span>
-            <i class="pi pi-cloud-download" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Switch Backup Error"
-              tooltipPosition="left" (click)="show_switch_backup_error()"></i>
+            <i class="pi pi-cloud-download" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Radio Backup Error"
+              tooltipPosition="left" (click)="show_radio_backup_error()"></i>
           </span>
         </div>
         <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
             <p-header>Radio Search</p-header>
-            <p-table styleClass="p-datatable-striped" #dt1 [value]="switches" selectionMode="single" >
+            <p-table styleClass="p-datatable-striped" #dt1 [value]="radios" selectionMode="single" >
                 <ng-template pTemplate="header">
                   <tr class="row-accessories border" style="margin: 10px;" >
                     <th>
@@ -59,7 +59,7 @@
 
                             <div class="col-md-12" style="padding-left: 40%">
                               <div class="row">
-                                <img src="\assets\img\brand\info_icon.png" (click)="show_radio_info(switch.id)" width="20" pTooltip="Switch info" tooltipPosition="top"
+                                <img src="\assets\img\brand\info_icon.png" (click)="show_radio_info(radio.id)" width="20" pTooltip="Radio info" tooltipPosition="top"
                                   style="cursor: pointer; margin: 5px;" />
                                   <img src="\assets\img\brand\Backup.png" width="20" pTooltip="Download radio Backup"
                                   tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="download_radio_backup(radio.device_ip)" />

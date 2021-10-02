@@ -10,6 +10,7 @@ export class RouterCommandService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'router-command/';
+  apiURL2 = environment.APIEndpoint + 'router/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -23,7 +24,7 @@ export class RouterCommandService {
 
 router_run_command(Router_dto): Promise<any> {
   return this._http
-    .post(this.apiURL+'router_run_command/', Router_dto, this.httpOptions)
+    .post(this.apiURL2+'router_run_command/', Router_dto, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);

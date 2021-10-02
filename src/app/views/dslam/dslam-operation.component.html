@@ -11,13 +11,45 @@
             <tabset>
               <tab>
                 <ng-template tabHeading><i class="icon-calculator"></i> کارت ها </ng-template>
-                <div class="cards" *ngFor="let slot of dslamInfo.slots">
-                  <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
-                    (click)="getTemperature(slot)">slot {{slot}}</button>
+                <div class="cards" *ngFor="let slot of dslamBoard">
+                  <div *ngIf = "slot.card_status == 'active'">
+                    <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="getTemperature(slot.card_number)">slot {{slot.card_number}}</button>
+                  </div>
+                  <div *ngIf = "slot.card_status != 'active'">
+                    <button aria-pressed="true" class="btn btn-block btn-secondary active" style="cursor: no-drop;" type="button"
+                     pTooltip="Inactive" tooltipPosition="top" title="">slot {{slot.card_number}}</button>
                 </div>
-                <div class="row">
+              </div>
+                <hr/>
+                <div class="row" style="margin: 5px; direction: ltr;">
+                  <table *ngIf="slot_obj" class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <td>Cart Type</td>
+                        <td>Firmware Version</td>
+                        <td>Hardware Version</td>
+                        <td>Mac Address</td>
+                        <td>Serial Number</td>
+                        <td>Total Ports | up | down</td>
+                        <td>Uptime</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{slot_obj.card_type}}</td>
+                        <td>{{slot_obj.fw_version}}</td>
+                        <td>{{slot_obj.hw_version}}</td>
+                        <td>{{slot_obj.mac_address}}</td>
+                        <td>{{slot_obj.serial_number}}</td>
+                        <td>
+                          {{slot_obj.total_ports_count}}|{{slot_obj.up_ports_count}}
+                      </td>
+                      <td>{{slot_obj.uptime}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <div class="card-body col-md-4" *ngFor="let temperature of temperatures">
-
                     <circle-progress *ngIf="showSpinner" [percent]="temperature.value" [radius]="100"
                       [outerStrokeWidth]="16" [innerStrokeWidth]="8" [outerStrokeColor]="'#78C000'"
                       [innerStrokeColor]="'#C7E596'" [animation]="true" [showSubtitle]="false" [showUnits]="false"

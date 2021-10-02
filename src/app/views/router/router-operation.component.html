@@ -14,7 +14,7 @@
                         <div class="ng-autocomplete col-md-3" style="direction: ltr;">
                           <ng-autocomplete [data]="router_commands" [searchKeyword]="keyword" placeHolder="Enter the Command"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='get_router_commands($event)' historyIdentifier="router_commands" [itemTemplate]="itemTemplate"
+                             historyIdentifier="router_commands" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
       

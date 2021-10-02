@@ -25,10 +25,13 @@ export class SwitchOperationComponent implements OnInit {
     comm_item = {};
     keyword = 'switch_command_text';
     filenames:string[];
+    vb_filenames:string[];
     show_result: boolean = false;
     show_backup_files: boolean = false;
     view_backup_file:boolean = false;
     bakup_text:string;
+    show_show_vlan_brief_files:boolean = false;
+    view_vlan_brif_file :boolean = false;
 
     get_switch_commands(switch_type_id, limit_row){
       this.SwitchCommandSrv.get_switch_commands(4, 10).then(res=>{
@@ -38,12 +41,22 @@ export class SwitchOperationComponent implements OnInit {
     selectEvent(item) {
       this.show_result = true;
       this.comm_item = item;
+      console.log(item.switch_command_text);
       if(item.switch_command_text == 'Get BackUp'){
         this.show_backup_files = true;
+        this.show_show_vlan_brief_files = false
         this.get_switch_backup_files_name(this.switch_id);
+      }
+      else if(item.switch_command_text == 'show vlan brief'){
+        this.show_backup_files = true;
+        this.show_show_vlan_brief_files = true
+        this.show_backup_files = false;
+        this.get_switch_show_vlan_brief_files_name(this.switch_id);
       }
       else{
         this.show_backup_files = false;
+        this.show_show_vlan_brief_files = false;
+
       }
   
     }
@@ -57,6 +70,13 @@ export class SwitchOperationComponent implements OnInit {
       });
     }
 
+    get_switch_show_vlan_brief_files_name(switch_id: number){
+      this.SwitchSrv.get_switch_show_vlan_brief_files_name(switch_id).then(res=>{
+        let obj = JSON.parse(res.response);
+        this.vb_filenames = obj[0];
+      });
+    }
+
     onChangeSearch(search: string) {
   
     }
@@ -64,6 +84,12 @@ export class SwitchOperationComponent implements OnInit {
     onFocused(e) {
   
     }
+
+    view_vlan_brief(){
+
+      this.view_vlan_brif_file = true;
+    }
+
     switch_run_command(switch_id, command, params){
       this.show_result = false;
       this.switch_dto = new SwitchDTO();
@@ -80,11 +106,20 @@ export class SwitchOperationComponent implements OnInit {
 
     }
     view_backup(filename){
-      this.view_backup_file = true;
       this.SwitchSrv.download_backup_file(filename).then(res=>{
          this.bakup_text = res.response;
       });
+      this.view_backup_file = true;
     }
+
+    view_vlan_brief_(vlan_brief_file_name){
+      this.SwitchSrv.download_view_vlan_brief_file(vlan_brief_file_name).then(res=>{
+         this.bakup_text = res.response;
+      });
+      this.view_backup_file = true;
+    }
+
+    
     ngOnInit(): void {
       }
 }

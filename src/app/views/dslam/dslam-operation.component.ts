@@ -73,6 +73,7 @@ export class DslamOperationComponent implements OnInit {
   slot_count: string;
   port_count: string;
   dslam_shelf = [];
+  slot_obj;
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -169,9 +170,7 @@ export class DslamOperationComponent implements OnInit {
   }
   getDslamBoard(dslam_id) {
     this.dslamSrv.getDslamBoard(dslam_id).then(res => {
-      this.dslamBoard = res;
-
-    },
+      this.dslamBoard = res;    },
       (error) => {
         this.show_errors(error);
       });
@@ -179,7 +178,11 @@ export class DslamOperationComponent implements OnInit {
   getTemperature(slot_id) {
     let slot = this.dslamBoard.find(item => item.card_number === slot_id);
     this.temperatures = slot.temperature;
-    console.log(slot);
+    this.slot_obj = slot;
+    console.log(this.slot_obj);
+  }
+  get_slot_info(slot_id){
+
   }
 
   get_dslam_current_icmp_result(dslam_id) {

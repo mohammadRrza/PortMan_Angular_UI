@@ -41,6 +41,13 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+  get_switch_show_vlan_brief_files_name(switch_id): Promise<any> {
+    return this._http
+      .post(this.apiURL+'get_switch_show_vlan_brief_files_name/', {'switch_id':switch_id} , this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 
   switch_run_command(Switch_dto): Promise<any> {
     return this._http
@@ -97,4 +104,11 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
   
+  download_view_vlan_brief_file(vlan_brief_file_name: string): Promise<any> {
+    return this._http
+      .post(this.apiURL+'download_view_vlan_brief_file/', {'vlan_brief_file_name':vlan_brief_file_name}, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 }

@@ -39,7 +39,6 @@ export class DslamPortComponent implements OnInit {
   show_dslam_port_info(port_id){
     this.displayMaximizable = true;
     this.portobj = this.listDslamPotrs.find(x => x.id === port_id);
-     console.log(this.portobj);
   }
   get_dslam_port_info(){
     

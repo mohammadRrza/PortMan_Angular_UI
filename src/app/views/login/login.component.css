@@ -1,5 +1,8 @@
 .background{
-    background-color: #cccccc;
+    background: url(../../../assets/img/background.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .border-info {
@@ -16,3 +19,4 @@
     box-shadow: -4px 4px 8px 0px #2d1dad;
 
     }
+    

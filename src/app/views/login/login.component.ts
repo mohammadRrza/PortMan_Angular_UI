@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/router/router']);
       }
       else{
-        this.router.navigate(['/dslam/dslam']);
+        this.router.navigate(['/router/router']);
       }
     });
   }

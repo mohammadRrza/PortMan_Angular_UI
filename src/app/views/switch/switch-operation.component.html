@@ -78,6 +78,30 @@
                               </ng-template>
                           </p-table>
                       </div>
+                      <div class="card-body" class="border" style="margin: 10px;" *ngIf="show_show_vlan_brief_files" >
+                        <p-table styleClass="p-datatable-striped" #dt1 [value]="vb_filenames" selectionMode="single">
+                            <ng-template pTemplate="header">         
+                              <tr class="row-accessories" style="text-align:center;">
+                                <th pSortableColumn="file_name" style="text-align:center;">Name<p-sortIcon field="file_name" style="text-align: center;"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="file_date" style="text-align:center;">Date<p-sortIcon field="file_date" style="text-align: center;"></p-sortIcon>
+                                </th>
+                                <th style="text-align:center;">File
+                                </th>
+                              </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-vb_filename>
+                                <tr>
+                                  <td class="text-center" style="direction: ltr;">{{vb_filename.file_name}}</td>
+                                  <td class="text-center"> {{vb_filename.file_date}}</td>
+                                  <td style="text-align:center;">
+                                    <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Download Vlan Brief File"
+                                    tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_vlan_brief_(vb_filename.file_name)" download />
+                                </td>
+                              </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
                     </tab>
                 </tabset>
             </div>
@@ -88,7 +112,21 @@
 </div>
 
 
-<p-dialog header="Switch Backup" [(visible)]="view_backup_file" [modal]="true" [style]="{width: '30vw'}"
+<p-dialog header="show Vlan Brief" [(visible)]="view_backup_file" [modal]="true" [style]="{width: '30vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+      <pre>
+        {{bakup_text}}
+      </pre>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Switch Backup" [(visible)]="view_vlan_brif_file" [modal]="true" [style]="{width: '30vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
   <div class="border-info">
     <div class="row">

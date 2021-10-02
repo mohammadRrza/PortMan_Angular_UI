@@ -30,6 +30,8 @@ export class RoutersOperationComponent implements OnInit {
     obj_data = {} as dataObj;
     view_backup_file :boolean = false;
     bakup_text: string;
+
+    
     get_router_commands(switch_type_id, limit_row){
       this.routerCommandSrv.get_router_commands(switch_type_id, limit_row).then(res=>{
         this.router_commands = res;
@@ -39,6 +41,10 @@ export class RoutersOperationComponent implements OnInit {
     onChangeSearch(search: string) {
       console.log(search);
   
+    }
+
+    inputFocused(event){
+      console.log(event);
     }
 
     view_backup(filename){
