@@ -6,63 +6,71 @@
   <form>
     <div class="row">
       <div class="col-md-6">
-        <span>
-          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
+        <span *ngIf = 'dslam_edit.telecom_center_info'>
+          <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text">
 
           </p-autoComplete>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.name">
-          <label for="float-input">Dslam Name</label>
+          <span *ngIf = 'dslam_edit.telecom_center_info'>
+            <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info" [ngModelOptions]="{standalone: true}" [suggestions]="listTelecom"
+              (completeMethod)="getTelecomCenterByCityId(dslam_edit.telecom_center_info.city)" [dropdown]="true" field="name" dataKey="id">
+            </p-autoComplete>
+          </span>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.get_snmp_community">
+          <input id="float-input" [(ngModel)]="dslam_edit.get_snmp_community" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.get_snmp_community">
           <label for="float-input">Get Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.set_snmp_community">
+          <input id="float-input" [(ngModel)]="dslam_edit.set_snmp_community" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.set_snmp_community">
           <label for="float-input">Set Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.telnet_username">
+          <input id="float-input" [(ngModel)]="dslam_edit.telnet_username" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.telnet_username">
           <label for="float-input">Telnet Username</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.ip">
+          <input id="float-input" [(ngModel)]="dslam_edit.ip" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.ip">
           <label for="float-input">IP</label>
         </span>
         <hr />
       </div>
       <div class="col-md-6">
-        <span>
-          <p-autoComplete [(ngModel)]="city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
+        <span *ngIf = 'dslam_edit.telecom_center_info'>
+          <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
             (completeMethod)="get_city_by_name($event)" [dropdown]="true" field="name" dataKey="id">
           </p-autoComplete>
         </span>
+        <hr/>
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" [(ngModel)]="dslam_edit.name" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.name">
+          <label for="float-input">Dslam Name</label>
+        </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.snmp_port">
+          <input id="float-input" [(ngModel)]="dslam_edit.snmp_port" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.snmp_port">
           <label for="float-input">Snmp Port</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.snmp_timeout">
+          <input id="float-input" [(ngModel)]="dslam_edit.snmp_timeout" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.snmp_timeout">
           <label for="float-input">Snmp Timeout</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.telnet_password">
+          <input id="float-input" [(ngModel)]="dslam_edit.telnet_password" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.telnet_password">
           <label for="float-input">Telnet Password</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText [value]="dslam_edit.fqdn">
+          <input id="float-input" [(ngModel)]="dslam_edit.fqdn" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.fqdn">
           <label for="float-input">Fqdn</label>
         </span>
         <hr />
@@ -71,7 +79,7 @@
   </form>
 </div>
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="displayMaximizable=false" label="Edit" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="apply_edit(dslam_edit)" label="Edit" styleClass="p-button-text"></p-button>
   </ng-template>
 </p-dialog>
 

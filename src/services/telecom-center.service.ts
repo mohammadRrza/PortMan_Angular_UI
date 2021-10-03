@@ -43,6 +43,14 @@ getAllTelecomCenters(page,page_size): Promise<any> {
                 .then(res => res)
                 .catch(this.handleError);   
              }
+getTelecomCenterByCityId(city_id): Promise<any> {
+    return this._http
+    .get(this.apiURL + '?search_city_id='+city_id, this.httpOptions)
+    .toPromise()
+    .then(res => res)
+    .catch(this.handleError);   
+}
+
 
 private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 

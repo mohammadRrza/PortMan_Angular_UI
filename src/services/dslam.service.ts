@@ -26,7 +26,6 @@ private handleError(error: any): Promise<any> {
   }
   //services
   get_all_dslams(page,itemsPerPage): Promise<any> {
-    console.log(this.token);
     return this._http
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
       .toPromise()
@@ -94,6 +93,16 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+  
+  apply_edit_dslam(dslam_id, paramstr):Promise<any>{
+    let param_obj = JSON.parse(paramstr);
+    return this._http
+    .put(this.apiURL + dslam_id+'/', param_obj, this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   show_dslam_info(dslam_id):Promise<any>{
     return this._http
     .get(this.apiURL + dslam_id+'/', this.httpOptions)

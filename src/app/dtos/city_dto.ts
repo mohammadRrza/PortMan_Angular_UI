@@ -15,3 +15,12 @@ export interface ci_city {
     parent
     text
 }
+
+export interface telecoms {
+    abb
+    english_name
+    id
+    name
+    parent
+    text
+}

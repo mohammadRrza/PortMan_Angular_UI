@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DslamService } from '../../../services/dslam.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { CityService } from '../../../services/city.service';
+import { TelecomCenterService } from '../../../services/telecom-center.service';
+
 import { UserService } from '../../../services/user.service';
-import { porv_city, ci_city } from '../../dtos/city_dto';
+import { porv_city, ci_city, telecoms } from '../../dtos/city_dto';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
@@ -43,6 +45,7 @@ export class DslamComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private citySrv: CityService,
     private usrSrv: UserService,
+    private telecomSrv:TelecomCenterService,
     fb: FormBuilder
   ) {
     this.form = fb.group({
@@ -79,6 +82,7 @@ export class DslamComponent implements OnInit {
   name: porv_city;
   c_name: ci_city
   listCites: porv_city[] = [];
+  listTelecom: telecoms[] = [];
   displayMaximizable: boolean = false;
   displayMaximizable2: boolean = false;
   displayMaximizable3: boolean = false;
@@ -204,6 +208,27 @@ export class DslamComponent implements OnInit {
       this.listCites = prov_res.results;
     });
   }
+
+  getTelecomCenterByCityId(city_id){
+    console.log(city_id);
+    this.telecomSrv.getTelecomCenterByCityId(city_id).then(telecom_res => {
+      this.listTelecom = telecom_res.results;
+    });
+  }
+
+  apply_edit(){
+    let param_str = '{"name":"'+this.dslam_edit.name+'","telecom_center":'+this.dslam_edit.telecom_center_info.id+',\
+    "dslam_type":'+this.dslam_edit.dslam_type_info.id+',"ip":"'+this.dslam_edit.ip+'","active":'+this.dslam_edit.active+',\
+    "status":"'+this.dslam_edit.status+'","conn_type":"'+this.dslam_edit.conn_type+'","get_snmp_community":"'+this.dslam_edit.get_snmp_community+'",\
+    "set_snmp_community":"'+this.dslam_edit.set_snmp_community+'","telnet_username":"'+this.dslam_edit.telnet_username+'",\
+    "telnet_password":"'+this.dslam_edit.telnet_password+'","snmp_port":'+this.dslam_edit.snmp_port+',\
+    "snmp_timeout":'+this.dslam_edit.snmp_timeout+',"fqdn":"'+this.dslam_edit.fqdn+'"}';
+    this.dslamSrv.apply_edit_dslam(this.dslam_edit.id, param_str).then(res=>{
+      this.edit_dslam(this.dslam_edit.id);
+      this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    });
+  }
+  
   get_permission(){
     this.usrSrv.get_permission().then(perm_res => {
       this.permission = perm_res;
