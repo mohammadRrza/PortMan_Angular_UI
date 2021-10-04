@@ -87,77 +87,77 @@
 <!--ADD DSLAM Dialog---------------------------------------------------------------->
 <p-dialog header="Add DSLAM" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '30vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
-  <form [formGroup]="form" #f="ngForm" (ngSubmit)="add_dslam(this.form)">
+  <form [formGroup]="add_dslam_from" (ngSubmit)="apply_add_dslam()">
     <div class="row">
       <div class="col-md-6">
         <span>
-          <p-autoComplete [(ngModel)]="porv_city" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="name">
-
+          <p-autoComplete formControlName="province" [suggestions]="listProvince"
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text">
           </p-autoComplete>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="dslam_Name">
-          <label for="float-input">Dslam Name</label>
+            <p-autoComplete formControlName="telecom" [suggestions]="listTelecom"
+              (completeMethod)="getTelecomCenterByCityId(dslam_edit.telecom_center_info.city)" [dropdown]="true" field="name" dataKey="id">
+            </p-autoComplete>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="get_snmp_community">
+          <input id="float-input" formControlName="get_snmp_community"  type="text" pInputText>
           <label for="float-input">Get Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="snmp_port">
-          <label for="float-input">Snmp Port</label>
+          <input id="float-input" formControlName="set_snmp_community" type="text" pInputText>
+          <label for="float-input">Set Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="telnet_username">
+          <input id="float-input" formControlName="telnet_username" type="text" pInputText>
           <label for="float-input">Telnet Username</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="ip">
+          <input id="float-input" formControlName="ip" type="text" pInputText>
           <label for="float-input">IP</label>
         </span>
         <hr />
       </div>
       <div class="col-md-6">
-        <span>
-          <p-autoComplete [(ngModel)]="ci_city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
-            (completeMethod)="get_city_by_name($event)" [dropdown]="true" field="name" dataKey="id">
+          <p-autoComplete 
+            (completeMethod)="get_city_by_name($event)" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
           </p-autoComplete>
+        <hr/>
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" formControlName="dslam_name" id="dslam_name" name="dslam_name" type="text" pInputText>
+          <label for="float-input">Dslam Name</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="set_snmp_community">
-          <label for="float-input">Set Snmp Community</label>
+          <input id="float-input"  formControlName="snmp_port" type="text" pInputText>
+          <label for="float-input">Snmp Port</label>
         </span>
         <hr />
-
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="snmp_timeout">
+          <input id="float-input" formControlName="snmp_timeout" type="text" pInputText>
           <label for="float-input">Snmp Timeout</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="password" pInputText formControlName="telnet_password">
+          <input id="float-input" formControlName="telnet_password" type="text" pInputText>
           <label for="float-input">Telnet Password</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" type="text" pInputText formControlName="fqdn">
+          <input id="float-input" formControlName="fqdn" type="text" pInputText>
           <label for="float-input">Fqdn</label>
         </span>
         <hr />
       </div>
     </div>
-    <button type="submit" (click)="displayMaximizable2=false;">Submit</button>
-    <ng-template pTemplate="footer">
-    </ng-template>
-  </form>
+    <p-button icon="pi pi-check" type="submit" label="Add Dslam" styleClass="p-button-text"></p-button>
 
+  </form>
 </p-dialog>
 
 

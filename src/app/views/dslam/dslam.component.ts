@@ -7,7 +7,6 @@ import { TelecomCenterService } from '../../../services/telecom-center.service';
 import { UserService } from '../../../services/user.service';
 import { porv_city, ci_city, telecoms } from '../../dtos/city_dto';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { navItems } from '../../_nav';
 import { Router } from '@angular/router';
@@ -22,22 +21,7 @@ export class DslamComponent implements OnInit {
   form: FormGroup;
   public navItems = navItems;
 
-  f_dslam_Name = new FormControl("", Validators.required);
-  f_dslam_type = new FormControl("", Validators.required);
-  f_get_snmp_community = new FormControl("", Validators.required);
-  f_set_snmp_community = new FormControl("", Validators.required);
-  f_snmp_port = new FormControl("", Validators.required);
-  f_snmp_timeout = new FormControl("", Validators.required);
-  f_telnet_username = new FormControl("", Validators.required);
-  f_telnet_password = new FormControl("", Validators.required);
-  f_ip = new FormControl("", Validators.required);
-  f_province = new FormControl("", Validators.required);
-  f_city = new FormControl("", Validators.required);
-  f_telecom = new FormControl("", Validators.required);
-  f_connection_type = new FormControl("", Validators.required);
-  f_fqdn = new FormControl("", Validators.required);
-  f_dslam_long = new FormControl("", Validators.required);
-  f_dslam_lat = new FormControl("", Validators.required);
+
 
   constructor(private router: Router,
     private dslamSrv: DslamService,
@@ -46,25 +30,25 @@ export class DslamComponent implements OnInit {
     private citySrv: CityService,
     private usrSrv: UserService,
     private telecomSrv:TelecomCenterService,
-    fb: FormBuilder
+    private formBuilder: FormBuilder
   ) {
-    this.form = fb.group({
-      "dslam_Name": this.f_dslam_Name,
-      "dslam_type":this.f_dslam_type,
-      "get_snmp_community":this.f_get_snmp_community,
-      "set_snmp_community":this.f_set_snmp_community,
-      "snmp_port":this.f_snmp_port,
-      "snmp_timeout":this.f_snmp_timeout,
-      "telnet_username":this.f_telnet_username,
-      "telnet_password":this.f_telnet_password,
-      "ip":this.f_ip,
-      "province":this.f_province,
-      "city":this.f_city,
-      "telecom":this.f_telecom,
-      "connection_type":this.f_connection_type,
-      "fqdn":this.f_fqdn,
-      "dslam_long":this.f_dslam_long,
-      "dslam_lat":this.f_dslam_lat,
+    this.add_dslam_from = this.formBuilder.group({
+      dslam_name : new FormControl("", Validators.required),
+      dslam_type : new FormControl("", Validators.required),
+      get_snmp_community : new FormControl("", Validators.required),
+      set_snmp_community : new FormControl("", Validators.required),
+      snmp_port : new FormControl("", Validators.required),
+      snmp_timeout : new FormControl("", Validators.required),
+      telnet_username : new FormControl("", Validators.required),
+      telnet_password : new FormControl("", Validators.required),
+      ip : new FormControl("", Validators.required),
+      province : new FormControl("", Validators.required),
+      city : new FormControl("", Validators.required),
+      telecom : new FormControl("", Validators.required),
+      connection_type : new FormControl("", Validators.required),
+      fqdn : new FormControl("", Validators.required),
+      dslam_long : new FormControl("", Validators.required),
+      dslam_lat : new FormControl("", Validators.required)
     });
     this.pagination_config = {
       itemsPerPage: 10,
@@ -73,6 +57,7 @@ export class DslamComponent implements OnInit {
     };
   }
   search_str = '';
+  add_dslam_from;
   dslam_info = '';
   pagination_config: any;
   listDslams = [];
@@ -90,6 +75,12 @@ export class DslamComponent implements OnInit {
   permission = [];
   progressSpinner: boolean = false;
   user_permission;
+  dslam_add = {};
+
+  get dslam_name() {
+    return this.add_dslam_from.get('dslam_name');
+  }
+
   pageChange_srch(page) {
     console.log(page);
     this.pagination_config.currentPage = page;
@@ -116,8 +107,14 @@ export class DslamComponent implements OnInit {
 
 
 
-  add_dslam() {
-    console.log(this.form.value);
+  apply_add_dslam(param) {
+    console.log(this.add_dslam_from.value);
+    let paramstr = '{"name":"adasasd","telecom_center":90053,"dslam_type":2,"ip":"192.18.1.1","active":true,"status":"new","conn_type":"","get_snmp_community":"asdasdasd","set_snmp_community":"asd","telnet_username":"sdfsdf","telnet_password":"asdasd","snmp_port":"1515","snmp_timeout":"161","fqdn":"adsafasdadasd"}';
+    console.log(param);
+return
+    this.dslamSrv.apply_add_dslam(paramstr).then(res=>{
+      this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    });
   }
   paginate(event) {
     if (this.dslam_info == '') {

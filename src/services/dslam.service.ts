@@ -93,6 +93,16 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  apply_add_dslam(paramstr):Promise<any>{
+    let param_obj = JSON.parse(paramstr);
+    return this._http
+    .post(this.apiURL+'/', param_obj, this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   
   apply_edit_dslam(dslam_id, paramstr):Promise<any>{
     let param_obj = JSON.parse(paramstr);
