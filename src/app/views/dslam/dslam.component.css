@@ -23,6 +23,16 @@
         font-size: smaller;
       }
 
+      .is-invalid-autoComplete{
+        background-color: darkorchid;
+      }
+
+      .is-invalid{
+        border: rgb(241, 8, 8);
+        border-style: solid;
+        border-radius: 5px;
+      }
+
       .progressSpinner{
         position: absolute; 
         z-index: 1000; 

@@ -91,72 +91,90 @@
     <div class="row">
       <div class="col-md-6">
         <span>
-          <p-autoComplete formControlName="province" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text">
+          <p-autoComplete formControlName="province"  placeholder="Province" [suggestions]="listProvince"
+            (completeMethod)="get_province_by_name($event)" (onSelect)="get_city_by_name($event.id)" dataKey="id"  [dropdown]="true" field="text">
           </p-autoComplete>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-            <p-autoComplete formControlName="telecom" [suggestions]="listTelecom"
-              (completeMethod)="getTelecomCenterByCityId(dslam_edit.telecom_center_info.city)" [dropdown]="true" field="name" dataKey="id">
+            <p-autoComplete formControlName="telecom" placeholder="TelecomCenter" [suggestions]="listTelecom"
+              (completeMethod)="getTelecomCenterByCityId($event)" [dropdown]="true" field="name" dataKey="id">
             </p-autoComplete>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="get_snmp_community"  type="text" pInputText>
+          <input id="float-input" formControlName="get_snmp_community" [ngClass]="{ 'is-invalid': submitted && f.get_snmp_community.errors }"  type="text" pInputText>
           <label for="float-input">Get Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="set_snmp_community" type="text" pInputText>
+          <input id="float-input" formControlName="set_snmp_community" [ngClass]="{ 'is-invalid': submitted && f.set_snmp_community.errors }" type="text" pInputText>
           <label for="float-input">Set Snmp Community</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="telnet_username" type="text" pInputText>
+          <input id="float-input" formControlName="telnet_username" [ngClass]="{ 'is-invalid': submitted && f.telnet_username.errors }" type="text" pInputText>
           <label for="float-input">Telnet Username</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="ip" type="text" pInputText>
+          <input id="float-input" formControlName="ip" [ngClass]="{ 'is-invalid': submitted && f.ip.errors }" type="text" pInputText>
           <label for="float-input">IP</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" formControlName="dslam_lat" type="text" [ngClass]="{ 'is-invalid': submitted && f.dslam_lat.errors }" pInputText>
+          <label for="float-input">Latitude</label>
         </span>
         <hr />
       </div>
       <div class="col-md-6">
           <p-autoComplete 
-            (completeMethod)="get_city_by_name($event)" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
+            (completeMethod)="get_city_by_id($event)" placeholder="City Name" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
           </p-autoComplete>
         <hr/>
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="dslam_name" id="dslam_name" name="dslam_name" type="text" pInputText>
+          <input id="float-input" formControlName="dslam_name" [ngClass]="{ 'is-invalid': submitted && f.dslam_name.errors }" id="dslam_name" name="dslam_name" type="text" pInputText>
           <label for="float-input">Dslam Name</label>
+          <div *ngIf="submitted && f.dslam_name.errors" class="invalid-feedback">
+            <div *ngIf="f.dslam_name.errors.required"></div>
+        </div>
         </span>
+
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input"  formControlName="snmp_port" type="text" pInputText>
+          <input id="float-input"  formControlName="snmp_port" [ngClass]="{ 'is-invalid': submitted && f.snmp_port.errors }" type="text" pInputText>
           <label for="float-input">Snmp Port</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="snmp_timeout" type="text" pInputText>
+          <input id="float-input" formControlName="snmp_timeout" [ngClass]="{ 'is-invalid': submitted && f.snmp_timeout.errors }" type="text" pInputText>
           <label for="float-input">Snmp Timeout</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="telnet_password" type="text" pInputText>
+          <input id="float-input" formControlName="telnet_password" [ngClass]="{ 'is-invalid': submitted && f.telnet_password.errors }" type="text" pInputText>
           <label for="float-input">Telnet Password</label>
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
-          <input id="float-input" formControlName="fqdn" type="text" pInputText>
+          <input id="float-input" formControlName="fqdn" type="text" [ngClass]="{ 'is-invalid': submitted && f.fqdn.errors }" pInputText>
           <label for="float-input">Fqdn</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" formControlName="dslam_long" type="text" [ngClass]="{ 'is-invalid': submitted && f.dslam_long.errors }" pInputText>
+          <label for="float-input">Longitude</label>
         </span>
         <hr />
       </div>
     </div>
     <p-button icon="pi pi-check" type="submit" label="Add Dslam" styleClass="p-button-text"></p-button>
-
+    <p-button icon="pi pi-check" type="submit" label="Clear Form" (click)="onReset()" styleClass="p-button-text"></p-button>
+    <div *ngIf="add_dslam_from.invalid && submitted">
+      <hr />
+      <p style="color: red;">Please Complete Required Firlds.</p>
+    </div>
   </form>
 </p-dialog>
 

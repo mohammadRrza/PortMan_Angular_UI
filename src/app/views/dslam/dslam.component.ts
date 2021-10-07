@@ -76,7 +76,8 @@ export class DslamComponent implements OnInit {
   progressSpinner: boolean = false;
   user_permission;
   dslam_add = {};
-
+  submitted = false;
+  prov_id;
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -86,6 +87,9 @@ export class DslamComponent implements OnInit {
     this.pagination_config.currentPage = page;
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
+
+  get f() { return this.add_dslam_from.controls; }
+
 
   edit_dslam(dslam_id) {
     this.dslamSrv.edit_dslam(dslam_id).then(res => {
@@ -108,9 +112,12 @@ export class DslamComponent implements OnInit {
 
 
   apply_add_dslam(param) {
-    console.log(this.add_dslam_from.value);
+    this.submitted = true;
+    console.log(this.add_dslam_from.value)
+    if (this.add_dslam_from.invalid) {
+      return;
+    }
     let paramstr = '{"name":"adasasd","telecom_center":90053,"dslam_type":2,"ip":"192.18.1.1","active":true,"status":"new","conn_type":"","get_snmp_community":"asdasdasd","set_snmp_community":"asd","telnet_username":"sdfsdf","telnet_password":"asdasd","snmp_port":"1515","snmp_timeout":"161","fqdn":"adsafasdadasd"}';
-    console.log(param);
 return
     this.dslamSrv.apply_add_dslam(paramstr).then(res=>{
       this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
@@ -166,6 +173,11 @@ return
 
   }
 
+  onReset() {
+    this.submitted = false;
+    this.add_dslam_from.reset();
+}
+
   remove_dslam(dslam_id) {
     this.confirmationService.confirm({
         message: 'Are you sure that you want to delete this Dslam?',
@@ -200,14 +212,23 @@ return
     });
   }
 
-  get_city_by_name(event) {
-    this.citySrv.get_city_by_name(event.query).then(prov_res => {
-      this.listCites = prov_res.results;
+  get_city_by_name(parent_id) {
+    this.prov_id = parent_id
+    console.log("get_city_by_name"+"  "+parent_id)
+    this.citySrv.get_city_by_name(parent_id).then(city_res => {
+      this.listCites = city_res.results;
+    });
+  }
+
+
+  get_city_by_id(event) {
+    this.citySrv.get_city_by_id(this.prov_id, event.query).then(city_res => {
+      this.listCites = city_res.results;
     });
   }
 
   getTelecomCenterByCityId(city_id){
-    console.log(city_id);
+    console.log(city_id.query);
     this.telecomSrv.getTelecomCenterByCityId(city_id).then(telecom_res => {
       this.listTelecom = telecom_res.results;
     });

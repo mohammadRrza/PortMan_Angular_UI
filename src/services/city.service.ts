@@ -47,9 +47,16 @@ httpOptions = {
       .then(res => res)
       .catch(this.handleError);
   }
-  get_city_by_name(city_name): Promise<any> {
+  get_city_by_name(parent_id): Promise<any> {
     return this._http
-      .get(this.apiURL+ "?parent=undefined&city_name="+city_name, this.httpOptions)
+      .get(this.apiURL+ "?parent="+parent_id, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  get_city_by_id(parent_id, city_srch): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "?parent="+parent_id+"&city_name="+city_srch, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
