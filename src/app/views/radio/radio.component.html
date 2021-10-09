@@ -76,3 +76,21 @@
         </div>
     </div>
     </div>
+
+    <p-dialog header="Router Backup Errors" [(visible)]="view_backup_error_file" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <table>
+            <tr *ngFor="let radio_backup_error of radio_backup_errors">
+              <td>{{radio_backup_error.split('|')[0]}}</td>
+              <td>{{radio_backup_error.split('|')[1]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

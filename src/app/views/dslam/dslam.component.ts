@@ -48,7 +48,8 @@ export class DslamComponent implements OnInit {
       connection_type : new FormControl("", Validators.required),
       fqdn : new FormControl("", Validators.required),
       dslam_long : new FormControl("", Validators.required),
-      dslam_lat : new FormControl("", Validators.required)
+      dslam_lat : new FormControl("", Validators.required),
+      enabled : new FormControl("", Validators.required),
     });
     this.pagination_config = {
       itemsPerPage: 10,

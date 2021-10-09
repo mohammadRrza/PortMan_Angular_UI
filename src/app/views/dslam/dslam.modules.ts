@@ -14,6 +14,7 @@ import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import {InputSwitchModule} from 'primeng/inputswitch';
 import {InputTextModule} from 'primeng/inputtext';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TooltipModule} from 'primeng/tooltip';
@@ -39,6 +40,7 @@ import {CardModule} from 'primeng/card';
         DialogModule,
         AutocompleteLibModule,
         FieldsetModule,
+        InputSwitchModule,
         ButtonModule,
         ProgressSpinnerModule,
         InputTextModule,

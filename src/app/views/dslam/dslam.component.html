@@ -1,6 +1,6 @@
 
 <!--EDIT DSLAM Dialog---------------------------------------------------------------->
-<p-dialog header="DLSMA Edit" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '30vw'}"
+<p-dialog header="DLSMA Edit" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
   <div class="border-info" style="padding: 10px;">
   <form>
@@ -8,7 +8,8 @@
       <div class="col-md-6">
         <span *ngIf = 'dslam_edit.telecom_center_info'>
           <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text">
+            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text"
+            (onSelect)="get_city_by_name($event.id)">
 
           </p-autoComplete>
         </span>
@@ -16,7 +17,8 @@
         <span class="p-float-label" style="margin-top: 20px;">
           <span *ngIf = 'dslam_edit.telecom_center_info'>
             <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info" [ngModelOptions]="{standalone: true}" [suggestions]="listTelecom"
-              (completeMethod)="getTelecomCenterByCityId(dslam_edit.telecom_center_info.city)" [dropdown]="true" field="name" dataKey="id">
+              (completeMethod)="getTelecomCenterByCityId(dslam_edit.telecom_center_info.city)" [dropdown]="true" field="name" dataKey="id" 
+              (onSelect)="get_city_by_name($event.id)">
             </p-autoComplete>
           </span>
         </span>
@@ -74,6 +76,8 @@
           <label for="float-input">Fqdn</label>
         </span>
         <hr />
+        <p-inputSwitch></p-inputSwitch>
+        <hr />
       </div>
     </div>
   </form>
@@ -85,7 +89,7 @@
 
 
 <!--ADD DSLAM Dialog---------------------------------------------------------------->
-<p-dialog header="Add DSLAM" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '30vw'}"
+<p-dialog header="Add DSLAM" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
   <form [formGroup]="add_dslam_from" (ngSubmit)="apply_add_dslam()">
     <div class="row">
@@ -166,6 +170,9 @@
           <input id="float-input" formControlName="dslam_long" type="text" [ngClass]="{ 'is-invalid': submitted && f.dslam_long.errors }" pInputText>
           <label for="float-input">Longitude</label>
         </span>
+        <hr />
+        <p-inputSwitch formControlName="enabled"></p-inputSwitch>
+
         <hr />
       </div>
     </div>

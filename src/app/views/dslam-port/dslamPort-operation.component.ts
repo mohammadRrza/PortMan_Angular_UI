@@ -385,17 +385,8 @@ export class DslamPortOperationComponent implements OnInit {
         this.show_result = false;
         var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '","new_lineprofile":""}';
         this.dsportSrv.run_command(command_str).then(res => {
-            if (command_obj.name == 'selt') {
-                //this.dslamPortcammand_info = '<table><tr><td>cableType</td><td></td></tr><tr><td>inprogress</td><td></td></tr><tr><td>loopEstimateLength</td><td></td></tr></table>';
-                this.dslamPortcammand_info = 'loopEstimateLength:' + ' ' + res.result[0].loopEstimateLength;
-
-            }
-            else {
-                this.dslamPortcammand_info = res.result.result;
-                console.log(this.dslamPortcammand_info);
-            }
-
-            //this.show_result = true;
+            this.dslamPortcammand_info = JSON.stringify(res.response);
+            console.log(this.dslamPortcammand_info);
         });
     }
 

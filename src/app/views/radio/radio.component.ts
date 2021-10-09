@@ -19,7 +19,8 @@ export class RadioComponent implements OnInit {
 
   radios = [];
   pagination_config;
-
+  radio_backup_errors = [];
+  view_backup_error_file: boolean = false;
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -45,6 +46,12 @@ export class RadioComponent implements OnInit {
     }
   }
   
+  show_radio_backup_error(){
+    this.radioSrv.show_radio_backup_error().then(res=>{
+      this.view_backup_error_file = true;
+      this.radio_backup_errors = res.response;
+    });
+  }
 
   get_all_radios(page,itemsPerPage){
     this.radioSrv.get_all_radios(page,itemsPerPage).then(res=>{
@@ -54,7 +61,7 @@ export class RadioComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.get_all_radios(1,10);
+    this.get_all_radios(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 
 }
