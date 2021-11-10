@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RadioService } from '../../../services/radio.service'
 import { RadioCommandService } from '../../../services/radio-command.service'
 import { ActivatedRoute } from '@angular/router';
+import * as L from 'leaflet';
 
 
 @Component({
@@ -10,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./radio-operationcomponent.css']
 })
 export class RadioOperationComponent implements OnInit {
-
   constructor(private radioSrv: RadioService,
               private radioCommandSrv: RadioCommandService,
               private route: ActivatedRoute) {
@@ -18,6 +18,7 @@ export class RadioOperationComponent implements OnInit {
                   this.radio_id = params['radio_Id'];
                   });
   }
+
   radio_commands = [];
   radio_commands_list = [{ id: 12, radio_command_description: "get Backup", radio_command_text: "get Backup" }];
   keyword = 'radio_command_text';

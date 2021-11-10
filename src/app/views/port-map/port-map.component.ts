@@ -14,7 +14,8 @@ export class PortMapComponent implements OnInit {
       totalItems: 0
     };
   }
-  
+  provinceObj = [{id: 2, provinceId: 2, provinceName: "آذربایجان شرقی", externalId: 291}];
+  keyword = 'provinceName';
   pagination_config;
   orders_ports = [];
   search_str='';
@@ -22,7 +23,9 @@ export class PortMapComponent implements OnInit {
   search_str3='';
   search_str4='';
   search_str5='';
-
+  view_port_operation_popup:boolean = false;
+ 
+  
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -76,6 +79,27 @@ export class PortMapComponent implements OnInit {
       this.pagination_config.totalItems = res.count;
     });
   }
+
+  show_ports_operations(){
+   this.view_port_operation_popup = true;
+  }
+
+  selectEvent(event){
+    console.log('selectEvent');
+  }
+
+  onChangeSearch(event){
+    console.log('onChangeSearch');
+
+  }
+
+  get_provinces_name(){
+    this.conSrv.get_provinces_name().then(res=>{
+      this.provinceObj = res.result;
+    });
+
+  }
+
 
   ngOnInit(): void {
     this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);

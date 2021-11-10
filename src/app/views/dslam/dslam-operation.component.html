@@ -81,15 +81,15 @@
                   </div>
                   <div class="col-md-3">
                     <button pButton type="button" style="margin-right: 0; float: right;"
-                      (click)="run_command(comm_item)" label="Run" [disabled]="!show_result"></button>
+                      (click)="run_command(comm_item)" label="Run" ></button>
                   </div>
                   <div class="col-md-6">
                     <div class="col-md-12">
                       <p-card header="Command Result">
                         <hr />
-                        <div *ngIf="!show_result" class="res_div_disabled border command_res">
+                        <!--<div *ngIf="!show_result" class="res_div_disabled border command_res">
                           <p-progressSpinner></p-progressSpinner>
-                        </div>
+                        </div>-->
                         <div *ngIf="show_result" class="res_div border">
                           <pre>
                             <div  *ngFor="let shelf of dslam_shelf">

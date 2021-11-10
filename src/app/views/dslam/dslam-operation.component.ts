@@ -126,7 +126,7 @@ export class DslamOperationComponent implements OnInit {
   run_command(command_obj) {
     alert(command_obj.name)
     this.show_result = false;
-    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     this.dslamSrv.run_command(command_str).then(res => {
       
       if(command_obj.name = 'profile adsl show'){
@@ -271,7 +271,8 @@ export class DslamOperationComponent implements OnInit {
   get_last_command(dslam_id) {
     this.dslamSrv.get_last_command(dslam_id).then(res => {
       console.log(res);
-      this.dslamPort_info = res[3].value.result;
+        this.dslamPort_info = res[3].value.result;
+
       this.show_result = true;
     });
   }
@@ -322,7 +323,7 @@ export class DslamOperationComponent implements OnInit {
     this.getDslamBoard(this.dslam_id);
     this.get_dslam_current_icmp_result(this.dslam_id);
     this.load_dslam_commands(this.dslam_id, 'port');
-    this.get_last_command(this.dslam_id);
+    //this.get_last_command(this.dslam_id);
     //this.get_zabbix_history(this.zabbix_item_id,"2020/12/01","2020/12/03");
     this.get_fifty_five_precntage();
   }

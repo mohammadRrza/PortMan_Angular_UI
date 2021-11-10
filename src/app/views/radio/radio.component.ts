@@ -21,6 +21,8 @@ export class RadioComponent implements OnInit {
   pagination_config;
   radio_backup_errors = [];
   view_backup_error_file: boolean = false;
+  view_radio_info_popup: boolean = false;
+  radio = {};
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -46,6 +48,13 @@ export class RadioComponent implements OnInit {
     }
   }
   
+  show_radio_info(radio_id){
+    this.view_radio_info_popup = true;
+    this.radioSrv.get_radio_info(radio_id).then(res=>{
+      this.radio = res
+    });
+  }
+
   show_radio_backup_error(){
     this.radioSrv.show_radio_backup_error().then(res=>{
       this.view_backup_error_file = true;

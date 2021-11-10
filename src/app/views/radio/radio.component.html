@@ -63,6 +63,7 @@
                                   style="cursor: pointer; margin: 5px;" />
                                   <img src="\assets\img\brand\Backup.png" width="20" pTooltip="Download radio Backup"
                                   tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="download_radio_backup(radio.device_ip)" />
+                                  
                               </div>
                             </div>
                           </td>
@@ -77,7 +78,7 @@
     </div>
     </div>
 
-    <p-dialog header="Router Backup Errors" [(visible)]="view_backup_error_file" [modal]="true" [style]="{width: '50vw'}"
+    <p-dialog header="Radio Backup Errors" [(visible)]="view_backup_error_file" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
   <div class="border-info">
     <div class="row">
@@ -93,4 +94,18 @@
       </div>
     </div>
   </div>
+</p-dialog>
+
+
+<p-dialog header="Radio Info" [(visible)]="view_radio_info_popup" [modal]="true" [style]="{width: '50vw'}"
+[maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+<div class="border-info">
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+
+      </div>
+    </div>
+  </div>
+</div>
 </p-dialog>

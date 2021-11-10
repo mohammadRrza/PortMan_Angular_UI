@@ -35,6 +35,15 @@ export class RadioService {
             .catch(this.handleError);
     }
 
+    get_radio_info(radio_id): Promise<any> {
+        return this._http
+        .get(this.apiURL+radio_id+"/", this.httpOptions)
+        .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+
     get_backup_files_name(radio_id): Promise<any> {
         return this._http
           .post(this.apiURL+'get_radio_backup_files_name/', {'radio_id': radio_id}, this.httpOptions)

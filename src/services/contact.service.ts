@@ -10,6 +10,7 @@ export class ContactService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'contact/';
+  apiURL2 = environment.APIEndpoint + 'province/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -36,6 +37,14 @@ private handleError(error: any): Promise<any> {
   search_orders(page,itemsPerPage,searchStr): Promise<any> {
     return this._http
       .get(this.apiURL + "portmap/?page="+page+"&page_size="+itemsPerPage+"&"+searchStr, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_provinces_name(): Promise<any> {
+    return this._http
+      .get(this.apiURL2+'get_provinces/', this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

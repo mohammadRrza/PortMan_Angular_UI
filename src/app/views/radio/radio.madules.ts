@@ -21,6 +21,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { CardModule } from 'primeng/card';
 import { RadioComponent } from './radio.component';
 import { RadioOperationComponent } from './radio-operationcomponent';
+import { MapComponent } from './../map/map.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { RadioOperationComponent } from './radio-operationcomponent';
 
   declarations: [
                 RadioComponent,
-                RadioOperationComponent
+                RadioOperationComponent,
+                MapComponent,
                 ]
 })
 export class RadioModule { }

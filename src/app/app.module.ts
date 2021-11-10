@@ -69,7 +69,6 @@ import { ButtonModule } from 'primeng/button';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -105,7 +104,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     P404Component,
     P500Component,
     LoginComponent
-      ],
+        ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy,

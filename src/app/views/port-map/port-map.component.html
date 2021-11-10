@@ -4,14 +4,23 @@
         <div class="card-header" style="text-align: center;">
           Port Map Panel
           <span>
-            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add Ports"
-              tooltipPosition="left" (click)="show_add_ports()"></i>
+            <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Ports Operations"
+              tooltipPosition="left" (click)="show_ports_operations()"></i>
           </span>
         </div>
         <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
             <p-header>Port Search</p-header>
             <p-table styleClass="p-datatable-striped" #dt1 [value]="orders_ports" selectionMode="single" >
                 <ng-template pTemplate="header">
+                  <tr class="row-accessories border" style="margin: 10px;" >
+                    <th>
+                      <ng-autocomplete [data]="provinceObj" [searchKeyword]="keyword" placeHolder="Search By Province"
+                      (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                      (inputFocused)='get_provinces_name($event)' historyIdentifier="provinceObj" [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+                    </th>
+                  </tr>
                   <tr class="row-accessories border" style="margin: 10px;" >
                     <th>
                       <input pInputText type="text" [(ngModel)]="username" (keyup)="search_orders(username,1)"
@@ -48,6 +57,8 @@
                 <ng-template pTemplate="header">
       
                   <tr class="row-accessories">
+                    <th pSortableColumn="telecomCenter_info.name">Telecom Name<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
+                    </th>
                     <th pSortableColumn="username">Username<p-sortIcon field="name" style="text-align: center;"></p-sortIcon>
                     </th>
                     <th pSortableColumn="telco_row">Telco Row<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
@@ -64,12 +75,15 @@
                     </th>
                     <th pSortableColumn="fqdn">Fqdn<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="port_status_info.description">Port Status<p-sortIcon field="Fqdn" style="text-align: center;"></p-sortIcon>
+                    </th>
                     <th>Action<p-sortIcon field="name"></p-sortIcon>
                     </th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-order_port>
                     <tr>
+                       <td class="text-center"><span>{{order_port.telecomCenter_info.name}}</span></td>
                         <td class="text-center"><span>{{order_port.username}}</span></td>
                         <td class="text-center"><span>{{order_port.telco_row}}</span></td>
                         <td class="text-center"><span>{{order_port.telco_column}}</span></td>
@@ -78,6 +92,7 @@
                         <td class="text-center"><span>{{order_port.port_number}}</span></td>
                         <td class="text-center"><span>{{order_port.ranjePhoneNumber}}</span></td>
                         <td class="text-center"><span>{{order_port.fqdn}}</span></td>
+                        <td class="text-center"><span>{{order_port.port_status_info.description}}</span></td>
 
                         <td class="text-center">
 
@@ -100,3 +115,18 @@
       </div>
     </div>
 </div>
+
+
+
+<p-dialog header="Port Operation" [(visible)]="view_port_operation_popup" [modal]="true" [style]="{width: '50vw'}"
+[maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+<div class="border-info">
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</p-dialog>
