@@ -25,10 +25,10 @@ private handleError(error: any): Promise<any> {
   }
   //services
 
-  get_orders_ports(page,itemsPerPage): Promise<any> {
+  get_orders_ports(page,itemsPerPage,telecom_id, port_status_id): Promise<any> {
     return this._http
-      .get(this.apiURL + "portmap/?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
-      .toPromise()
+    .get(this.apiURL + "portmap/?page="+page+"&page_size="+itemsPerPage+'&telecom_id='+telecom_id+'&port_status_id='+port_status_id, this.httpOptions)
+    .toPromise()
       .then(res => res)
       .catch(this.handleError);
   }
@@ -68,6 +68,31 @@ private handleError(error: any): Promise<any> {
   get_port_statuses(): Promise<any> {
     return this._http
       .get(this.apiURL+'get_port_statuses/', this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+
+  search_ports(page,itemsPerPage,telecom_id, port_status_id): Promise<any> {
+    return this._http
+      .get(this.apiURL + "portmap/?page="+page+"&page_size="+itemsPerPage+'&telecom_id='+telecom_id+'&port_status_id='+port_status_id, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  change_port_status(order): Promise<any> {
+    return this._http
+      .post(this.apiURL+ "update_status_ports/", order, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_ordr_port_info(username): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "get_ordr_port_info/?username="+username, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

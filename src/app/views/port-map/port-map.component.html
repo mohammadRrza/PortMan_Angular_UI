@@ -26,7 +26,7 @@
                       (onSelect)="get_telecom_id($event)"></p-autoComplete>           
                     </th>
                     <th>
-                      <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status" optionLabel="description" itemSize="30"></p-dropdown>
+                      <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status" optionLabel="description" (onChange)="get_port_status_id(port_status,$event)"></p-dropdown>
                     </th>
                   </tr>
                   <tr class="row-accessories border" style="margin: 10px;" >
@@ -101,8 +101,8 @@
 
                             <div class="col-md-12" style="padding-left: 40%">
                               <div class="row">
-                                <img src="\assets\img\brand\edit_icon.png" (click)="edit_router(router.id)" width="20"
-                                  pTooltip="Router Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                                <img *ngIf="order_port.username!='NULL'" src="\assets\img\brand\edit_icon.png" (click)="View_change_port_status(order_port.username)" width="20"
+                                  pTooltip="Change Port Status" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
                                 <img src="\assets\img\brand\info_icon.png" width="20" pTooltip="Check Port Conflict"
                                   tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="check_port_conflict(order_port.fqdn,order_port.slot_number,order_port.port_number)" />
                               </div>
@@ -121,15 +121,44 @@
 
 
 
-<p-dialog header="Port Operation" [(visible)]="view_port_operation_popup" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog header="Port Operation" [(visible)]="View_port_status" [modal]="true" [style]="{width: '50vw'}"
 [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
 <div class="border-info">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div>
-
+        <table class="border" style="width: 100%;font-size: large; text-align: center;">
+          <tr>
+            <th>username</th>
+            <th>{{port_info.username}}</th>
+          </tr>
+          <tr>
+            <th>Port Status</th>
+            <th>{{port_info.status}}</th>
+          </tr>
+          <tr>
+            <th>Telecommunication Center</th>
+            <th>{{port_info.telecom}}</th>
+          </tr>
+        </table>
+        </div>
       </div>
-    </div>
+        <div class="col-md-6">
+          <table class="border" style="width: 100%;font-size: large; text-align: center;">
+            <tr>
+              <th>
+                Change Port Status to: 
+              </th>
+              <th>
+                <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status" optionLabel="description" (onChange)="get_port_status_id(port_status,$event)"></p-dropdown>
+              </th>
+            </tr>
+          </table>
+      </div>
+   
+  </div>
+  <div class="row">
+    <p-button icon="pi pi-check" type="submit" label="Change Port Status" styleClass="p-button-text" (click)="change_port_status(order_port.username,order_port.port_status_info.id)"></p-button>
   </div>
 </div>
 </p-dialog>

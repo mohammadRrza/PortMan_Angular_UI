@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactService} from '../../../services/contact.service';
-import {PortStatus} from '../../dtos/city_dto';
+import {PortStatus,PortOrder} from '../../dtos/city_dto';
 
 @Component({
   selector: 'app-port-map',
@@ -21,9 +21,11 @@ export class PortMapComponent implements OnInit {
   telecomObj = [];
   port_statusObj = [];
   port_status:PortStatus;
+  port_order:PortOrder;
   province_id :number;
   city_id:number;
-  telecom_id:number;
+  telecom_id="";
+  port_status_id = "";
   pagination_config;
   orders_ports = [];
   search_str='';
@@ -31,20 +33,20 @@ export class PortMapComponent implements OnInit {
   search_str3='';
   search_str4='';
   search_str5='';
-  view_port_operation_popup:boolean = false;
+  port_info = {};
+  View_port_status:boolean = false;
  
   
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
-    this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,this.telecom_id, this.port_status_id);
   }
 
-  get_orders_ports(page,itemsPerPage){
-    this.conSrv.get_orders_ports(page,itemsPerPage).then(res=>{
+  get_orders_ports(page,itemsPerPage, telecom_id, port_status_id){
+    this.conSrv.get_orders_ports(page,itemsPerPage, telecom_id, port_status_id).then(res=>{
     this.orders_ports = res.results;
     this.pagination_config.totalItems = res.count;
-
     });
   }
 
@@ -88,8 +90,11 @@ export class PortMapComponent implements OnInit {
     });
   }
 
-  show_ports_operations(){
-   this.view_port_operation_popup = true;
+  View_change_port_status(username){
+    this.conSrv.get_ordr_port_info(username).then(res=>{
+      this.port_info = res;
+    });
+   this.View_port_status = true;
   }
 
 
@@ -122,6 +127,7 @@ export class PortMapComponent implements OnInit {
 
   get_telecom_id(telecom){
     this.telecom_id = telecom.id;
+    this.search_ports(this.telecom_id, "");
   }
   
   get_port_statuses(){
@@ -130,9 +136,32 @@ export class PortMapComponent implements OnInit {
     });
   }
 
+  get_port_status_id(event){
+    this.port_status_id = event.id;
+    this.search_ports(this.telecom_id, this.port_status_id);
+  }
+
+  search_ports(telecom_id, port_status_id){
+    this.conSrv.search_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,telecom_id, port_status_id).then(res=>{
+      this.orders_ports = res.results;
+      this.pagination_config.totalItems = res.count;
+    });
+  }
+
+  change_port_status(username,port_status_id){
+    this.port_order = new PortOrder;
+    this.port_order.username = username;
+    this.port_order.port_status_id = port_status_id;
+
+    this.conSrv.change_port_status(this.port_order).then(res=>{
+      
+    });
+  }
+  
   ngOnInit(): void {
-    this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,this.telecom_id, this.port_status_id);
     this.get_port_statuses();
+
   }
 
 }

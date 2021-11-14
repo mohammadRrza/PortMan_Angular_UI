@@ -16,6 +16,7 @@
         color: #495057;
         background: #f8f9fa;
         transition: box-shadow 0.2s;
+        font-family: 'Times New Roman', Times, serif;
       }
 
       tr ,input {
