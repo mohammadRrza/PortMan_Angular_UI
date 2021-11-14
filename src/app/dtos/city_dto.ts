@@ -24,3 +24,8 @@ export interface telecoms {
     parent
     text
 }
+
+export interface PortStatus {
+    id: string,
+    description: string
+}

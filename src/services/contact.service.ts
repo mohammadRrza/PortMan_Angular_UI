@@ -10,7 +10,6 @@ export class ContactService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'contact/';
-  apiURL2 = environment.APIEndpoint + 'province/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -42,9 +41,33 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
-  get_provinces_name(): Promise<any> {
+  get_provinces_name(province_name): Promise<any> {
     return this._http
-      .get(this.apiURL2+'get_provinces/', this.httpOptions)
+      .get(this.apiURL+'get_provinces/?province_name='+province_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_cities_name(city_name,province_id): Promise<any> {
+    return this._http
+      .get(this.apiURL+'get_cities_by_province_id/?province_id='+province_id+'&city_name='+city_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_telecoms_name(telecom_name,city_id): Promise<any> {
+    return this._http
+      .get(this.apiURL+'get_telecoms_by_city_id/?city_id='+city_id+'&telecom_name='+telecom_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_port_statuses(): Promise<any> {
+    return this._http
+      .get(this.apiURL+'get_port_statuses/', this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

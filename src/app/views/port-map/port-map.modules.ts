@@ -20,6 +20,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CardModule } from 'primeng/card';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CardModule } from 'primeng/card';
     NgxPaginationModule,
     ReactiveFormsModule,
     TabsModule,
+    DropdownModule,
     FormsModule,
     PaginatorModule,
     ChartsModule,

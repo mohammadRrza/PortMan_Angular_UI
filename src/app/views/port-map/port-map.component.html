@@ -8,17 +8,25 @@
               tooltipPosition="left" (click)="show_ports_operations()"></i>
           </span>
         </div>
-        <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
+        <p-fieldset [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
             <p-header>Port Search</p-header>
             <p-table styleClass="p-datatable-striped" #dt1 [value]="orders_ports" selectionMode="single" >
                 <ng-template pTemplate="header">
                   <tr class="row-accessories border" style="margin: 10px;" >
                     <th>
-                      <ng-autocomplete [data]="provinceObj" [searchKeyword]="keyword" placeHolder="Search By Province"
-                      (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                      (inputFocused)='get_provinces_name($event)' historyIdentifier="provinceObj" [itemTemplate]="itemTemplate"
-                      [notFoundTemplate]="notFoundTemplate">
-                    </ng-autocomplete>
+                      <p-autoComplete [(ngModel)]="provinceName" placeholder="Select Province" field="provinceName" [suggestions]="provinceObj" (completeMethod)="get_provinces_name($event)"
+                      (onSelect)="get_province_id($event)"></p-autoComplete>              
+                    </th>
+                    <th>
+                      <p-autoComplete [(ngModel)]="cityName" placeholder="Select City" field="cityName" [suggestions]="cityObj" (completeMethod)="get_cities_name($event)"
+                      (onSelect)="get_city_id($event)"></p-autoComplete>              
+                    </th>
+                    <th>
+                      <p-autoComplete [(ngModel)]="name" placeholder="Select Telecom" field="name" [suggestions]="telecomObj" (completeMethod)="get_telecom_name($event)"
+                      (onSelect)="get_telecom_id($event)"></p-autoComplete>           
+                    </th>
+                    <th>
+                      <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status" optionLabel="description" itemSize="30"></p-dropdown>
                     </th>
                   </tr>
                   <tr class="row-accessories border" style="margin: 10px;" >
@@ -32,11 +40,6 @@
                         placeholder="Search by Phone" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Phone"
                         tooltipPosition="top">
                     </th>
-                    <th>
-                        <input pInputText type="text" [(ngModel)]="fqdn" (keyup)="search_orders(fqdn,3)"
-                          placeholder="Search by Fqdn" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Fqdn"
-                          tooltipPosition="top">
-                      </th>
                       <th>
                         <input pInputText type="number" min="1" [(ngModel)]="slot" (keyup)="search_orders(slot,4)"
                           placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Slot"

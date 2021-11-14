@@ -244,8 +244,7 @@ export class DslamOperationComponent implements OnInit {
   }
 
   onFocused(e) {
-    console.log('onFocused');
-
+    this.load_dslam_commands(this.dslam_id, 'port');
   }
 
   show_errors(error) {
@@ -322,7 +321,6 @@ export class DslamOperationComponent implements OnInit {
     this.get_dslam_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id);
     this.getDslamBoard(this.dslam_id);
     this.get_dslam_current_icmp_result(this.dslam_id);
-    this.load_dslam_commands(this.dslam_id, 'port');
     //this.get_last_command(this.dslam_id);
     //this.get_zabbix_history(this.zabbix_item_id,"2020/12/01","2020/12/03");
     this.get_fifty_five_precntage();

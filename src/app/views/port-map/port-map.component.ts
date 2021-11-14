@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactService} from '../../../services/contact.service'
+import {ContactService} from '../../../services/contact.service';
+import {PortStatus} from '../../dtos/city_dto';
+
 @Component({
   selector: 'app-port-map',
   templateUrl: './port-map.component.html',
@@ -14,8 +16,14 @@ export class PortMapComponent implements OnInit {
       totalItems: 0
     };
   }
-  provinceObj = [{id: 2, provinceId: 2, provinceName: "آذربایجان شرقی", externalId: 291}];
-  keyword = 'provinceName';
+  provinceObj = [];
+  cityObj = [];
+  telecomObj = [];
+  port_statusObj = [];
+  port_status:PortStatus;
+  province_id :number;
+  city_id:number;
+  telecom_id:number;
   pagination_config;
   orders_ports = [];
   search_str='';
@@ -84,25 +92,47 @@ export class PortMapComponent implements OnInit {
    this.view_port_operation_popup = true;
   }
 
-  selectEvent(event){
-    console.log('selectEvent');
-  }
 
-  onChangeSearch(event){
-    console.log('onChangeSearch');
-
-  }
-
-  get_provinces_name(){
-    this.conSrv.get_provinces_name().then(res=>{
+  get_provinces_name(event){
+    this.conSrv.get_provinces_name(event.query).then(res=>{
       this.provinceObj = res.result;
     });
 
   }
 
+  get_province_id(province){
+    this.province_id = province.id;
+  }
+
+  get_cities_name(event){
+    this.conSrv.get_cities_name(event.query, this.province_id).then(res=>{
+      this.cityObj = res.result;
+    });
+  }
+
+  get_city_id(city){
+    this.city_id = city.id;
+  }
+
+  get_telecom_name(event){
+    this.conSrv.get_telecoms_name(event.query, this.city_id).then(res=>{
+      this.telecomObj = res.result;
+    });
+  }
+
+  get_telecom_id(telecom){
+    this.telecom_id = telecom.id;
+  }
+  
+  get_port_statuses(){
+    this.conSrv.get_port_statuses().then(res=>{
+      this.port_statusObj = res.result;
+    });
+  }
 
   ngOnInit(): void {
     this.get_orders_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    this.get_port_statuses();
   }
 
 }
