@@ -20,10 +20,13 @@ export class PortMapComponent implements OnInit {
   cityObj = [];
   telecomObj = [];
   port_statusObj = [];
+  port_statusObj_ch = [];
   port_status:PortStatus;
+  port_status_ch:PortStatus;
   port_order:PortOrder;
   province_id :number;
   city_id:number;
+  port_status_id_ch;
   telecom_id="";
   port_status_id = "";
   pagination_config;
@@ -35,7 +38,7 @@ export class PortMapComponent implements OnInit {
   search_str5='';
   port_info = {};
   View_port_status:boolean = false;
- 
+  port_status_ch_res = {};
   
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
@@ -133,12 +136,17 @@ export class PortMapComponent implements OnInit {
   get_port_statuses(){
     this.conSrv.get_port_statuses().then(res=>{
       this.port_statusObj = res.result;
+      this.port_statusObj_ch = res.result;
     });
   }
 
   get_port_status_id(event){
     this.port_status_id = event.id;
     this.search_ports(this.telecom_id, this.port_status_id);
+  }
+
+  get_port_status_id_for_ch_st(event){
+    this.port_status_id_ch = event.id;
   }
 
   search_ports(telecom_id, port_status_id){
@@ -148,14 +156,18 @@ export class PortMapComponent implements OnInit {
     });
   }
 
-  change_port_status(username,port_status_id){
+  change_port_status(username){
     this.port_order = new PortOrder;
     this.port_order.username = username;
-    this.port_order.port_status_id = port_status_id;
-
+    this.port_order.port_status_id = this.port_status_id_ch;
     this.conSrv.change_port_status(this.port_order).then(res=>{
-      
+      this.port_status_ch_res = res;
+      this.conSrv.search_orders(1,100, "search_username="+username).then(res=>{
+        this.orders_ports =  res.results;
+        this.pagination_config.totalItems = res.count;
+      });
     });
+
   }
   
   ngOnInit(): void {

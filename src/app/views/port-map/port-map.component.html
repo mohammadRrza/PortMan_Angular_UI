@@ -121,8 +121,8 @@
 
 
 
-<p-dialog header="Port Operation" [(visible)]="View_port_status" [modal]="true" [style]="{width: '50vw'}"
-[maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+<p-dialog header="Port Operation" [(visible)]="View_port_status" [modal]="true"
+[maximizable]="true" [baseZIndex]="10001" [draggable]="true" [resizable]="false">
 <div class="border-info">
   <div class="row">
     <div class="col-md-6">
@@ -150,7 +150,7 @@
                 Change Port Status to: 
               </th>
               <th>
-                <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status" optionLabel="description" (onChange)="get_port_status_id(port_status,$event)"></p-dropdown>
+                <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status_ch"  optionLabel="description" (onChange)="get_port_status_id_for_ch_st(port_status_ch,$event)"></p-dropdown>
               </th>
             </tr>
           </table>
@@ -158,7 +158,11 @@
    
   </div>
   <div class="row">
-    <p-button icon="pi pi-check" type="submit" label="Change Port Status" styleClass="p-button-text" (click)="change_port_status(order_port.username,order_port.port_status_info.id)"></p-button>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <p-button icon="pi pi-check" type="submit" label="Change Port Status" styleClass="p-button-text" (click)="change_port_status(port_info.username)"></p-button>
+    </div>
   </div>
 </div>
 </p-dialog>

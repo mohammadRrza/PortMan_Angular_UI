@@ -6,6 +6,7 @@
       box-shadow: 3px 2px 18px 4px #A2C5FF; 
       padding: 5px;
       margin-top: 15px;
+      height: 15vw;
       }
 ::ng-deep .p-datatable .p-datatable-thead > tr > th{
         text-align: center;
@@ -18,6 +19,14 @@
         transition: box-shadow 0.2s;
         font-family: 'Times New Roman', Times, serif;
       }
+
+      ::ng-deep .p-dialog .p-dialog-content {
+        background: #ffffff;
+        color: #495057;
+        padding: 0 1.5rem 2rem 1.5rem;
+        height: 20vw;
+        width: 50vw;
+    }
 
       tr ,input {
         font-family:Iranian_Sans;
