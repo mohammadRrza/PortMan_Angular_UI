@@ -47,8 +47,8 @@
                       </th>
                       <th>
                         <input pInputText type="number" min="1" [(ngModel)]="port" (keyup)="search_orders(port,5)"
-                          placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
-                          tooltipPosition="Port">
+                          placeholder="Search by Port" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
+                          tooltipPosition="top">
                       </th>
                   </tr>
                 </ng-template>
@@ -101,7 +101,7 @@
 
                             <div class="col-md-12" style="padding-left: 40%">
                               <div class="row">
-                                <img *ngIf="order_port.username!='NULL'" src="\assets\img\brand\edit_icon.png" (click)="View_change_port_status(order_port.username)" width="20"
+                                <img *ngIf="order_port.username!='NULL'" src="\assets\img\brand\edit_icon.png" (click)="View_change_port_status(order_port)" width="20"
                                   pTooltip="Change Port Status" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
                                 <img src="\assets\img\brand\info_icon.png" width="20" pTooltip="Check Port Conflict"
                                   tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="check_port_conflict(order_port.fqdn,order_port.slot_number,order_port.port_number)" />
@@ -123,7 +123,7 @@
 
 <p-dialog header="Port Operation" [(visible)]="View_port_status" [modal]="true"
 [maximizable]="true" [baseZIndex]="10001" [draggable]="true" [resizable]="false">
-<div class="border">
+<div>
   <div class="row">
     <div class="col-md-12">
       <div>
@@ -151,16 +151,22 @@
         <div class="col-md-2">
         </div>
         <div class="col-md-8">
-          <table class="border" style="width: 100%;font-size: large; text-align: center;">
+          <table style="width: 100%;font-size: large; text-align: center;">
             <tr>
                   <th>
                     Change Telco Row
                   </th>
                   <th>
+                    <div style="background-color: gray;">
                     From: 
+                      {{bukht.telco_row}}
+                    </div>
                   </th>
                   <th>
                     To: 
+                    <input pInputText type="number" min="1" [(ngModel)]="new_telco_row"
+                    class="p-column-filter" style="margin: 10px;width: 75px;" pTooltip="New Telco Row"
+                    tooltipPosition="top">
                   </th>
               </tr>
               <tr>
@@ -168,10 +174,16 @@
                     Change Telco Column 
                   </th>
                   <th>
-                    From: 
+                    <div style="background-color: gray;">
+                      From: 
+                        {{bukht.telco_column}}
+                      </div> 
                   </th>
                   <th>
                     To: 
+                    <input pInputText type="number"  min="1" [(ngModel)]="new_telco_column" 
+                     class="p-column-filter" style="margin: 10px;width: 75px;" pTooltip="New Telco Column"
+                    tooltipPosition="Right">
                   </th>
                   </tr>
                   <tr>
@@ -179,10 +191,16 @@
                     Change Telco Connection
                   </th>
                   <th>
-                    From: 
+                    <div style="background-color: gray;">
+                      From: 
+                        {{bukht.telco_connection}}
+                      </div> 
                   </th>
                   <th>
                     To: 
+                    <input pInputText type="number" min="1" [(ngModel)]="new_telco_connection" 
+                     class="p-column-filter" style="margin: 10px;width: 75px;" pTooltip="New Telco Connection"
+                    tooltipPosition="Right">
                   </th>
               </tr>
               <tr>
@@ -190,8 +208,9 @@
                     Change Port Status  
                   </th>
                   <th>
-                    From:
-                    <p-dropdown [options]="port_statusObj" [(ngModel)]="port_status_ch"  optionLabel="description" (onChange)="get_port_status_id_for_ch_st(port_status_ch,$event)"></p-dropdown>
+                    <div style="background-color: gray;">
+                      {{bukht.port_status_desc}}
+                    </div> 
                   </th>
                   <th>
                     To:
@@ -209,9 +228,9 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-6">
-      <p-button icon="pi pi-check" type="submit" label="Change Port Status" styleClass="p-button-text" (click)="change_port_status(port_info.username)"></p-button>
     </div>
     <div class="col-md-3">
+      <p-button icon="pi pi-check" type="submit" label="Change Port Status" styleClass="p-button-text" (click)="change_port_status(port_info.username)"></p-button>
     </div>
   </div>
 </div>

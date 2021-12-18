@@ -74,6 +74,9 @@ export class DslamOperationComponent implements OnInit {
   port_count: string;
   dslam_shelf = [];
   slot_obj;
+  command_res;
+  P_number;
+  S_number;
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -124,11 +127,13 @@ export class DslamOperationComponent implements OnInit {
   }
 
   run_command(command_obj) {
-    alert(command_obj.name)
+    //alert(command_obj.name)
     this.show_result = false;
     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     this.dslamSrv.run_command(command_str).then(res => {
-      
+      this.command_res = res.response?res.response:res.Result.result?res.Result.result:res.result?res.result:res.Result;
+      console.log(this.command_res);
+      return;
       if(command_obj.name = 'profile adsl show'){
         this.profile_adsl_show = true;
         this.dslam_profiles = res.result.result;
@@ -141,12 +146,12 @@ export class DslamOperationComponent implements OnInit {
       }
       else if(command_obj.name ='Show Shelf'){
         this.show_shelf = true;
-        console.log(res.result);
-        this.dslam_shelf = res.result;
+        this.dslam_shelf = res.Result;
+        alert(this.dslam_shelf)
         this.show_result = true;
       }
       else{
-        this.dslamPort_info = res.result.result;
+        this.dslamPort_info = res.Result;
         this.show_result = true;
       }
     });
@@ -304,10 +309,17 @@ export class DslamOperationComponent implements OnInit {
     if(type == "1"){
       this.slot_count = count;
       console.log(count);
+
     }    
+
+
     if(type == "2"){
       this.port_count = count;
       console.log(count);
+      this.dslamSrv.search_port(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,this.dslam_id, this.S_number,this.P_number).then(res=>{
+        this.pagination_config.totalItems = res.count;
+        this.listDslamPorts = res.results;
+      });
     }  
   }
   ngOnInit(): void {

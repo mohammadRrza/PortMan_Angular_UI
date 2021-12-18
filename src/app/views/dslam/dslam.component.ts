@@ -3,13 +3,14 @@ import { DslamService } from '../../../services/dslam.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { CityService } from '../../../services/city.service';
 import { TelecomCenterService } from '../../../services/telecom-center.service';
-
+import {JwtHelperService} from '@auth0/angular-jwt';
 import { UserService } from '../../../services/user.service';
 import { porv_city, ci_city, telecoms } from '../../dtos/city_dto';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {ConfirmationService} from 'primeng/api';
 import { navItems } from '../../_nav';
 import { Router } from '@angular/router';
+import {LoginCls} from '../../dtos/login_cls';
 
 @Component({
   selector: 'app-dslam',
@@ -30,7 +31,8 @@ export class DslamComponent implements OnInit {
     private citySrv: CityService,
     private usrSrv: UserService,
     private telecomSrv:TelecomCenterService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private jwtHelper: JwtHelperService
   ) {
     this.add_dslam_from = this.formBuilder.group({
       dslam_name : new FormControl("", Validators.required),
@@ -255,10 +257,15 @@ return
     });
   }
   ngOnInit(): void {
-    let loggedIn = localStorage.getItem('loggedin');
-    if(!Boolean(loggedIn)){
-      this.router.navigate(['/login']);
-    }
+    // let loggedIn = localStorage.getItem('loggedin');
+    // if(!Boolean(loggedIn) || this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))){
+    //   this.router.navigate(['/login']);
+    //   return;
+    // }else {
+    //   console.log("token not expired"); 
+    // }
+    var loginCls =  new LoginCls(this.jwtHelper,this.router);
+    loginCls.check_login();
     this.get_permission();
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     this.primengConfig.ripple = true;

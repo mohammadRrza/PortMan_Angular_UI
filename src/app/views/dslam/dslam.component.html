@@ -341,12 +341,12 @@
           </ng-template>
           <ng-template pTemplate="body" let-dslam>
             <tr>
-              <td class="text-center" ><a [routerLink]="['/dslam/dslamOperation']"
+              <td class="text-center" ><a class="btn btn-sm btn-outline-primary" [routerLink]="['/dslam/dslamOperation']"
                   [queryParams]="{dslamId:dslam.id}">{{dslam.name}}</a></td>
               <td class="text-center">{{dslam.ip}}</td>
               <td class="text-center">{{dslam.telecom_center_info.name}}</td>
-              <td class="text-center">{{dslam.telecom_center_info.city_info.name}}</td>
-              <td class="text-center">{{dslam.dslam_type_info.name}}</td>
+              <td class="text-center"><pre *ngIf="dslam.telecom_center_info.city_info">{{dslam.telecom_center_info.city_info.name}}</pre></td>
+              <td class="text-center"><pre *ngIf="dslam.dslam_type_info">{{dslam.dslam_type_info.name}}</pre></td>
               <td class="text-center">{{dslam.status}}</td>
               <td class="text-center">{{dslam.dslam_availability}}</td>
               <td class="text-center">{{dslam.total_ports_count}}/{{dslam.up_ports_count}}/{{dslam.down_ports_count}}

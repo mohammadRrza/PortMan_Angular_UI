@@ -137,7 +137,7 @@
                 <ng-template tabHeading><i class="icon-calculator"></i> دستورات پورت </ng-template>
                 <div class="row">
                   <div class="ng-autocomplete col-md-3" style="direction: ltr;">
-                    <ng-autocomplete [data]="commandObj" [disabled]="!show_result" [searchKeyword]="keyword"
+                    <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword"
                       placeHolder="Enter the Command" (selected)='selectEvent($event)'
                       (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
                       historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
@@ -154,14 +154,14 @@
                   </div>
                   <div class="col-md-3">
                     <button pButton type="button" style="margin-right: 0; float: right;"
-                      (click)="run_command(comm_item)" label="Run" [disabled]=""></button>
+                      (click)="run_command(comm_item)" label="Run"></button>
                   </div>
                   <div class="col-md-6">
                     <p-card header="Command Result">
                       <hr />
 
-                      <div  class="res_div border" >
-                        <pre>
+                      <div  class="res_div border" style="direction:rtl;">
+                        <pre >
                         {{dslamPortcammand_info}}
                       </pre>
                       </div>

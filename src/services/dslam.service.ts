@@ -10,7 +10,8 @@ export class DslamService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'dslam/';
-  apiURL2 = environment.APIEndpoint + 'dslamport/command/';
+  apiURL2 = environment.APIEndpoint + 'dslamport/dslam_commandsV2/';
+  apiURL3 = environment.APIEndpoint + 'dslam-port/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -163,6 +164,14 @@ private handleError(error: any): Promise<any> {
   load_dslam_ports(dslam_id, slot_count, port_count):Promise<any> {
     return this._http
       .get(this.apiURL+'load_dslam_ports?dslam_id='+dslam_id+'&slot_count='+slot_count+'&port_count='+port_count, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  search_port(page,page_size,dslam_id, slot_number, port_number):Promise<any> {
+    return this._http
+      .get(this.apiURL3+'?page='+page+'&page_size='+page_size+'&search_dslam_id='+dslam_id+'&search_slot_number='+slot_number+'&search_port_number='+port_number, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

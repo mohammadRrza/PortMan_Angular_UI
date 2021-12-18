@@ -34,6 +34,14 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    ldap_login(userInfo): Promise<any> {
+        return this._http
+            .post(this.apiURL + 'ldap_login/', userInfo, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     loggedin() {
       let loggedin = !this.helper.isTokenExpired(this.token);
       console.log('loggedin:' + loggedin);

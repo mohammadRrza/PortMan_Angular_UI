@@ -62,6 +62,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
+        path: 'portman-cdms',
+        loadChildren: () => import('./views/portman-cdms/portman-cdms.modules').then(m => m.PortmanCdmsModule)
+      },
+      {
         path: 'back_up_errors',
         loadChildren: () => import('./views/telecom-costs/telecom-costs.module').then(m => m.TelecomCostsModule)
       },

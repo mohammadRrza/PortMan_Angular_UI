@@ -6,19 +6,30 @@ export const navItems: INavData[] = [
     url: '/dashboard',
     icon: 'icon-speedometer',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
-  },
+    ldap_attributes: {hidden: null, who: []},
 
+  },
+  {
+    name: 'Portman CDMS',
+    url: '/portman-cdms/portman-cdms',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN']},
+    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
+   },
   {
     name: 'مدیریت مراکز مخابراتی',
     url: '/telecom-center/telecom-center',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+    ldap_attributes: {hidden: null, who: []},
+
   },
   {
     name: ' هزینه های مرکز',
     url: '/telecom_costs',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
 
      },
      {
@@ -26,6 +37,7 @@ export const navItems: INavData[] = [
       url: '/backup-management',
       icon: 'icon-settings',
       attributes: {hidden: null, who: []},
+      ldap_attributes: {hidden: null, who: []},
   
        },
      {
@@ -33,13 +45,15 @@ export const navItems: INavData[] = [
       url: '/back_up_errors',
       icon: 'icon-settings',
       attributes: {hidden: null, who: []},
+      ldap_attributes: {hidden: null, who: []},
   
        },
   {
     name: 'مدیریت روترها',
     url: '/router/router',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER','Software']},
+    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
 
   },
   {
@@ -47,43 +61,49 @@ export const navItems: INavData[] = [
     url: '/radio/radio',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN']},
-
+    ldap_attributes: {hidden: null, who: ['Software']},
   },
   {
     name: 'مدیریت سوئیچ ها',
     url: '/switch/switch',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
+    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
   },
   {
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN', 'RESELLER','SUPERVISOR','DIRECTRESELLER']},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'وضعیت پورت ها',
     url: '/icons/coreui-icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
    },
   {
     name: 'پورت مپ',
     url: '/contact/port-map',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'جستجو',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'نماینده ریسلر',
@@ -93,48 +113,53 @@ export const navItems: INavData[] = [
       {
         name: 'مدیر پورت ریسلر',
         url: '/reseller/reseller-ports',
-        icon: 'icon-bell'
-
+        icon: 'icon-bell',
+        ldap_attributes: {hidden: null, who: []},
       },
       {
         name: 'ریسلر',
         url: '/reseller/resellers',
-        icon: 'icon-bell'
-
+        icon: 'icon-bell',
+        ldap_attributes: {hidden: null, who: []},
       }
     ],
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'مدیریت کاربران',
     url: '/userManagement',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'مدیریت اعضا',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت شهر و استان',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت وی لن ها',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: ' مدیریت پروفایل خط',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
-
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'مجوزهای دسترسی',
@@ -144,23 +169,29 @@ export const navItems: INavData[] = [
       {
         name: 'مجوزهای کاربران',
         url: '/permission/userpermission',
-        icon: 'icon-bell'
+        icon: 'icon-bell',
+        ldap_attributes: {hidden: null, who: []},
+
 
       },
       {
         name: 'پروفایل های دسترسی',
         url: '/permission/accessprofile',
-        icon: 'icon-bell'
+        icon: 'icon-bell',
+        ldap_attributes: {hidden: null, who: []},
 
       }
     ],
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+    ldap_attributes: {hidden: null, who: []},
   },
   {
     name: 'آیکون ها',
     url: '/icons',
     icon: 'icon-settings',
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
+
   },
   {
     name: 'Widgets',
@@ -171,15 +202,19 @@ export const navItems: INavData[] = [
       text: 'NEW'
     },
     attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: []},
 
   },
   {
-    divider: true
+    divider: true,
+    ldap_attributes: {hidden: null, who: []},
+
   },
   {
     title: true,
     name: 'Extras',
-    attributes: {hidden: null, who: []},
+    attributes: {hidden: true, who: []},
+    ldap_attributes: {hidden: true, who: []},
   },
   {
     name: 'Pages',
@@ -189,25 +224,34 @@ export const navItems: INavData[] = [
       {
         name: 'Login',
         url: '/login',
-        icon: 'icon-star'
+        icon: 'icon-star',
+        ldap_attributes: {hidden: null, who: []},
+
       },
       {
         name: 'Register',
         url: '/register',
-        icon: 'icon-star'
+        icon: 'icon-star',
+        ldap_attributes: {hidden: null, who: []},
+
       },
       {
         name: 'Error 404',
         url: '/404',
-        icon: 'icon-star'
+        icon: 'icon-star',
+        ldap_attributes: {hidden: null, who: []},
+
       },
       {
         name: 'Error 500',
         url: '/500',
-        icon: 'icon-star'
+        icon: 'icon-star',
+        ldap_attributes: {hidden: null, who: []},
+
       }
     ],
-    attributes: {hidden: null, who: []},
+    attributes: {hidden: true, who: []},
+    ldap_attributes: {hidden: true, who: []},
 
   },
   {
@@ -218,7 +262,8 @@ export const navItems: INavData[] = [
       variant: 'secondary',
       text: 'NEW'
     },
-    attributes: {hidden: null, who: []},
+    attributes: {hidden: true, who: []},
+    ldap_attributes: {hidden: true, who: ['Software']},
 
   }
 ];

@@ -18,6 +18,7 @@ export class RoutersComponent implements OnInit {
     currentPage: 1,
     totalItems: 0
   }; 
+  
 }
 
   routers = [];

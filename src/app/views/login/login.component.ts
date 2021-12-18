@@ -21,15 +21,24 @@ export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   isSubmitted  =  false;
   token = '';
+  ldap_token = '';
   errorMessage = '';
   @Output() send_username = new EventEmitter<String>();
   username = '';
   permission;
   role: string = "";
   show_reset_password:boolean = false;
+  ldap_form:boolean = true;
+  ldap_obj;
+  show_ldap_login_form(){
+    this.ldap_form = true;
+  }
 
+  show_standard_login_form(){
+    this.ldap_form = false;
 
-  login(loginForm){
+  }
+  standard_login(loginForm){
     let loggedin = this.usrSrv.loggedin();
     this.usrSrv.login(loginForm).then(res => {
       this.token = res.token;
@@ -37,6 +46,7 @@ export class LoginComponent implements OnInit{
 
         localStorage.setItem('access_token', this.token);
         this.username = res.username;
+        localStorage.setItem('ldap_login', 'false');
         this.send_username.emit(this.username);
         localStorage.setItem('username', this.username);
         this.notifySrv.showSuccess('Login is Successfull','Login');
@@ -52,6 +62,28 @@ export class LoginComponent implements OnInit{
   });
   }
 
+  ldap_login(ldap_loginForm){
+    this.usrSrv.ldap_login(ldap_loginForm).then(res => {
+      this.ldap_obj = res.result;
+      this.ldap_token = res.token;
+      if(this.ldap_obj.message ==='Success'){
+        var group_name = JSON.stringify(res.result.group_name)
+        localStorage.setItem('ldap_permissions', group_name);
+        if(!res.result.group_name[0].includes('Portman')){
+          this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
+          return;
+        }
+        localStorage.setItem('ldap_login', 'true');
+        localStorage.setItem('access_token', this.ldap_token);
+        this.notifySrv.showSuccess('Login is Successfull','Login');
+        this.router.navigate(['/switch/switch']);
+
+      }
+  },
+   (error) => {
+    this.show_errors(error);
+  });
+  }
   send_reset_password_link(email)
   {
     var valid_email_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -84,16 +116,21 @@ export class LoginComponent implements OnInit{
   }
 
   get_permission(){
+    if(this.ldap_form){
+      this.usrSrv.get_permission().then(ldap_perm_res => {
+
+      });
+    }
     this.usrSrv.get_permission().then(perm_res => {
       this.permission = perm_res;
       localStorage.setItem("permissions", JSON.stringify(this.permission));
       this.role = this.permission.user_type;
       localStorage.setItem('role', this.role);
       if(this.role == "COREUSER"){
-        this.router.navigate(['/router/router']);
+        this.router.navigate(['/switch/switch']);
       }
       else{
-        this.router.navigate(['/router/router']);
+        this.router.navigate(['/switch/switch']);
       }
     });
   }

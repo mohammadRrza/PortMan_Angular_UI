@@ -37,22 +37,45 @@ export class DefaultLayoutComponent implements OnInit {
     else {
       this.router.navigate(['/login']);
     }
-    var permissions = JSON.parse(localStorage.getItem("permissions"));
-    var role = permissions.user_type;
-    this.navItems.forEach(function (value) {
-      if (value.attributes && value.attributes.who) {
-        if(value.attributes.who.includes(role)){
-          value.attributes.hidden = null;
+    var is_ldap_login = localStorage.getItem("ldap_login")
+    if(is_ldap_login === 'true'){
+      var ldap_permissions = JSON.parse(localStorage.getItem("ldap_permissions"));
+      this.navItems.forEach(function (value) {
+        if (value.ldap_attributes && value.ldap_attributes.who) {
+          if(value.ldap_attributes.who.includes(ldap_permissions[0])){
+            value.attributes.hidden = null;
+          }
+          else{
+            if(value.attributes){      
+              value.attributes.hidden = true;
+            }
+          }
         }
-        else{
-          value.attributes.hidden = true;
+  
+  
+      });
+       this.username = localStorage.getItem("username");
+       console.log(this.username); 
+    }
+    else{
+      var permissions = JSON.parse(localStorage.getItem("permissions"));
+      var role = permissions.user_type;
+      this.navItems.forEach(function (value) {
+        if (value.attributes && value.attributes.who) {
+          if(value.attributes.who.includes(role)){
+            value.attributes.hidden = null;
+          }
+          else{
+            value.attributes.hidden = true;
+          }
         }
-      }
+  
+  
+      });
+       this.username = localStorage.getItem("username");
+       console.log(this.username);
+    }
 
-
-    });
-     this.username = localStorage.getItem("username");
-     console.log(this.username);
 
   }
 
