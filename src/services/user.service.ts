@@ -10,6 +10,8 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 export class UserService {
     apiURL = environment.APIEndpoint + 'users/';
+    apiURL2 = environment.APIEndpoint + 'users-permission-profile/';
+
     token = localStorage.getItem('access_token');
     helper = new JwtHelperService();
 
@@ -66,7 +68,7 @@ export class UserService {
 
     get_users_permission(page,itemsPerPage): Promise<any> {
         return this._http
-            .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
+            .get(this.apiURL2 + '?page='+page, this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -90,7 +92,7 @@ export class UserService {
     
     get_user_permission_profile(permission_profile_id){
         return this._http
-            .get(this.apiURL+'permission-profile/'+permission_profile_id+'/objects/', this.httpOptions)
+            .get(this.apiURL2+permission_profile_id+'/objects/', this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);

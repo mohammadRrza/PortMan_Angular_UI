@@ -39,4 +39,12 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  load_all_commands(dslam_id): Promise<any> {
+    return this._http
+      .get(this.apiURL + "?dslam_id=" + dslam_id, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 }

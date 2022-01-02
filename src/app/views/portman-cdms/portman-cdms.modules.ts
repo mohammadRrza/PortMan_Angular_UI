@@ -6,6 +6,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 import {FieldsetModule} from 'primeng/fieldset';
+import {InputTextModule} from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -15,7 +20,12 @@ import {FieldsetModule} from 'primeng/fieldset';
         NgxPaginationModule,
         TableModule,
         PaginatorModule,
-        FieldsetModule
+        FieldsetModule,
+        InputTextModule,
+        ButtonModule,
+        AutoCompleteModule,
+        AutocompleteLibModule,
+        CardModule
     ],
     declarations: [ PortmanCdmsComponent ]
   })

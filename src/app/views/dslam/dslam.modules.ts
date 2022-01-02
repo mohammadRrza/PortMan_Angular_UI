@@ -13,7 +13,6 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
-import { ButtonModule } from 'primeng/button';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {InputTextModule} from 'primeng/inputtext';
 import {AutoCompleteModule} from 'primeng/autocomplete';
@@ -41,7 +40,6 @@ import {CardModule} from 'primeng/card';
         AutocompleteLibModule,
         FieldsetModule,
         InputSwitchModule,
-        ButtonModule,
         ProgressSpinnerModule,
         InputTextModule,
         TooltipModule,

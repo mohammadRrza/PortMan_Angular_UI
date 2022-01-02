@@ -1,1 +1,135 @@
-<p>portman-cdms works!</p>
+<div class="row" style="direction: rtl; text-align: center;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+              PortMan CDMS
+            </div>
+            <div class="glowing-border direction">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="p-float-label" style="margin-top: 20px; float: left;">
+                                <input id="float-input" [(ngModel)]="username" type="text" pInputText [value]="" placeholder="Enter the Username">
+                                <p-button icon="pi pi-search"  (click)="get_port_info()" styleClass="rounded-button ui-button-success"></p-button>
+        
+                              </span>
+                        </div>
+                       
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+                                <div class="col-lg-9">
+
+                                <span class="p-float-label" style="margin-top: 20px; width: 100%;" >
+                                    <ng-autocomplete [data]="zabbix_fqdns" [searchKeyword]="keyword2" placeHolder="Enter a part of fqdn"
+                                    (selected)='fqdn_selectEvent($event)' (inputChanged)='fqdn_onChangeSearch($event)'
+                                    (inputFocused)='fqdn_onFocused($event)' historyIdentifier="fqdns" [itemTemplate]="itemTemplate"
+                                    [notFoundTemplate]="notFoundTemplate">
+                                  </ng-autocomplete>
+                                  <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.device_fqdn"></a>
+                                  </ng-template>
+              
+                                  <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                  </ng-template>
+                                </span>
+                                </div>
+                                <div class="col-lg-3" >
+                                    <button pButton type="button" style="margin-top: 20px; width: 100%; float: left;"
+                                    (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Update FQDN" ></button>
+                                </div>
+                            </div>
+                        </div> 
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-6">
+                        <div *ngIf='responseStatus.ErrorCode != 0'>
+                            {{responseStatus.Message}}
+                        </div>
+                        <div>
+                            <span *ngIf='port_infos && responseStatus.ErrorCode == 0' class="p-float-label" style="margin-top: 20px; width: 50%;">
+                                <table *ngIf='port_infos && responseStatus.ErrorCode == 0' class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                                    <thead class="thead-light">
+                                      <tr>
+                                        <th class="text-center">User Name</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Card</th>
+                                        <th class="text-center">Port</th>
+                                        <th class="text-center">FQDN</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr >
+                                        <td>{{port_infos.PanelUsername}}</td>
+                                        <td>{{port_infos.Name}}</td>
+                                        <td>{{port_infos.D_Kart}}</td>
+                                        <td>{{port_infos.D_Port}}</td>
+                                        <td *ngIf="port_infos.FQDN">{{port_infos.FQDN}}</td>
+                                        <td *ngIf="!port_infos.FQDN">{{zabbix_fqdn}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </span>
+                              <div class="row" style="margin: 20px;">
+                                <span *ngIf='port_infos && responseStatus.ErrorCode == 0' class="p-float-label" style="margin-top: 20px; width: 50%;">
+                                    <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
+                                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                                    (inputFocused)='onFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                                    [notFoundTemplate]="notFoundTemplate">
+                                  </ng-autocomplete>
+                                  <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.name"></a>
+                                  </ng-template>
+              
+                                  <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                  </ng-template>
+                                    <span class="p-float-label" style="margin-top: 10px; float: left;" *ngIf ="profile_adsl_set">
+                                        <input id="float-input" [(ngModel)]="new_lineprofile" type="text" pInputText [value]="" placeholder="New Lineprofile">                
+                                      </span>
+                                  <div style="margin-top: 10px;">
+                                    <button pButton type="button"
+                                    (click)="run_command(comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run Command" ></button>
+                                    <button pButton type="button"
+                                    (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Run3" ></button>
+                                    <button pButton type="button"
+                                    (click)="run_command_by_ip('172.17.193.192',comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run2" ></button>
+                                  </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <p-card header="Command Result" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+                            <hr />
+                            <!--<div *ngIf="!show_result" class="res_div_disabled border command_res">
+                              <p-progressSpinner></p-progressSpinner>
+                            </div>-->
+                            <div class="res_div border">
+                              <pre>
+                                <div>
+                                 <pre>{{command_res}}</pre>
+                                </div>
+                             </pre>
+                            </div>
+                            <pre>
+                            </pre>
+                          </p-card>
+                        </div>
+                    </div> 
+            </div>
+            <hr/>
+            <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+
+                <div class="col-12">
+                    <p-card header="Command History">
+                        <hr />
+                        <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                        </table>
+                    </p-card>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>

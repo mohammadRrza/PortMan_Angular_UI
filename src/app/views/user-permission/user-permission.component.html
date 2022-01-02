@@ -51,8 +51,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-permission>
                         <tr>
-                            <td class="text-center">{{permission.username}}</td>
-                            <td class="text-center">{{permission.username}}</td>
+                            <td class="text-center" *ngIf="permission.user_info">{{permission.user_info.username}}</td>
+                            <td class="text-center">{{permission.permission_profile_name}}</td>
                             <td class="text-center">
                               <img src="\assets\img\brand\permission.png" width="30"
                               pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" (click) = 'get_user_permission_profile(permission.id)' />
