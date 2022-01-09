@@ -77,6 +77,27 @@ export class DslamOperationComponent implements OnInit {
   command_res;
   P_number;
   S_number;
+  ngn_dslam_ip:string = ""
+  ngn_dslam_subnet_mask:string = ""
+  ngn_phone_number:string = ""
+  ngn_Sip_password:string = ""
+  ngn_card:number = 0
+  ngn_port:number = 0
+  ngn_register_port_started:boolean = false;
+  ngn_register_port_comlpeted:boolean = false;
+  sip_configuration_started:boolean = false;
+  sip_configuration_comlpeted:boolean = false;
+  assign_number_to_user_started:boolean = false;
+  assign_number_to_user_comlpeted:boolean = false;
+  reset_sip_configuration_started:boolean = false;
+  reset_sip_configuration_comlpeted:boolean = false;
+  display_if_sip_attribute_running_started:boolean = false;
+  display_if_sip_attribute_running_comlpeted:boolean = false;
+  ngn_register_port_res;
+  sip_configuration_res;
+  assign_number_to_user_res;
+  reset_sip_configuration_res;
+  display_if_sip_attribute_running_res;
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -322,6 +343,67 @@ export class DslamOperationComponent implements OnInit {
       });
     }  
   }
+
+  register_ngn_number(){
+    this.ngn_register_port_started = false;
+    this.ngn_register_port_comlpeted = false;
+    this.sip_configuration_started = false;
+    this.sip_configuration_comlpeted = false;
+    this.assign_number_to_user_started = false;
+    this.assign_number_to_user_comlpeted = false;
+    this.reset_sip_configuration_started = false;
+    this.reset_sip_configuration_comlpeted = false;
+    this.display_if_sip_attribute_running_started = false;
+    this.display_if_sip_attribute_running_comlpeted = false;
+    const ipPattern = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    if(this.ngn_dslam_ip.match(ipPattern) || this.ngn_dslam_subnet_mask.match(ipPattern)){
+      alert('match');
+    }
+    else{
+      alert('not match');
+    }
+    let ngn_command = "ngn_register_port"
+
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+    this.ngn_register_port_started =  true;
+    this.dslamSrv.register_ngn_number(command_str).then(res=>{
+      this.ngn_register_port_res = res.result.result;
+      this.ngn_register_port_comlpeted =  true;
+       ngn_command = "sip_configuration"
+       this.sip_configuration_started =  true;
+       command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+      this.dslamSrv.register_ngn_number(command_str).then(res=>{
+        this.sip_configuration_res = res.result.result;
+
+        this.sip_configuration_comlpeted =  true;
+         ngn_command = "assign_number_to_user"
+         this.assign_number_to_user_started =  true;
+         command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+        this.dslamSrv.register_ngn_number(command_str).then(res=>{
+          this.assign_number_to_user_res = res.result.result;
+          this.assign_number_to_user_comlpeted =  true;
+           ngn_command = "reset_sip_configuration"
+           this.reset_sip_configuration_started =  true;
+           command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+          this.dslamSrv.register_ngn_number(command_str).then(res=>{
+            this.reset_sip_configuration_res = res.result.result;
+            this.reset_sip_configuration_comlpeted =  true;
+            ngn_command = "display_if_sip_attribute_running"
+             this.display_if_sip_attribute_running_started =  true;
+             command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+            this.dslamSrv.register_ngn_number(command_str).then(res=>{
+              this.display_if_sip_attribute_running_res = res.result;
+              console.log(this.display_if_sip_attribute_running_res);
+              this.display_if_sip_attribute_running_comlpeted =  true;
+
+            });
+          });
+        });
+      });
+    });
+
+  }
+
   ngOnInit(): void {
     let loggedIn = localStorage.getItem('loggedin');
     console.log(!Boolean(loggedIn));

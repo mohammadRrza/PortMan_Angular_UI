@@ -337,6 +337,154 @@
                   </tbody>
                 </table>
               </tab>
+              <tab *ngIf="dslamInfo.dslam_type && dslamInfo.dslam_type==2">
+                <ng-template tabHeading><i class="icon-pie-chart"></i> رجیستر شماره NGN </ng-template>
+                <div class="row" style="direction: ltr;">
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_dslam_ip" (keyup)="search_ports(P_count,2)"
+                    placeholder="DSLAM IP" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM IP"
+                    tooltipPosition="top">
+                  </div>  
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_dslam_subnet_mask" (keyup)="search_ports(P_count,2)"
+                    placeholder="DSLAM Subnet Mask" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM Subnet Mask"
+                    tooltipPosition="top">
+                  </div>  
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_card" (keyup)="search_ports(P_count,2)"
+                    placeholder="Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Slot"
+                    tooltipPosition="top">
+                  </div>  
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_port" (keyup)="search_ports(P_count,2)"
+                    placeholder="Port" class="p-column-filter" style="margin: 10px;" pTooltip="Port"
+                    tooltipPosition="top">
+                  </div>  
+                  
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_phone_number" (keyup)="search_ports(P_count,2)"
+                    placeholder="Phone Number" class="p-column-filter" style="margin: 10px;" pTooltip="Phone Number"
+                    tooltipPosition="top">
+                  </div>  
+                  <div class="col-md-1 mb-4">
+                    <input pInputText type="text" [(ngModel)]="ngn_Sip_password" (keyup)="search_ports(P_count,2)"
+                    placeholder="SIP Password" class="p-column-filter" style="margin: 10px;" pTooltip="SIP Password"
+                    tooltipPosition="top">
+                  </div>  
+                  <div class="col-md-2 mb-4">
+                    <button aria-pressed="true" style="margin-top:10px; padding-left: 30%;"
+                    class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="register_ngn_number()">Register Number</button>
+                  </div>  
+                </div>
+                <div>
+                  
+                </div>
+                <div class="row" style="direction: ltr;">
+                  <div class="col-6">
+                    <div class="row" style="direction: ltr;">
+                      <div class="col-md-2 mb-4">
+                        <div class="cards" >
+                          <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
+                            <div>
+                              NGN Register Port
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div *ngIf="ngn_register_port_started" class="col-md-6 mb-4" style="float: left;">
+                        <img *ngIf="!ngn_register_port_comlpeted" src="\assets\img\brand\updating.gif" width="30"
+                        pTooltip="Updating" tooltipPosition="top" />
+                      <img *ngIf="ngn_register_port_comlpeted"  src="\assets\img\brand\ready.png" width="30" title="ready"
+                        pTooltip="ready" tooltipPosition="top" />             
+                       </div>
+                    </div>
+                    <div class="row" style="direction: ltr;">
+                      <div class="col-md-2 mb-4">
+                        <div class="cards" >
+                          <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
+                            <div>
+                              SIP Configuration
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div *ngIf="sip_configuration_started" class="col-md-6 mb-4" style="float: left;">
+                        <img *ngIf="!sip_configuration_comlpeted" src="\assets\img\brand\updating.gif" width="30"
+                        pTooltip="Updating" tooltipPosition="top" />
+                      <img *ngIf="sip_configuration_comlpeted"   src="\assets\img\brand\ready.png" width="30" title="ready"
+                        pTooltip="ready" tooltipPosition="top" />             
+                       </div>
+                    </div>
+                    <div class="row" style="direction: ltr;">
+                      <div class="col-md-2 mb-4">
+                        <div class="cards" >
+                          <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
+                            <div>
+                              Assign Number To User
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div *ngIf="assign_number_to_user_started" class="col-md-6 mb-4" style="float: left;">
+                        <img *ngIf="!assign_number_to_user_comlpeted" src="\assets\img\brand\updating.gif" width="30"
+                        pTooltip="Updating" tooltipPosition="top" />
+                      <img *ngIf="assign_number_to_user_comlpeted" src="\assets\img\brand\ready.png" width="30" title="ready"
+                        pTooltip="ready" tooltipPosition="top" />             
+                       </div>
+                    </div>
+                    <div class="row" style="direction: ltr;">
+                      <div class="col-md-2 mb-4">
+                        <div class="cards" >
+                          <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
+                            <div>
+                              Reset SIP Configuration
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div *ngIf="reset_sip_configuration_started" class="col-md-6 mb-4" style="float: left;">
+                        <img *ngIf="!reset_sip_configuration_comlpeted" src="\assets\img\brand\updating.gif" width="30"
+                        pTooltip="Updating" tooltipPosition="top" />
+                      <img *ngIf="reset_sip_configuration_comlpeted"  src="\assets\img\brand\ready.png" width="30" title="ready"
+                        pTooltip="ready" tooltipPosition="top" />             
+                       </div>
+                    </div>
+                    <div class="row" style="direction: ltr;">
+                      <div class="col-md-2 mb-4">
+                        <div class="cards" >
+                          <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
+                            <div>
+                              Display If SIP Attribute Running
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div *ngIf="display_if_sip_attribute_running_started" class="col-md-6 mb-4" style="float: left;">
+                        <img  *ngIf="!display_if_sip_attribute_running_comlpeted" src="\assets\img\brand\updating.gif" width="30"
+                        pTooltip="Updating" tooltipPosition="top" />
+                      <img  *ngIf="display_if_sip_attribute_running_comlpeted" src="\assets\img\brand\ready.png" width="30" title="ready"
+                        pTooltip="ready" tooltipPosition="top" />             
+                       </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                  <p-card header="NGN Registration Result">
+                    <hr />
+                    <div class="res_div border">
+                      <pre>
+                        <div>
+                         <pre>{{display_if_sip_attribute_running_res}}</pre>
+                        </div>
+                     </pre>
+                    </div>
+                    <pre>
+                    </pre>
+                  </p-card>
+                </div>
+                </div>
+        
+              </tab>
             </tabset>
           </div>
           <!--/.col-->

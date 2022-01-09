@@ -176,4 +176,14 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  register_ngn_number(ngn_command_str):Promise<any> {
+    console.log(ngn_command_str);
+    return this._http
+      .post(this.apiURL+'ngn_register/', ngn_command_str, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   }
