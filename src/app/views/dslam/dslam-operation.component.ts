@@ -98,6 +98,12 @@ export class DslamOperationComponent implements OnInit {
   assign_number_to_user_res;
   reset_sip_configuration_res;
   display_if_sip_attribute_running_res;
+  ngn_dslam_ip_isValid: boolean = false;
+  ngn_dslam_subnet_mask_isValid: boolean = false;
+  ngn_card_isValid: boolean = false;
+  ngn_port_isValid: boolean = false;
+  ngn_phone_number_isValid: boolean = false;
+
   // public pieChartLabels: string[] = [];
   // public pieChartData: number[] = [];
   // public pieChartType = 'pie';
@@ -355,13 +361,7 @@ export class DslamOperationComponent implements OnInit {
     this.reset_sip_configuration_comlpeted = false;
     this.display_if_sip_attribute_running_started = false;
     this.display_if_sip_attribute_running_comlpeted = false;
-    const ipPattern = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-    if(this.ngn_dslam_ip.match(ipPattern) || this.ngn_dslam_subnet_mask.match(ipPattern)){
-      alert('match');
-    }
-    else{
-      alert('not match');
-    }
+
     let ngn_command = "ngn_register_port"
 
     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"' + ngn_command + '","new_lineprofile":""}';
@@ -395,12 +395,56 @@ export class DslamOperationComponent implements OnInit {
               this.display_if_sip_attribute_running_res = res.result;
               console.log(this.display_if_sip_attribute_running_res);
               this.display_if_sip_attribute_running_comlpeted =  true;
-
             });
           });
         });
       });
     });
+
+  }
+
+  check_ngn_dslam_ip(ngn_dslam_ip){
+    const ipPattern = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    if(this.ngn_dslam_ip.match(ipPattern) || this.ngn_dslam_subnet_mask.match(ipPattern)){
+      this.ngn_dslam_ip_isValid = true;
+    }
+    else{
+      this.ngn_dslam_ip_isValid = false;
+    }
+  }
+
+  check_ngn_dslam_subnet_mask(ngn_dslam_subnet_mask){
+    const ipPattern = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    if(this.ngn_dslam_subnet_mask.match(ngn_dslam_subnet_mask)){
+      this.ngn_dslam_subnet_mask_isValid = true;
+    }
+    else{
+      this.ngn_dslam_subnet_mask_isValid = false;
+    }
+  }
+
+  view_registered_numbers(){
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"display_sippstnuser_reg_state","new_lineprofile":""}';
+    this.dslamSrv.register_ngn_number(command_str).then(res=>{
+      
+    });
+  }
+  view_call_state(){
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.ngn_card+'","port_number":"'+this.ngn_port+'"}},"command":"display_sippstnuser_call_state","new_lineprofile":""}';
+    this.dslamSrv.register_ngn_number(command_str).then(res=>{
+      
+    });
+  }
+
+  check_ngn_card(ngn_card){
+
+  }
+
+  check_ngn_phone_number(ngn_phone_number){
+
+  }
+
+  check_ngn_Sip_password(ngn_Sip_password){
 
   }
 

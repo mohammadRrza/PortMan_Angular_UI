@@ -341,44 +341,57 @@
                 <ng-template tabHeading><i class="icon-pie-chart"></i> رجیستر شماره NGN </ng-template>
                 <div class="row" style="direction: ltr;">
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_dslam_ip" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="text" [(ngModel)]="ngn_dslam_ip" [ngStyle]="{'border-color': ngn_dslam_ip_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_ip(ngn_dslam_ip)"
                     placeholder="DSLAM IP" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM IP"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_dslam_subnet_mask" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="text" [(ngModel)]="ngn_dslam_subnet_mask" [ngStyle]="{'border-color': ngn_dslam_subnet_mask_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_subnet_mask(ngn_dslam_subnet_mask)"
                     placeholder="DSLAM Subnet Mask" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM Subnet Mask"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_card" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="text" [(ngModel)]="ngn_card" [ngStyle]="{'border-color': ngn_card_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_card(ngn_card)"
                     placeholder="Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Slot"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_port" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="text" [(ngModel)]="ngn_port" [ngStyle]="{'border-color': ngn_port_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_port(ngn_port)"
                     placeholder="Port" class="p-column-filter" style="margin: 10px;" pTooltip="Port"
                     tooltipPosition="top">
                   </div>  
                   
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_phone_number" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="text" [(ngModel)]="ngn_phone_number" [ngStyle]="{'border-color': ngn_phone_number_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_phone_number(ngn_phone_number)"
                     placeholder="Phone Number" class="p-column-filter" style="margin: 10px;" pTooltip="Phone Number"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_Sip_password" (keyup)="search_ports(P_count,2)"
+                    <input pInputText type="password" [(ngModel)]="ngn_Sip_password" [ngStyle]="{'border-color': ngn_dslam_ip_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_Sip_password(ngn_Sip_password)"
                     placeholder="SIP Password" class="p-column-filter" style="margin: 10px;" pTooltip="SIP Password"
                     tooltipPosition="top">
                   </div>  
-                  <div class="col-md-2 mb-4">
-                    <button aria-pressed="true" style="margin-top:10px; padding-left: 30%;"
-                    class="btn btn-block btn-outline-primary active card" type="button"
-                    (click)="register_ngn_number()">Register Number</button>
-                  </div>  
+ 
                 </div>
                 <div>
                   
+                </div>
+                <div class="row" style="direction: ltr; margin-left: 10px;">
+                  <div class="mb-4" style="margin:5px;">
+                    <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
+                    class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="register_ngn_number()">Register Number</button>
+                  </div>  
+                  <div class="mb-4" style="margin:5px;">
+                    <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
+                    class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="view_registered_numbers()">View the Registered Numbers on the Port</button>
+                  </div>
+                  <div class="mb-4" style="margin:5px;">
+                    <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
+                    class="btn btn-block btn-outline-primary active card" type="button"
+                    (click)="view_call_state()">Call State</button>
+                  </div>
                 </div>
                 <div class="row" style="direction: ltr;">
                   <div class="col-6">
@@ -466,7 +479,10 @@
                       <img  *ngIf="display_if_sip_attribute_running_comlpeted" src="\assets\img\brand\ready.png" width="30" title="ready"
                         pTooltip="ready" tooltipPosition="top" />             
                        </div>
+                       
                     </div>
+
+                    
                 </div>
                 <div class="col-6">
                   <p-card header="NGN Registration Result">
