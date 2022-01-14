@@ -47,7 +47,15 @@ export const navItems: INavData[] = [
       attributes: {hidden: null, who: []},
       ldap_attributes: {hidden: null, who: []},
   
-       },
+    },
+    {
+        name: 'DDR Page',
+        url: '/ddr-page/ddr-page-info',
+        icon: 'icon-settings',
+        attributes: {hidden: null, who: ['ADMIN']},
+        ldap_attributes: {hidden: null, who: []},
+    
+    },
   {
     name: 'مدیریت روترها',
     url: '/router/router',

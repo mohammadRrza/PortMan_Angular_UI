@@ -385,12 +385,12 @@
                   <div class="mb-4" style="margin:5px;">
                     <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
                     class="btn btn-block btn-outline-primary active card" type="button"
-                    (click)="view_registered_numbers()">View the Registered Numbers on the Port</button>
+                    (click)="view_registered_numbers()">View Registered Numbers on Port</button>
                   </div>
                   <div class="mb-4" style="margin:5px;">
                     <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
                     class="btn btn-block btn-outline-primary active card" type="button"
-                    (click)="view_call_state()">Call State</button>
+                    (click)="view_call_state()">View Call State</button>
                   </div>
                 </div>
                 <div class="row" style="direction: ltr;">
@@ -409,8 +409,14 @@
                         <img *ngIf="!ngn_register_port_comlpeted" src="\assets\img\brand\updating.gif" width="30"
                         pTooltip="Updating" tooltipPosition="top" />
                       <img *ngIf="ngn_register_port_comlpeted"  src="\assets\img\brand\ready.png" width="30" title="ready"
-                        pTooltip="ready" tooltipPosition="top" />             
+                        pTooltip="ready" tooltipPosition="top" />  
+         
                        </div>
+                       <div *ngIf="ngn_register_port_error" class="col-md-6 mb-4" style="float: left;">
+                       <img src="\assets\img\brand\error.png" width="30" title="error"
+                       pTooltip="error" tooltipPosition="top" />  
+                      </div>
+
                     </div>
                     <div class="row" style="direction: ltr;">
                       <div class="col-md-2 mb-4">

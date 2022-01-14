@@ -70,6 +70,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/telecom-costs/telecom-costs.module').then(m => m.TelecomCostsModule)
       },
       {
+        path: 'ddr-page',
+        loadChildren: () => import('./views/ddr-page-info/ddr_page_info.modules').then(m => m.DDRPageInfoModule)
+      },
+      {
         path: 'backup-management',
         loadChildren: () => import('./views/backup-management/backup-management.madules').then(m => m.BackupManagementModule)
       },
