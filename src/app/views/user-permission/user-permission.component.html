@@ -55,11 +55,11 @@
                             <td class="text-center">{{permission.permission_profile_name}}</td>
                             <td class="text-center">
                               <img src="\assets\img\brand\permission.png" width="30"
-                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" (click) = 'get_user_permission_profile(permission.id)' />
+                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" (click) = 'get_user_permission_profile(permission.id, 1)' />
                             </td>
                             <td class="text-center">
                               <img src="\assets\img\brand\permission.png" width="30"
-                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" />
+                              pTooltip="View permissions" tooltipPosition="top" style="cursor: pointer;" (click) = 'get_user_permission_profile(permission.id, 2)'/>
                             </td>
                             <td class="text-center">
                               <img src="\assets\img\brand\permission.png" width="30"
@@ -95,15 +95,33 @@
 </div>
 
 
-<p-dialog header="User Permission Profile" [(visible)]="view_user_permission_profile" [modal]="true" [style]="{width: '50vw', height: '100vw'}"
+<p-dialog header="Dslam Permission Profile" [(visible)]="view_user_dslam_permission_profile" [modal]="true" [style]="{width: '50vw', height: '100vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="true">
   <div class="border-info">
     <div class="row">
       <div class="col-md-12">
         <div style="height: 200px;">
-          <p-multiSelect [options]="dslam_permissions" [style]="{'width': '100%'}" [(ngModel)]="selectedPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
+          <p-multiSelect [options]="dslam_permissions" [style]="{'width': '100%'}" [(ngModel)]="selected_dslamPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
           <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
-            <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+            <button *ngIf="user_permission.model_type=='dslam'" aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+            (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+
+<p-dialog header="Command Permission Profile" [(visible)]="view_user_command_permission_profile" [modal]="true" [style]="{width: '50vw', height: '100vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="true">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+        <div style="height: 200px;">
+          <p-multiSelect [options]="command_permissions" [style]="{'width': '100%'}" [(ngModel)]="selected_commandPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
+          <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
+            <button *ngIf="user_permission.model_type=='command'" aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
             (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
            </div>
         </div>
