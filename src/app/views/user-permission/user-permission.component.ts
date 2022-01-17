@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { Permission } from '../../dtos/permission_dto';
 
 @Component({
   selector: 'app-user-permission',
   templateUrl: './user-permission.component.html',
   styleUrls: ['./user-permission.component.css']
 })
+
+
 export class UserPermissionComponent implements OnInit {
 
   constructor(private usrSrv: UserService) { 
@@ -14,7 +17,14 @@ export class UserPermissionComponent implements OnInit {
       currentPage: 1,
       totalItems: 0
     };
+    this.dslam_permissions = [
+  ];
   }
+
+  
+  dslam_permissions:Permission[];
+  selectedPermissions: Permission;
+  user_permissions : Permission[];
   pagination_config;
   users_permissions = [];
   add_permission_profile : boolean = false;
@@ -34,6 +44,12 @@ export class UserPermissionComponent implements OnInit {
 
   get_user_permission_profile(permission_profile_id){
     this.usrSrv.get_user_permission_profile(permission_profile_id).then(res => {
+      if(res.result){
+        this.dslam_permissions = res.result;
+        this.selectedPermissions = res.result;
+        this.user_permissions = res.result;
+
+      }
       this.view_user_permission_profile = true;
     });
   }
@@ -41,6 +57,10 @@ export class UserPermissionComponent implements OnInit {
   show_add_Permission(){
     this.add_permission_profile = true;
   }
+  onChange(event){
+    this.user_permissions = event.value;
+  }
+
   ngOnInit(): void {
     this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }

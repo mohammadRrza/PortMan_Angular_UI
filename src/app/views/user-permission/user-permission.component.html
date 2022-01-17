@@ -95,21 +95,21 @@
 </div>
 
 
-<p-dialog header="User Permission Profile" [(visible)]="view_user_permission_profile" [modal]="true" [style]="{width: '50vw'}"
-  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+<p-dialog header="User Permission Profile" [(visible)]="view_user_permission_profile" [modal]="true" [style]="{width: '50vw', height: '100vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="true">
   <div class="border-info">
     <div class="row">
       <div class="col-md-12">
-        <div>
-          <table>
-            <tr>
-              <td>
-
-              </td>
-            </tr>
-          </table>
+        <div style="height: 200px;">
+          <p-multiSelect [options]="dslam_permissions" [style]="{'width': '100%'}" [(ngModel)]="selectedPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
+          <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
+            <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+            (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
+           </div>
         </div>
       </div>
     </div>
   </div>
 </p-dialog>
+
+

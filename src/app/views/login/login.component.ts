@@ -129,6 +129,9 @@ export class LoginComponent implements OnInit{
       if(this.role == "COREUSER"){
         this.router.navigate(['/switch/switch']);
       }
+      else if(this.role == "RESELLER"){
+        this.router.navigate(['/ddr-page/ddr-page-info']);
+      }
       else{
         this.router.navigate(['/switch/switch']);
       }

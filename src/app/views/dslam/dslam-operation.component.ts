@@ -368,12 +368,6 @@ export class DslamOperationComponent implements OnInit {
     this.ngn_register_port_started =  true;
     this.dslamSrv.register_ngn_number(command_str).then(res=>{
       this.ngn_register_port_res = res.result.result;
-      if(this.ngn_register_port_res.includes('No results was returned.')){
-            this.ngn_register_port_started =  false;
-              this.ngn_register_port_comlpeted =  false;
-              this.ngn_register_port_error = true;
-              return;
-      }
       this.ngn_register_port_comlpeted =  true;
        ngn_command = "sip_configuration"
        this.sip_configuration_started =  true;

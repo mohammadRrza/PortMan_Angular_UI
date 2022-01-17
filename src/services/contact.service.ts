@@ -10,6 +10,7 @@ export class ContactService {
 
   //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'contact/';
+  apiURL2 = environment.APIEndpoint + 'farzanegan_data/';
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -97,4 +98,21 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  get_ddr_info(username, currentPage, itemsPerPage): Promise<any> {
+    return this._http
+      .get(this.apiURL2+'?page='+currentPage+'&page_size='+itemsPerPage, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_ddr_info_total(owner_username): Promise<any> {
+    return this._http
+      .get(this.apiURL+'farzanegan_provider_date?owner_username='+owner_username, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
 }

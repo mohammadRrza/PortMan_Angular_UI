@@ -52,7 +52,7 @@ export const navItems: INavData[] = [
         name: 'DDR Page',
         url: '/ddr-page/ddr-page-info',
         icon: 'icon-settings',
-        attributes: {hidden: null, who: ['ADMIN']},
+        attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
         ldap_attributes: {hidden: null, who: []},
     
     },

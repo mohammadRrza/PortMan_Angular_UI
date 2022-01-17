@@ -1,1 +1,66 @@
-<p>ddr-page-info works!</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="text-align: center;">
+                DDR Page Information
+            </div>
+            <div class="card-body" class="border" style="margin: 10px;">
+                <table class="table table-striped" style="direction: ltr;">
+                    <thead class="text-center">
+                        <th>Total Traffic</th>
+                        <th>Used Traffic</th>
+                        <th>Remain Traffic</th>
+                        <th>Total Numbers</th>
+                        <th>Used Numbers</th>
+                        <th>Remain Numbers</th>
+                        <th>Total Data Volume</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody >
+                        <tr *ngIf="farzanegan_data_total">
+                            <td class="text-center">{{farzanegan_data_total.total_traffic| number : fractionSize}}</td>
+                            <td class="text-center">{{farzanegan_data_total.used_traffic | number : fractionSize}}</td>
+                            <td class="text-center">{{farzanegan_data_total.remain_traffic| number : fractionSize}}</td>
+                            <td class="text-center">{{farzanegan_data_total.total_numbers| number : fractionSize}}</td>
+                            <td class="text-center">{{farzanegan_data_total.used_numbers}}</td>
+                            <td class="text-center">{{farzanegan_data_total.remain_numbers}}</td>
+                            <td class="text-center">{{farzanegan_data_total.total_data_volume | number : fractionSize}}</td>
+                            <td class="text-center" >{{farzanegan_data_total.created|date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <hr/>
+            <hr/>
+
+            <div class="card-body" class="border" style="margin: 10px;">
+                <p-table styleClass="p-datatable-striped" #dt1 [value]="farzanegan_data" selectionMode="single">
+                    <ng-template pTemplate="header">
+
+                        <tr class="row-accessories">
+                            <th>Date Key</th>
+                            <th>Provider Number</th>
+                            <th>Customer Msisdn</th>
+                            <th>Total Data Volume Income</th>
+                            <th>Provider Name</th>
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-farzanegan>
+                        <tr>
+                            <td class="text-center">{{farzanegan.date_key}}</td>
+                            <td class="text-center">{{farzanegan.provider_number}}</td>
+                            <td class="text-center">{{farzanegan.customer_msisdn}}</td>
+                            <td class="text-center">{{farzanegan.total_data_volume_income}}</td>
+                            <td class="text-center">{{farzanegan.provider_number}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+                [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+            </div>
+        </div>
+    </div>
+</div>
