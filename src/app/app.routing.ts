@@ -90,6 +90,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/radio/radio.madules').then(m => m.RadioModule)
       },
       {
+        path: 'partak',
+        loadChildren: () => import('./views/update-partak-fqdns/update-partak-fqdns.modules').then(m => m.UpdatePartakFqdnsModule)
+      },
+      {
         path: 'dslam',
         loadChildren: () => import('./views/dslam/dslam.modules').then(m => m.DslamModule)
       },

@@ -340,16 +340,16 @@
               <tab *ngIf="dslamInfo.dslam_type && dslamInfo.dslam_type==2">
                 <ng-template tabHeading><i class="icon-pie-chart"></i> رجیستر شماره NGN </ng-template>
                 <div class="row" style="direction: ltr;">
-                  <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_dslam_ip" [ngStyle]="{'border-color': ngn_dslam_ip_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_ip(ngn_dslam_ip)"
+                  <!-- <div class="col-md-1 mb-4">
+                    <input *ngIf="false" pInputText type="text" [(ngModel)]="ngn_dslam_ip" [ngStyle]="{'border-color': ngn_dslam_ip_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_ip(ngn_dslam_ip)"
                     placeholder="DSLAM IP" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM IP"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
-                    <input pInputText type="text" [(ngModel)]="ngn_dslam_subnet_mask" [ngStyle]="{'border-color': ngn_dslam_subnet_mask_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_subnet_mask(ngn_dslam_subnet_mask)"
+                    <input *ngIf="false" pInputText type="text" [(ngModel)]="ngn_dslam_subnet_mask" [ngStyle]="{'border-color': ngn_dslam_subnet_mask_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_dslam_subnet_mask(ngn_dslam_subnet_mask)"
                     placeholder="DSLAM Subnet Mask" class="p-column-filter" style="margin: 10px;" pTooltip="DSLAM Subnet Mask"
                     tooltipPosition="top">
-                  </div>  
+                  </div>   -->
                   <div class="col-md-1 mb-4">
                     <input pInputText type="text" [(ngModel)]="ngn_card" [ngStyle]="{'border-color': ngn_card_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_card(ngn_card)"
                     placeholder="Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Slot"
@@ -363,7 +363,7 @@
                   
                   <div class="col-md-1 mb-4">
                     <input pInputText type="text" [(ngModel)]="ngn_phone_number" [ngStyle]="{'border-color': ngn_phone_number_isValid ? '#00aeff' : '#ff0000'}" (keyup)="check_ngn_phone_number(ngn_phone_number)"
-                    placeholder="Phone Number" class="p-column-filter" style="margin: 10px;" pTooltip="Phone Number"
+                    placeholder="982191099999" class="p-column-filter" style="margin: 10px;" pTooltip="Phone Number"
                     tooltipPosition="top">
                   </div>  
                   <div class="col-md-1 mb-4">
@@ -387,15 +387,27 @@
                     class="btn btn-block btn-outline-primary active card" type="button"
                     (click)="view_registered_numbers()">View Registered Numbers on Port</button>
                   </div>
+                  <div class="mb-4" style="margin:10px;">
+                    <img *ngIf="!view_registered_number" style="margin:8px;" src="\assets\img\brand\error.png" width="30"
+                    pTooltip="" tooltipPosition="top" />
+                  <img *ngIf="view_registered_number" style="margin:8px;" src="\assets\img\brand\ready.png" width="30" title="ready"
+                    pTooltip="ready" tooltipPosition="top" />  
+                  </div>
                   <div class="mb-4" style="margin:5px;">
                     <button aria-pressed="true" style="margin-top:10px; padding-left: 8px; text-align: center;"
                     class="btn btn-block btn-outline-primary active card" type="button"
                     (click)="view_call_state()">View Call State</button>
                   </div>
+                  <div class="mb-4" style="margin:5px;">
+                    <img *ngIf="" src="\assets\img\brand\updating.gif" width="30"
+                    pTooltip="Updating" tooltipPosition="top" />
+                  <img *ngIf="assign_number_to_user_comlpeted" src="\assets\img\brand\ready.png" width="30" title="ready"
+                    pTooltip="ready" tooltipPosition="top" />   
+                  </div>
                 </div>
                 <div class="row" style="direction: ltr;">
                   <div class="col-6">
-                    <div class="row" style="direction: ltr;">
+                    <!-- <div class="row" style="direction: ltr;">
                       <div class="col-md-2 mb-4">
                         <div class="cards" >
                           <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
@@ -417,8 +429,8 @@
                        pTooltip="error" tooltipPosition="top" />  
                       </div>
 
-                    </div>
-                    <div class="row" style="direction: ltr;">
+                    </div> -->
+                    <!-- <div class="row" style="direction: ltr;">
                       <div class="col-md-2 mb-4">
                         <div class="cards" >
                           <div class="glowing-border" style="width: 220%; height: auto; padding: auto;">
@@ -434,7 +446,7 @@
                       <img *ngIf="sip_configuration_comlpeted"   src="\assets\img\brand\ready.png" width="30" title="ready"
                         pTooltip="ready" tooltipPosition="top" />             
                        </div>
-                    </div>
+                    </div> -->
                     <div class="row" style="direction: ltr;">
                       <div class="col-md-2 mb-4">
                         <div class="cards" >

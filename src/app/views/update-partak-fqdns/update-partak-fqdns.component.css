@@ -33,10 +33,10 @@
       .disabled{
         position: absolute;
         z-index: 500;
-        margin-top: 6%;
-        margin-left: 1%;
-        height: 71%;
-        width: 98%;
+        margin-top: 0%;
+        margin-left: 0%;
+        height: 70%;
+        width: 97%;
         background-color: #85b8eb;
         opacity: 0.5;
       }
@@ -51,6 +51,11 @@
         transition: box-shadow 0.2s;
     }
 
-    ::ng-deep .p-button.p-button-icon-only{
-      height: 50px;
+.row_class{
+    margin: 10px;
+}
+
+::ng-deep .p-inputtext 
+     {
+      width: 100%;
     }

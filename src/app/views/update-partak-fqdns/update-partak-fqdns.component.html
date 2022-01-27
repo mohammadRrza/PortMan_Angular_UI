@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="text-align: center;">
+                Update Partak FQDNs
+
+            </div>
+            <div class="card-body" class="border" style="margin: 10px;">
+                <div class="row row_class">
+                    <div class="ng-autocomplete col-md-6" style="direction: ltr;">
+                        <ng-autocomplete [data]="prov_list" [searchKeyword]="prov_keyword" placeHolder="Select The Province"
+                          (selected)='prov_selectEvent($event)' (inputChanged)='prov_onChangeSearch($event)'
+                          (inputFocused)='prov_onFocused($event)' [itemTemplate]="prove_itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+    
+                        <ng-template #prove_itemTemplate let-item>
+                          <a [innerHTML]="item.ProvinceName"></a>
+                        </ng-template>
+    
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                      <div class="ng-autocomplete col-md-6" style="direction: ltr;">
+                        <ng-autocomplete [data]="city_list" [searchKeyword]="city_keyword" placeHolder="Select The City"
+                          (selected)='city_selectEvent($event)' (inputChanged)='city_onChangeSearch($event)'
+                          (inputFocused)='city_onFocused($event)'  [itemTemplate]="city_itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+    
+                        <ng-template #city_itemTemplate let-item>
+                          <a [innerHTML]="item.CityName"></a>
+                        </ng-template>
+    
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                </div>
+                <hr />
+                <div class="row row_class">
+                    <div class="ng-autocomplete col-md-6" style="direction: ltr;">
+                        <ng-autocomplete [data]="telecom_list" [searchKeyword]="telecom_keyword" placeHolder="Select The Telecom Center"
+                          (selected)='telecom_selectEvent($event)' (inputChanged)='telecom_onChangeSearch($event)'
+                          (inputFocused)='telecom_onFocused($event)'  [itemTemplate]="telecom_itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+    
+                        <ng-template #telecom_itemTemplate let-item>
+                          <a [innerHTML]="item.MdfName"></a>
+                        </ng-template>
+    
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                      <div class="ng-autocomplete col-md-6" style="direction: ltr;">
+                        <ng-autocomplete [data]="dslam_list" [searchKeyword]="dslam_keyword" placeHolder="Select The Dslam"
+                          (selected)='dslam_selectEvent($event)' (inputChanged)='dslam_onChangeSearch($event)'
+                          (inputFocused)='dslam_onFocused($event)'  [itemTemplate]="dslam_itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+    
+                        <ng-template #dslam_itemTemplate let-item>
+                          <a [innerHTML]="item.Slat" *ngIf="item"></a>
+                        </ng-template>
+    
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                </div>
+                <hr />
+                <hr />
+                <div class="row row_class" *ngIf='dslam_info'>
+                    <div class="col-md-6" style="direction: ltr;">
+                        <p-autoComplete [(ngModel)]="fqdn" [suggestions]="portman_fqdns" [inputStyle]="{'width':'70%'}" [style]="{'width':'100%'}" (completeMethod)="search_fqdns($event)" field="fqdn"></p-autoComplete>
+                        <div style="margin-top: 5px;">
+                            <button pButton type="button" label="Update Fqdn" (click)="update_fqdn()" ></button>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="direction: ltr;">
+                        <table  class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
+                            <thead class="thead-light">
+                              <tr>
+                                <th class="text-center" style="max-width: 10%;">Telecom Center</th>
+                                <th class="text-center">FQDN</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr >
+                                <td class="text-center" style="width: 20%;">{{dslam_info.MdfName}}</td>
+                                <td class="text-center">{{dslam_info.FQDN}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

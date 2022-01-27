@@ -79,6 +79,13 @@ export const navItems: INavData[] = [
     ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
   },
   {
+    name: 'به روز رسانی پارتاک',
+    url: '/partak/update-partak-fqdns',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN']},
+    ldap_attributes: {hidden: null, who: []},
+   },
+  {
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
@@ -89,7 +96,7 @@ export const navItems: INavData[] = [
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER','SUPERVISOR','DIRECTRESELLER']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
     ldap_attributes: {hidden: null, who: []},
   },
   {

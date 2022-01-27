@@ -63,6 +63,7 @@ import { ContactService } from '../services/contact.service';
 import { login } from '../app/Classes/login';
 import { SwitchCommandService } from '../services/switch-command.service';
 import { RouterCommandService } from '../services/router-command.service';
+import { PartakService } from '../services/partak.service';
 import { DialogModule } from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -104,7 +105,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     P404Component,
     P500Component,
     LoginComponent
-        ],
+          ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
@@ -121,6 +122,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     CityService,
     ConfirmationService,
     PermissionService,
+    PartakService,
     ContactService,
     SwitchCommandService,
     RouterCommandService,

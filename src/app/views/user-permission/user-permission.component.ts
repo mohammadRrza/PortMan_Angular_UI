@@ -70,6 +70,7 @@ export class UserPermissionComponent implements OnInit {
     this.add_permission_profile = true;
   }
   onChange(event){
+    console.log(event);
     this.user_permissions = event.value;
   }
 

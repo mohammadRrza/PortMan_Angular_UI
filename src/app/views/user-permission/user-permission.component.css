@@ -6,7 +6,7 @@
       box-shadow: 3px 2px 18px 4px #A2C5FF; 
       padding: 5px;
       margin-top: 15px;
-      height: 100%;
+      height: auto;
       }
 ::ng-deep .p-datatable .p-datatable-thead > tr > th{
         text-align: center;
