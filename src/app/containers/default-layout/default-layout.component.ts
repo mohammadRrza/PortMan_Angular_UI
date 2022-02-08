@@ -21,6 +21,9 @@ export class DefaultLayoutComponent implements OnInit {
     localStorage.removeItem('loggedin');
     localStorage.removeItem('access_token');
     localStorage.removeItem('role');
+    localStorage.removeItem('ldap_login');
+    localStorage.removeItem('username');
+
     this.router.navigate(['/login']);
 
   }
@@ -42,14 +45,19 @@ export class DefaultLayoutComponent implements OnInit {
       var ldap_permissions = JSON.parse(localStorage.getItem("ldap_permissions"));
       this.navItems.forEach(function (value) {
         if (value.ldap_attributes && value.ldap_attributes.who) {
-          if(value.ldap_attributes.who.includes(ldap_permissions[0])){
-            value.attributes.hidden = null;
-          }
-          else{
-            if(value.attributes){      
-              value.attributes.hidden = true;
+          for (var i = 0; i < ldap_permissions.length; i++) {
+
+            if(value.ldap_attributes.who.includes(ldap_permissions[i])){
+              value.attributes.hidden = null;
+              break;
+            }
+            else{
+              if(value.attributes){      
+                value.attributes.hidden = true;
+              }
             }
           }
+
         }
   
   

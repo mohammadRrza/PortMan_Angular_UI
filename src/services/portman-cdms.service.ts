@@ -9,6 +9,9 @@ import { NotificationService } from './notification.service'
 
 export class PortManCDMSService {
     apiURL = environment.APIEndpoint + 'portman_cdms/';
+    apiURL2 = environment.APIEndpoint + 'users/';
+    apiURL3 = environment.APIEndpoint + 'user/';
+
     token = localStorage.getItem('access_token');
 
     constructor(private _http: HttpClient, private notSrv: NotificationService) {
@@ -60,6 +63,22 @@ get_dslam_id_by_ip(ip:string): Promise<any> {
 get_fqdn_from_zabbix(fqdn:string): Promise<any> {
     return this._http
         .get(this.apiURL+'get_fqdn_from_zabbix/?fqdn='+fqdn , this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(this.handleError);
+}
+
+add_bulk_users_to_portman(user_str:string): Promise<any> {
+    return this._http
+        .post(this.apiURL2, user_str, this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(this.handleError);
+}
+
+set_permission_for_user(email:string): Promise<any> {
+    return this._http
+        .get(this.apiURL3+'set_permission_for_user/?email='+email, this.httpOptions)
         .toPromise()
         .then(res => res)
         .catch(this.handleError);

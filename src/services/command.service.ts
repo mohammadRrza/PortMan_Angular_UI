@@ -40,9 +40,17 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
-  load_all_commands(dslam_id): Promise<any> {
+  load_all_commands(dslam_id, username, ldap_login): Promise<any> {
     return this._http
-      .get(this.apiURL + "?dslam_id=" + dslam_id, this.httpOptions)
+      .get(this.apiURL + "?dslam_id=" + dslam_id+'&username='+username+'&ldap_login='+ldap_login, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_all_commands_by_email(dslam_id, ldap_email, ldap_login): Promise<any> {
+    return this._http
+      .get(this.apiURL + "?dslam_id=" + dslam_id+'&ldap_email='+ldap_email+'&ldap_login='+ldap_login, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

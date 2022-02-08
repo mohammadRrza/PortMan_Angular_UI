@@ -17,7 +17,7 @@
                        
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
-                                <div class="col-lg-9">
+                                <!-- <div class="col-lg-9">
 
                                 <span class="p-float-label" style="margin-top: 20px; width: 100%;" >
                                     <ng-autocomplete [data]="zabbix_fqdns" [searchKeyword]="keyword2" placeHolder="Enter a part of fqdn"
@@ -37,7 +37,7 @@
                                 <div class="col-lg-3" >
                                     <button pButton type="button" style="margin-top: 20px; width: 100%; float: left;"
                                     (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Update FQDN" ></button>
-                                </div>
+                                </div> -->
                             </div>
                         </div> 
                 </div>
@@ -54,6 +54,7 @@
                                       <tr>
                                         <th class="text-center">User Name</th>
                                         <th class="text-center">Name</th>
+                                        <th class="text-center">AgentName</th>
                                         <th class="text-center">Card</th>
                                         <th class="text-center">Port</th>
                                         <th class="text-center">FQDN</th>
@@ -63,6 +64,7 @@
                                       <tr >
                                         <td>{{port_infos.PanelUsername}}</td>
                                         <td>{{port_infos.Name}}</td>
+                                        <td>{{port_infos.AgentUsername}}</td>
                                         <td>{{port_infos.D_Kart}}</td>
                                         <td>{{port_infos.D_Port}}</td>
                                         <td *ngIf="port_infos.FQDN">{{port_infos.FQDN}}</td>
@@ -91,10 +93,10 @@
                                   <div style="margin-top: 10px;">
                                     <button pButton type="button"
                                     (click)="run_command(comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run Command" ></button>
-                                    <button pButton type="button"
+                                    <!-- <button pButton type="button"
                                     (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Run3" ></button>
                                     <button pButton type="button"
-                                    (click)="run_command_by_ip('172.17.193.192',comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run2" ></button>
+                                    (click)="run_command_by_ip('172.17.193.192',comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run2" ></button> -->
                                   </div>
                                 </span>
                             </div>
@@ -108,8 +110,9 @@
                             </div>-->
                             <div class="res_div border">
                               <pre>
-                                <div>
-                                 <pre>{{command_res}}</pre>
+                                <div style="min-height: 300px;">
+                                 <pre *ngIf="command_res_show">{{command_res}}</pre>
+                                 <p-progressSpinner *ngIf="!command_res_show" [style]="{width: '100px', height: '100px'}" styleClass="custom-spinner" strokeWidth="2" animationDuration="1s"></p-progressSpinner>
                                 </div>
                              </pre>
                             </div>
@@ -119,6 +122,10 @@
                         </div>
                     </div> 
             </div>
+            <button pButton type="button"
+            (click)="add_bulk_users_to_portman()" label="Run Command" ></button>
+            <button pButton type="button"
+            (click)="set_permission_for_user()" label="set_permission_for_user" ></button>
             <hr/>
             <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
 

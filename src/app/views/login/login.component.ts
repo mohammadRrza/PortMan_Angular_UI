@@ -62,21 +62,44 @@ export class LoginComponent implements OnInit{
   });
   }
 
-  ldap_login(ldap_loginForm){
+ldap_login(ldap_loginForm){
     this.usrSrv.ldap_login(ldap_loginForm).then(res => {
       this.ldap_obj = res.result;
       this.ldap_token = res.token;
       if(this.ldap_obj.message ==='Success'){
-        var group_name = JSON.stringify(res.result.group_name)
-        localStorage.setItem('ldap_permissions', group_name);
-        if(!res.result.group_name[0].includes('Portman')){
-          this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
-          return;
-        }
-        localStorage.setItem('ldap_login', 'true');
-        localStorage.setItem('access_token', this.ldap_token);
-        this.notifySrv.showSuccess('Login is Successfull','Login');
-        this.router.navigate(['/switch/switch']);
+
+        var portman_ldap_groups = [];
+        for (var i = 0; i < res.result.group_name.length; i++) {
+
+          if(res.result.group_name[i].includes('Portman')){
+            var group_name = JSON.stringify(res.result.group_name);
+            var email = res.result.email;
+            var ldap_name = res.result.fullname;
+            localStorage.setItem('ldap_permissions', group_name);
+            localStorage.setItem('ldap_email', email);
+            localStorage.setItem('username', ldap_name);
+            portman_ldap_groups.push(res.result.group_name[i]);
+            // if(!res.result.group_name[0].includes('Portman')){
+            //   this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
+            //   return;
+            // }
+            localStorage.setItem('ldap_login', 'true');
+            localStorage.setItem('access_token', this.ldap_token);
+            this.notifySrv.showSuccess('Login is Successfull','Login');
+            this.router.navigate(['/portman-cdms/portman-cdms']);
+          }
+          // else{
+          //     this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
+          //     return;
+          // }
+
+      }
+      console.log(portman_ldap_groups);
+
+      if(portman_ldap_groups.length === 0){
+        this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
+        return;
+ }
 
       }
   },

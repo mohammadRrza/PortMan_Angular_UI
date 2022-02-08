@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {CardModule} from 'primeng/card';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
     imports: [
@@ -20,6 +20,7 @@ import {CardModule} from 'primeng/card';
         NgxPaginationModule,
         TableModule,
         PaginatorModule,
+        ProgressSpinnerModule,
         FieldsetModule,
         InputTextModule,
         ButtonModule,

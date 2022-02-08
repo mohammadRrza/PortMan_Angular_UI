@@ -8,8 +8,9 @@ import { NotificationService } from '../../../services/notification.service';
 import { BandwidthService } from '../../../services/bandwidth.service';
 import { Zabbix_history } from '../../dtos/zabbix_dto';
 import { Router } from '@angular/router';
-
 import { ErrorHandlerService } from '../../../services/error-handler.service';
+import {LoginCls} from '../../dtos/login_cls';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-dslam',
@@ -27,6 +28,8 @@ export class DslamOperationComponent implements OnInit {
     private bwSrv: BandwidthService,
     private errorHandler: ErrorHandlerService,
     private router: Router,
+    private jwtHelper: JwtHelperService
+
   ) {
     this.route.queryParams.subscribe(params => {
       this.dslam_id = params['dslamId'];
@@ -478,6 +481,8 @@ export class DslamOperationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var loginCls =  new LoginCls(this.jwtHelper,this.router);
+    loginCls.check_login();
     let loggedIn = localStorage.getItem('loggedin');
     console.log(!Boolean(loggedIn));
 

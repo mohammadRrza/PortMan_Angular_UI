@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SwitchService } from '../../../services/switch.service';
+import {LoginCls} from '../../dtos/login_cls';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-switch',
@@ -9,7 +12,10 @@ import { SwitchService } from '../../../services/switch.service';
 export class SwitchComponent implements OnInit {
 
 
-  constructor(private switchSrv: SwitchService) {   
+  constructor(private switchSrv: SwitchService,
+    private jwtHelper: JwtHelperService,
+    private router: Router
+    ) {   
     this.pagination_config = {
    itemsPerPage: 10,
    currentPage: 1,
@@ -67,5 +73,7 @@ download_switch_backup(switch_ip){
 
  ngOnInit(): void {
    this.get_all_switches(1,10);
+   var loginCls =  new LoginCls(this.jwtHelper,this.router);
+  //  loginCls.check_login();
  }
 }

@@ -99,9 +99,9 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
-  get_ddr_info(username, currentPage, itemsPerPage): Promise<any> {
+  get_ddr_info(owner_username, currentPage, itemsPerPage): Promise<any> {
     return this._http
-      .get(this.apiURL2+'?page='+currentPage+'&page_size='+itemsPerPage, this.httpOptions)
+      .get(this.apiURL2+'?page='+currentPage+'&page_size='+itemsPerPage+'&owner_username='+owner_username, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
@@ -115,4 +115,11 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  get_ddr_info_exportExcel(owner_username): Promise<any> {
+    return this._http
+      .get(this.apiURL+'get_ddr_info_exportExcel/?owner_username='+owner_username, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 }

@@ -3,6 +3,9 @@ import { SwitchCommandService } from '../../../services/switch-command.service';
 import { SwitchService } from '../../../services/switch.service';
 import { ActivatedRoute } from '@angular/router';
 import { SwitchDTO } from '../../dtos/switch_dto';
+import {LoginCls} from '../../dtos/login_cls';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-router',
@@ -15,7 +18,10 @@ export class SwitchOperationComponent implements OnInit {
     switch_dto : SwitchDTO;
     constructor(private SwitchCommandSrv:SwitchCommandService,
                 private SwitchSrv:SwitchService,
-                private route: ActivatedRoute
+                private route: ActivatedRoute,
+                private jwtHelper: JwtHelperService,
+                private router: Router
+
                ){
                   this.route.queryParams.subscribe(params => {
                   this.switch_id = params['switchId'];
@@ -121,5 +127,7 @@ export class SwitchOperationComponent implements OnInit {
 
     
     ngOnInit(): void {
+      var loginCls =  new LoginCls(this.jwtHelper,this.router);
+      loginCls.check_login();
       }
 }

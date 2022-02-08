@@ -13,8 +13,8 @@ export const navItems: INavData[] = [
     name: 'Portman CDMS',
     url: '/portman-cdms/portman-cdms',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
-    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
   {
     name: 'مدیریت مراکز مخابراتی',
@@ -278,7 +278,7 @@ export const navItems: INavData[] = [
       text: 'NEW'
     },
     attributes: {hidden: true, who: []},
-    ldap_attributes: {hidden: true, who: ['Software']},
+    ldap_attributes: {hidden: true, who: []},
 
   }
 ];

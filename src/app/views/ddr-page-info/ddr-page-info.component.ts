@@ -19,9 +19,11 @@ export class DdrPageInfoComponent implements OnInit {
    pagination_config;
    farzanegan_data = [];
    farzanegan_data_total;
+   owner_username = localStorage.getItem("username");
+   farzanegan_data_exportExcel;
 
-   get_ddr_info(username, currentPage, itemsPerPage){
-    this.contSrv.get_ddr_info(username, currentPage, itemsPerPage).then(res=>{
+   get_ddr_info(owner_username, currentPage, itemsPerPage,){
+    this.contSrv.get_ddr_info(owner_username, currentPage, itemsPerPage).then(res=>{
       this.farzanegan_data = res.results;
       this.pagination_config.totalItems = res.count;
     });
@@ -38,16 +40,20 @@ export class DdrPageInfoComponent implements OnInit {
    paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
-    this.get_ddr_info('',this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
+    this.get_ddr_info(this.owner_username,this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
   }
 
   exportExcel() {
-    import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.farzanegan_data);
+    this.contSrv.get_ddr_info_exportExcel(this.owner_username).then(res=>{
+      this.farzanegan_data_exportExcel = res.result;
+      import("xlsx").then(xlsx => {
+        const worksheet = xlsx.utils.json_to_sheet(this.farzanegan_data_exportExcel);
         const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, "Data");
     });
+    });
+
 }
 
 
@@ -67,8 +73,8 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 }
 
   ngOnInit(): void {
-    this.get_ddr_info_total('Iran-sepanta');
-    this.get_ddr_info('', this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+    this.get_ddr_info_total(this.owner_username);
+    this.get_ddr_info(this.owner_username, this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 
 }
