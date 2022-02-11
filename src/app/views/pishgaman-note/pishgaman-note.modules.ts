@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PishgamanNoteComponent } from './pishgaman-note.component';
+import { PishgamanNoteComponent, Safe } from './pishgaman-note.component';
 import { PishgamanNoteRoutingModule } from './pishgaman-note.routing.module';
 import { CommonModule } from "@angular/common";
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -35,6 +35,6 @@ import {EditorModule} from 'primeng/editor';
         EditorModule,
 
     ],
-    declarations: [ PishgamanNoteComponent ]
+    declarations: [ PishgamanNoteComponent,Safe ]
   })
   export class PishgamanNoteModule { }

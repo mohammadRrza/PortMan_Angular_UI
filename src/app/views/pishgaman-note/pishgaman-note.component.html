@@ -21,11 +21,12 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-pishgaman_note>
+                            
                             <tr>
                                 <td class="text-center">{{pishgaman_note.telecom_center}}</td>
-                                <td class="text-center">{{pishgaman_note.problem_desc}}</td>
+                                <td class="text-center" [innerHTML]="pishgaman_note.problem_desc | safeHtml"></td>
                                 <td class="text-center">{{pishgaman_note.username}}</td>
-                                <td class="text-center">{{pishgaman_note.register_time}}</td>
+                                <td class="text-center">{{pishgaman_note.register_time | date:'medium'}}</td>
                                 <td class="text-center">               
                                  <div class="col-md-12" style="padding-left: 40%">
                                     <div class="row">

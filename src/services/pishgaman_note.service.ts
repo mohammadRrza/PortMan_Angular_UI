@@ -34,9 +34,9 @@ export class PishgamanNoteService {
             .catch(this.handleError);
     }
 
-    save_note(note_str): Promise<any> {
+    save_note(note_obj): Promise<any> {
         return this._http
-            .post(this.apiURL+'save-note/', note_str, this.httpOptions)
+            .post(this.apiURL+'save-note/', note_obj, this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);

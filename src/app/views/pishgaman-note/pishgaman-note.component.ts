@@ -1,6 +1,17 @@
-import { Component, OnInit, ɵcompileNgModuleFactory__POST_R3__ } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import {PishgamanNoteService} from '../../../services/pishgaman_note.service';
+import { DomSanitizer} from '@angular/platform-browser';
 
+@Pipe({name: 'safeHtml'})
+export class Safe {
+  constructor(private sanitizer:DomSanitizer){}
+
+  transform(value: any, args?: any): any {
+    return this.sanitizer.bypassSecurityTrustHtml(value);
+    // return this.sanitizer.bypassSecurityTrustStyle(style);
+    // return this.sanitizer.bypassSecurityTrustXxx(style); - see docs
+  }
+}
 @Component({
   selector: 'app-pishgaman-note',
   templateUrl: './pishgaman-note.component.html',
@@ -8,7 +19,8 @@ import {PishgamanNoteService} from '../../../services/pishgaman_note.service';
 })
 export class PishgamanNoteComponent implements OnInit {
 
-  constructor(private pish_noteSrv: PishgamanNoteService) {
+  constructor(private pish_noteSrv: PishgamanNoteService,
+    private sanitizer: DomSanitizer) {
     this.pagination_config = {
       itemsPerPage: 10,
       currentPage: 1,
@@ -48,10 +60,12 @@ export class PishgamanNoteComponent implements OnInit {
   }
 
   save_note(){
+    var problem_description = this.problem_description.replace('"',"'").replace('"',"'");
+    console.log(problem_description);
     this.username = localStorage.getItem("username");
-    var note_str='{"username": "'+this.username+'","problem_description": "'+this.problem_description+'","province": "'+this.province+'","city": "'+this.city+'","telecom_center": "'+this.telecom_center+'"}';
+    var note_str='{"username": "'+this.username+'","problem_description": "'+problem_description+'","province": "'+this.province+'","city": "'+this.city+'","telecom_center": "'+this.telecom_center+'"}';
     this.pish_noteSrv.save_note(note_str).then(res=>{
-
+      this.get_pishgaman_notes();
     });
 
   }
