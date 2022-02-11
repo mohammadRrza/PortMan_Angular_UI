@@ -3,9 +3,11 @@
         <div class="card">
             <div class="card-header">
               Pishgaman Note
-              <span>
-                <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add New Problem"
+              <hr />
+              <span style="font-size: 2rem; float: right; cursor: pointer;">
+                <i class="pi pi-plus-circle"  pTooltip="Add New Problem"
                   tooltipPosition="left" (click)="show_add_new_problem()"></i>
+                  <i class="pi pi-refresh" (click)="refresh_problems()"></i>
               </span>
             </div>
             <div class="glowing-border direction" style="direction: ltr;">
@@ -22,7 +24,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-pishgaman_note>
                             
-                            <tr>
+                            <tr *ngIf="show_problems">
                                 <td class="text-center">{{pishgaman_note.telecom_center}}</td>
                                 <td class="text-center" [innerHTML]="pishgaman_note.problem_desc | safeHtml"></td>
                                 <td class="text-center">{{pishgaman_note.username}}</td>

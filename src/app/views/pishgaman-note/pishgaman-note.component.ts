@@ -36,10 +36,11 @@ export class PishgamanNoteComponent implements OnInit {
    province:string = '';
    city:string = '';
    telecom_center:string = '';
-
+   show_problems: boolean = true;
   get_pishgaman_notes(){
     this.pish_noteSrv.get_pishgaman_notes(this.pagination_config.currentPage, this.pagination_config.itemsPerPage).then(res=>{
       this.pishgaman_notes = res.results;
+      this.show_problems = true;
     });
   }
 
@@ -68,6 +69,11 @@ export class PishgamanNoteComponent implements OnInit {
       this.get_pishgaman_notes();
     });
 
+  }
+
+  refresh_problems(){
+    this.show_problems = false;
+    this.get_pishgaman_notes();
   }
 
   ngOnInit(): void {

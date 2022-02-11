@@ -20,7 +20,7 @@
 
       tr ,input {
         font-family:Iranian_Sans;
-        font-size: smaller;
+        font: size 7px;;
       }
 
       .progressSpinner{
