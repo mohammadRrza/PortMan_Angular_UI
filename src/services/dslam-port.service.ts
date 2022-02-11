@@ -99,4 +99,12 @@ private handleError(error: any): Promise<any> {
     .then(res => res)
     .catch(this.handleError);
   }
+
+  register_port(command_obj): Promise<any> {
+    return this._http
+        .post(this.apiURL+'register-port/', command_obj,this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(this.handleError);
+}
 }

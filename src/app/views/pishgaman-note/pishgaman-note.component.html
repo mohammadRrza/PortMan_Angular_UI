@@ -1,0 +1,78 @@
+<div class="row" style="direction: rtl; text-align: center;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+              Pishgaman Note
+              <span>
+                <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add New Problem"
+                  tooltipPosition="left" (click)="show_add_new_problem()"></i>
+              </span>
+            </div>
+            <div class="glowing-border direction" style="direction: ltr;">
+                <div class="card-body">
+                    <p-table [value]="pishgaman_notes" class="table table-striped" responsiveLayout="scroll">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Telecom Center</th>
+                                <th>Status</th>
+                                <th>Operator Name</th>
+                                <th>Event Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-pishgaman_note>
+                            <tr>
+                                <td class="text-center">{{pishgaman_note.telecom_center}}</td>
+                                <td class="text-center">{{pishgaman_note.problem_desc}}</td>
+                                <td class="text-center">{{pishgaman_note.username}}</td>
+                                <td class="text-center">{{pishgaman_note.register_time}}</td>
+                                <td class="text-center">               
+                                 <div class="col-md-12" style="padding-left: 40%">
+                                    <div class="row">
+                                      <img  src="\assets\img\brand\info_icon.png" (click)="show_status_info(pishgaman_note.id)" width="20" pTooltip="Status info" tooltipPosition="top"
+                                        style="cursor: pointer; margin: 5px;" />
+                                      <img  src="\assets\img\brand\edit_icon.png" (click)="edit_status(pishgaman_note.id)" width="20" pTooltip="Status Edit" tooltipPosition="top"
+                                             style="cursor: pointer;margin: 5px;" />
+                                    </div>
+                                  </div>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog header="Add New Problem" [(visible)]="display_add_new_problem" [modal]="true" [style]="{width: '80vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="card">
+    <div class="glowing-border direction" style="direction: ltr;">
+        <div class="card-body border">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="p-float-label">
+                        <input id="float-input" [(ngModel)]="telecom_center"  type="text" pInputText style="width: 80%;"> 
+                        <label for="float-input">Telecom Center</label>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <p-button icon="pi pi-check" type="Button" label="Record and display the problem" styleClass="p-button-text" (click)='save_note()'></p-button>
+                </div>
+            </div>
+            <hr />
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p-editor (onTextChange)='onTextChange($event)'  [(ngModel)]="problem_description" [style]="{'height':'320px'}"></p-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+</p-dialog>

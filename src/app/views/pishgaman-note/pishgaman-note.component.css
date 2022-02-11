@@ -2,7 +2,7 @@
     box-shadow: 3px 2px 18px 4px #A2C5FF; 
     }
 
-.border-info {
+    .border-info {
       box-shadow: 3px 2px 18px 4px #A2C5FF; 
       padding: 5px;
       margin-top: 15px;
@@ -21,16 +21,6 @@
       tr ,input {
         font-family:Iranian_Sans;
         font-size: smaller;
-      }
-
-      .is-invalid-autoComplete{
-        background-color: darkorchid;
-      }
-
-      .is-invalid{
-        border: rgb(241, 8, 8);
-        border-style: solid;
-        border-radius: 5px;
       }
 
       .progressSpinner{
@@ -60,4 +50,7 @@
         -webkit-transition: box-shadow 0.2s;
         transition: box-shadow 0.2s;
     }
-    
+
+    ::ng-deep .p-button.p-button-icon-only{
+      height: 30px;
+    }

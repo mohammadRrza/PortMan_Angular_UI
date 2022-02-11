@@ -16,6 +16,13 @@ export const navItems: INavData[] = [
     attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
     ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
+   {
+    name: 'Pishgaman Note',
+    url: '/pishgaman-note/pishgaman-note',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    ldap_attributes: {hidden: null, who: ['Portman-support']},
+   },
   {
     name: 'مدیریت مراکز مخابراتی',
     url: '/telecom-center/telecom-center',
@@ -83,7 +90,7 @@ export const navItems: INavData[] = [
     url: '/partak/update-partak-fqdns',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN']},
-    ldap_attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
   {
     name: 'مدیریت دی اس لم ها',

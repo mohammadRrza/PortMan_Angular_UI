@@ -11,6 +11,7 @@ export class PortManCDMSService {
     apiURL = environment.APIEndpoint + 'portman_cdms/';
     apiURL2 = environment.APIEndpoint + 'users/';
     apiURL3 = environment.APIEndpoint + 'user/';
+    apiURL4 = environment.APIEndpoint + 'dslamport/';
 
     token = localStorage.getItem('access_token');
 
@@ -83,5 +84,7 @@ set_permission_for_user(email:string): Promise<any> {
         .then(res => res)
         .catch(this.handleError);
 }
+
+
 
 }

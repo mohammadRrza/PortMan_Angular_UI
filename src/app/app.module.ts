@@ -64,6 +64,7 @@ import { login } from '../app/Classes/login';
 import { SwitchCommandService } from '../services/switch-command.service';
 import { RouterCommandService } from '../services/router-command.service';
 import { PartakService } from '../services/partak.service';
+import { PishgamanNoteService } from '../services/pishgaman_note.service';
 import { DialogModule } from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -105,7 +106,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     P404Component,
     P500Component,
     LoginComponent
-          ],
+            ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
@@ -126,6 +127,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     ContactService,
     SwitchCommandService,
     RouterCommandService,
+    PishgamanNoteService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService
   ],

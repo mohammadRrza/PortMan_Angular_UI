@@ -66,6 +66,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/portman-cdms/portman-cdms.modules').then(m => m.PortmanCdmsModule)
       },
       {
+        path: 'pishgaman-note',
+        loadChildren: () => import('./views/pishgaman-note/pishgaman-note.modules').then(m => m.PishgamanNoteModule)
+      },
+      {
         path: 'back_up_errors',
         loadChildren: () => import('./views/telecom-costs/telecom-costs.module').then(m => m.TelecomCostsModule)
       },

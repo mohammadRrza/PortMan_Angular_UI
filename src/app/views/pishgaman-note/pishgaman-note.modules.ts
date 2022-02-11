@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { PortmanCdmsComponent } from './portman-cdms.component';
-import { PortmanCDMSRoutingModule } from './portman-cdms.routing.module';
+import { PishgamanNoteComponent } from './pishgaman-note.component';
+import { PishgamanNoteRoutingModule } from './pishgaman-note.routing.module';
 import { CommonModule } from "@angular/common";
 import {NgxPaginationModule} from 'ngx-pagination';
 import {TableModule} from 'primeng/table';
@@ -12,10 +12,13 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {CardModule} from 'primeng/card';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TooltipModule} from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import {EditorModule} from 'primeng/editor';
 
 @NgModule({
     imports: [
-        PortmanCDMSRoutingModule,
+        PishgamanNoteRoutingModule,
         CommonModule,
         NgxPaginationModule,
         TableModule,
@@ -26,8 +29,12 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         ButtonModule,
         AutoCompleteModule,
         AutocompleteLibModule,
-        CardModule
-        ],
-    declarations: [ PortmanCdmsComponent ]
+        CardModule,
+        TooltipModule,
+        DialogModule,
+        EditorModule,
+
+    ],
+    declarations: [ PishgamanNoteComponent ]
   })
-  export class PortmanCdmsModule { }
+  export class PishgamanNoteModule { }

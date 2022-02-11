@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {PortManCDMSService} from '../../../services/portman-cdms.service'
-import {DslamService} from '../../../services/dslam.service'
-import {CommandService} from '../../../services/command.service'
+import {PortManCDMSService} from '../../../services/portman-cdms.service';
+import {DslamService} from '../../../services/dslam.service';
+import {CommandService} from '../../../services/command.service';
+import {DslamPortService} from '../../../services/dslam-port.service'
 
 @Component({
   selector: 'app-portman-cdms',
@@ -12,7 +13,8 @@ export class PortmanCdmsComponent implements OnInit {
 
   constructor(private portman_cdmsSrv: PortManCDMSService,
               private dslamSrv: DslamService,
-              private comSrv: CommandService
+              private comSrv: CommandService,
+              private dslamPortsrv: DslamPortService
               ) { }
 
   username:string = '';
@@ -39,10 +41,7 @@ export class PortmanCdmsComponent implements OnInit {
   ldap_permissions;
   is_ldap_login;
   ldap_email;
-  portman_users = [
-    'v.oruji@pishgaman.net',
-    'h.ansari@pishgaman.net',
-    's.ebrahimzadeh@pishgaman.net']
+  portman_users = ['a.eshghi@pishgaman.net']
   get_port_info(){
     this.run_by_ip = false;
     this.portman_cdmsSrv.get_port_info(this.username).then(res=>{
@@ -77,7 +76,7 @@ export class PortmanCdmsComponent implements OnInit {
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
           this.profile_adsl_set = true;
           
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":"' +this.new_lineprofile+ '"}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
         else
         {
@@ -92,6 +91,12 @@ export class PortmanCdmsComponent implements OnInit {
       this.command_res = res.response.result?res.response.result:res.response?res.response:res.response;
       this.command_res_show = true;
   });
+  }
+
+  register_port(){
+    var command_str = '';
+    this.dslamPortsrv.register_port(command_str).then();
+
   }
 
   run_command_by_ip(ip, command_obj, card, port){
