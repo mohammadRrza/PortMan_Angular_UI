@@ -43,3 +43,8 @@
         stroke: #ffa700;
     }
 }
+
+.ping_tr{
+    border-style: groove;
+    background-color: aliceblue;
+}

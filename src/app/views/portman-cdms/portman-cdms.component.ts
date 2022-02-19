@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {PortManCDMSService} from '../../../services/portman-cdms.service';
 import {DslamService} from '../../../services/dslam.service';
 import {CommandService} from '../../../services/command.service';
 import {DslamPortService} from '../../../services/dslam-port.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-portman-cdms',
@@ -14,14 +15,15 @@ export class PortmanCdmsComponent implements OnInit {
   constructor(private portman_cdmsSrv: PortManCDMSService,
               private dslamSrv: DslamService,
               private comSrv: CommandService,
-              private dslamPortsrv: DslamPortService
+              private dslamPortsrv: DslamPortService,
+              private router: Router,
               ) { }
 
   username:string = '';
   commandObj = [];
   keyword = 'name';
   keyword2 = 'device_fqdn';
-
+  display_dslam_ping:boolean = false;
   data: any;
   port_infos;
   responseStatus = {};
@@ -41,13 +43,30 @@ export class PortmanCdmsComponent implements OnInit {
   ldap_permissions;
   is_ldap_login;
   ldap_email;
-  portman_users = ['a.eshghi@pishgaman.net']
+  pind_res;
+  ping_res_show:boolean = true;
+  user_does_not_exist:boolean = false;
+  portman_users = []
+  show_mac_by_slot_port:boolean = false;
+  show_custom_port: boolean = false;;
+  custom_slot:number;
+  custom_port: number;
+
+  
   get_port_info(){
+    this.user_does_not_exist = false;
     this.run_by_ip = false;
     this.portman_cdmsSrv.get_port_info(this.username).then(res=>{
       this.port_infos = res.CustomerInfo;
       this.responseStatus = res.ResponseStatus;
-      this.get_dslam_id_by_fqdn(this.port_infos.FQDN);
+      if(res.ResponseStatus.ErrorCode != 0){
+        this.user_does_not_exist = true;
+      }
+      else{
+        this.user_does_not_exist = false;
+        this.get_dslam_id_by_fqdn(this.port_infos.FQDN);
+
+      }
     });
   }
 
@@ -68,9 +87,14 @@ export class PortmanCdmsComponent implements OnInit {
       this.commandObj = res;
     });
   }
+  run_command_on_custom_port(command){
+    this.run_command_on_custom_port2(command, this.custom_slot, this.custom_port)
+  }
 
-  run_command(command_obj, card, port){
+  run_command_on_custom_port2(command_obj, card, port){
     this.command_res_show = false;
+    this.profile_adsl_set = false;
+    this.show_mac_by_slot_port = false;
     console.log(this.new_lineprofile)
     if(command_obj.type='port'){
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
@@ -78,8 +102,41 @@ export class PortmanCdmsComponent implements OnInit {
           
           var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
-        else
-        {
+    // else if(command_obj.name == 'show mac by slot port'){
+    //     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+    //   }
+    else
+      {
+          this.profile_adsl_set = false;
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+        }
+    }
+    else if(command_obj.type='dslam'){
+      var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+    }
+    this.dslamSrv.run_command(command_str).then(res => {
+      this.command_res = res.response.result?res.response.result:res.response?res.response:res.response;
+      this.command_res_show = true;
+  });
+  }
+  
+  run_command(command_obj, card, port){
+    console.log(command_obj.name);
+    this.command_res_show = false;
+    this.profile_adsl_set = false;
+    this.show_mac_by_slot_port = false;
+    console.log(this.new_lineprofile)
+    if(command_obj.type='port'){
+        if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
+          this.profile_adsl_set = true;
+          
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+        }
+    // else if(command_obj.name == 'show mac by slot port'){
+    //     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+    //   }
+    else
+      {
           this.profile_adsl_set = false;
           var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
         }
@@ -107,10 +164,17 @@ export class PortmanCdmsComponent implements OnInit {
   }
 
   selectEvent(item){
+    console.log(item.name);
+    this.profile_adsl_set = false;
+    // this.show_mac_by_slot_port = false;
     if(item.name == 'profile adsl set' || item.name == 'setPortProfiles'){
       this.profile_adsl_set = true;
       this.comm_item = item;
     }
+
+    // else if(item.name == 'show'){
+    //   this.show_mac_by_slot_port = true;
+    // }
     else{
       this.profile_adsl_set = false;
       this.comm_item = item; 
@@ -118,6 +182,10 @@ export class PortmanCdmsComponent implements OnInit {
 
    }
   
+   show_custom_port_event(event){
+    this.show_custom_port = event.checked;
+   }
+
   onChangeSearch(event){
     console.log('nChangeSearch');
 
@@ -185,6 +253,17 @@ export class PortmanCdmsComponent implements OnInit {
     this.portman_users.forEach(item=>{
       this.portman_cdmsSrv.set_permission_for_user(item).then();
     });
+  }
+
+  ping_dslam(){
+    this.display_dslam_ping = true;
+    this.ping_res_show = false;
+    var ping_str = '{"params":{"count":4,"timeout":0.2},"dslam_id":"'+this.dslam_id+'","icmp_type":"ping"}'
+    this.portman_cdmsSrv.ping_dslam(ping_str).then(res=>{
+      this.pind_res = res.result;
+      this.ping_res_show = true;
+    });
+
   }
 
   ngOnInit(): void {

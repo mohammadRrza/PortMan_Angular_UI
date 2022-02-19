@@ -97,7 +97,7 @@ export const navItems: INavData[] = [
     url: '/dslam',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
-    ldap_attributes: {hidden: null, who: []},
+    ldap_attributes: {hidden: null, who: ['Portman-support']},
   },
   {
     name: 'مدیریت پورت ها',

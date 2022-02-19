@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-3">
                             <span class="p-float-label" style="margin-top: 30px; float: left;">
-                                <input id="float-input" [(ngModel)]="username" type="text" pInputText [value]="" placeholder="Enter the Username">
+                                <input id="float-input" [(ngModel)]="username" type="text" pInputText [value]="" placeholder="Enter the Username" (keyup.enter)="get_port_info()">
                                 <p-button icon="pi pi-search"  (click)="get_port_info()" styleClass="rounded-button ui-button-success"></p-button>
         
                               </span>
@@ -41,9 +41,13 @@
                                         <td *ngIf="port_infos.FQDN">{{port_infos.FQDN}}</td>
                                         <td *ngIf="!port_infos.FQDN">{{zabbix_fqdn}}</td>
                                         <td *ngIf="port_infos.AgentUsername">
-                                          <button pButton type="button"
-                                          (click)="register_port()" label="Register Port" >
-                                        </button>
+                                          <!-- <button pButton type="button"
+                                          (click)="edit_slot_port()" label="Edit Port" >
+                                        </button> -->
+                                        <!-- <img  src="\assets\img\brand\edit_icon.png" (click)="edit_slot_port()" width="20" pTooltip="Edit Port" tooltipPosition="top"
+                                        style="cursor: pointer;margin: 5px;" /> -->
+                                        <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Ping DSLAM"
+                                        tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="ping_dslam()" />
                                         </td>
 
                                       </tr>
@@ -77,13 +81,11 @@
                 <hr/>
                 <div class="row">
                     <div class="col-6">
-                        <div *ngIf='responseStatus.ErrorCode != 0'>
-                            {{responseStatus.Message}}
-                        </div>
                         <div>
 
-                              <div class="row" style="margin: 20px;">
-                                <span *ngIf='port_infos && responseStatus.ErrorCode == 0' class="p-float-label" style="margin-top: 20px; width: 50%;">
+                              <div class="row" style="margin: 20px;" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+                                <div class="col-md-6">
+                                <span  class="p-float-label" style="margin-top: 20px; width: 100%;">
                                     <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
                                     (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
                                     (inputFocused)='onFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
@@ -99,15 +101,42 @@
                                     <span class="p-float-label" style="margin-top: 10px; float: left;" *ngIf ="profile_adsl_set">
                                         <input id="float-input" [(ngModel)]="new_lineprofile" type="text" pInputText [value]="" placeholder="New Lineprofile">                
                                       </span>
+                                      <div>
+                                        <span class="p-float-label" style="margin-top: 10px; float: left;" *ngIf ="show_mac_by_slot_port">
+                                          <input id="float-input" [(ngModel)]="show_mac_by_slot_port" type="text" pInputText [value]="" placeholder="Enter MAC Address">                
+                                        </span>
+                                      </div>
+  
                                   <div style="margin-top: 10px;">
                                     <button pButton type="button"
-                                    (click)="run_command(comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run Command" ></button>
+                                    (click)="run_command(comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run Command" *ngIf="!show_custom_port" ></button>
+                                    <button pButton type="button"
+                                    (click)="run_command_on_custom_port(comm_item)" label="Run Command on Custom Port" *ngIf="show_custom_port" ></button>
                                     <!-- <button pButton type="button"
                                     (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Run3" ></button>
                                     <button pButton type="button"
                                     (click)="run_command_by_ip('172.17.193.192',comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run2" ></button> -->
                                   </div>
                                 </span>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="row">
+                                    <div class="col-md-3">
+                                      <span  class="p-float-label" style="margin-top: 20px; width: 100%;">
+                                        <p-inputSwitch [(ngModel)]="show_custom_port" (onChange)="show_custom_port_event($event)" pTooltip="Run Command On Custom Port"
+                                        tooltipPosition="left"></p-inputSwitch>
+                                        </span>
+                                      </div>
+                                      <div class="col-md-9">
+                                        <span style="width: 50px;" class="custom" >
+                                          <p-inputNumber [(ngModel)]="custom_slot" *ngIf="show_custom_port" placeholder="Card"></p-inputNumber>
+                                          <p-inputNumber [(ngModel)]="custom_port" *ngIf="show_custom_port" placeholder="Port"></p-inputNumber>
+
+                                        </span>
+                                      </div>
+                                  </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,10 +160,10 @@
                         </div>
                     </div> 
             </div>
-            <button pButton type="button"
+            <!-- <button pButton type="button"
             (click)="add_bulk_users_to_portman()" label="Run Command" ></button>
             <button pButton type="button"
-            (click)="set_permission_for_user()" label="set_permission_for_user" ></button>
+            (click)="set_permission_for_user()" label="set_permission_for_user" ></button> -->
             <hr/>
             <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
 
@@ -149,3 +178,97 @@
             </div>
     </div>
 </div>
+
+<p-dialog header="DSLAM Ping Result" style="direction: ltr;" [(visible)]="display_dslam_ping" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="card">
+    <div class="glowing-border direction" style="direction: ltr;" *ngIf='pind_res'>
+        <div class="card-body border">
+          <div class="row" style="padding-left: 45%">
+            <p-progressSpinner *ngIf="!ping_res_show" [style]="{width: '100px', height: '100px'}" styleClass="custom-spinner" strokeWidth="2" animationDuration="1s"></p-progressSpinner>
+          </div>
+          <div *ngIf="ping_res_show">
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Host:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.host}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Packet_loss: 
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.packet_loss}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Jitter:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.jitter}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Maxping:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.maxping}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Minping:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.minping}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Received:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.received}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Sent:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.sent}}
+  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ping_tr">
+                Avgping:
+              </div>
+              <div class="col-md-6 ping_tr">
+                {{pind_res.avgping}}
+  
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+</p-dialog>
+
+
+<p-dialog header="User Does Not Exist" [(visible)]="user_does_not_exist">
+  <div *ngIf='responseStatus.ErrorCode != 0'>
+    {{responseStatus.Message}}
+    </div>
+  </p-dialog>

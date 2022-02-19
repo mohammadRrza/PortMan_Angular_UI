@@ -12,6 +12,7 @@ export class PortManCDMSService {
     apiURL2 = environment.APIEndpoint + 'users/';
     apiURL3 = environment.APIEndpoint + 'user/';
     apiURL4 = environment.APIEndpoint + 'dslamport/';
+    apiURL5 = environment.APIEndpoint + 'dslam/';
 
     token = localStorage.getItem('access_token');
 
@@ -85,6 +86,12 @@ set_permission_for_user(email:string): Promise<any> {
         .catch(this.handleError);
 }
 
-
+ping_dslam(ping_str): Promise<any> {
+    return this._http
+        .post(this.apiURL5+'icmp/command/', ping_str, this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(this.handleError);
+}
 
 }

@@ -15,6 +15,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TooltipModule} from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
+import {JalaliPipe} from './pishgaman-note.component'
 
 @NgModule({
     imports: [
@@ -32,9 +33,9 @@ import {EditorModule} from 'primeng/editor';
         CardModule,
         TooltipModule,
         DialogModule,
-        EditorModule,
-
+        EditorModule
     ],
-    declarations: [ PishgamanNoteComponent,Safe ]
+    declarations: [ PishgamanNoteComponent,Safe,
+        JalaliPipe ]
   })
   export class PishgamanNoteModule { }

@@ -67,7 +67,6 @@ ldap_login(ldap_loginForm){
       this.ldap_obj = res.result;
       this.ldap_token = res.token;
       if(this.ldap_obj.message ==='Success'){
-
         var portman_ldap_groups = [];
         for (var i = 0; i < res.result.group_name.length; i++) {
 
@@ -83,6 +82,7 @@ ldap_login(ldap_loginForm){
             //   this.notifySrv.showError('You are not allowed to login.No LDAP groups defined for you.','Login');
             //   return;
             // }
+            
             localStorage.setItem('ldap_login', 'true');
             localStorage.setItem('access_token', this.ldap_token);
             this.notifySrv.showSuccess('Login is Successfull','Login');

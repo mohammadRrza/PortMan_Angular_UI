@@ -11,6 +11,23 @@
               </span>
             </div>
             <div class="glowing-border direction" style="direction: ltr;">
+                <div class="card-body" *ngFor="let pishgaman_note of pishgaman_notes;">
+                    <div class="row problem_detail_header" >
+                        <div class="col-md-6" >
+                            {{pishgaman_note.register_time | jalali }}
+                        </div>
+                        <div class="col-md-6">
+                            {{pishgaman_note.username}}
+                        </div>
+                    </div>
+                    <div class="row problem_detail_body">
+                        <div class="col-md-6">
+                            {{pishgaman_note.telecom_center}}
+                        </div>
+                        <div class="col-md-6" [innerHTML]="pishgaman_note.problem_desc | safeHtml">
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <p-table [value]="pishgaman_notes" class="table table-striped" responsiveLayout="scroll">
                         <ng-template pTemplate="header">
@@ -28,7 +45,7 @@
                                 <td class="text-center">{{pishgaman_note.telecom_center}}</td>
                                 <td class="text-center" [innerHTML]="pishgaman_note.problem_desc | safeHtml"></td>
                                 <td class="text-center">{{pishgaman_note.username}}</td>
-                                <td class="text-center">{{pishgaman_note.register_time | date:'medium'}}</td>
+                                <td class="text-center">{{pishgaman_note.register_time | jalali}}</td>
                                 <td class="text-center">               
                                  <div class="col-md-12" style="padding-left: 40%">
                                     <div class="row">

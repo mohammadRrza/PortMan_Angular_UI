@@ -70,7 +70,6 @@ import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
-
 @NgModule({
   imports: [
     BrowserModule,

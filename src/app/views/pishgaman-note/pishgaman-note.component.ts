@@ -1,10 +1,15 @@
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import {PishgamanNoteService} from '../../../services/pishgaman_note.service';
 import { DomSanitizer} from '@angular/platform-browser';
+import * as moment from 'jalali-moment';
+import {LoginCls} from '../../dtos/login_cls';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Pipe({name: 'safeHtml'})
 export class Safe {
-  constructor(private sanitizer:DomSanitizer){}
+  constructor(private sanitizer:DomSanitizer,
+    private jwtHelper: JwtHelperService){}
 
   transform(value: any, args?: any): any {
     return this.sanitizer.bypassSecurityTrustHtml(value);
@@ -12,6 +17,17 @@ export class Safe {
     // return this.sanitizer.bypassSecurityTrustXxx(style); - see docs
   }
 }
+
+@Pipe({
+  name: 'jalali'
+})
+export class JalaliPipe implements PipeTransform {
+  transform(value: any, args?: any): any {
+    let MomentDate = moment(value, 'YYYY/MM/DD hh:mm:ss');
+    return MomentDate.locale('fa').format('YYYY/M/D hh:mm:ss');
+  }
+}
+
 @Component({
   selector: 'app-pishgaman-note',
   templateUrl: './pishgaman-note.component.html',
@@ -20,7 +36,11 @@ export class Safe {
 export class PishgamanNoteComponent implements OnInit {
 
   constructor(private pish_noteSrv: PishgamanNoteService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private jwtHelper: JwtHelperService,
+    private router: Router,
+
+    ) {
     this.pagination_config = {
       itemsPerPage: 10,
       currentPage: 1,
@@ -77,6 +97,8 @@ export class PishgamanNoteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // var loginCls =  new LoginCls(this.jwtHelper,this.router);
+    // loginCls.check_login();
     this.get_pishgaman_notes();
   }
 

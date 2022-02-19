@@ -12,6 +12,10 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {CardModule} from 'primeng/card';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TooltipModule} from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
     imports: [
@@ -26,7 +30,11 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         ButtonModule,
         AutoCompleteModule,
         AutocompleteLibModule,
-        CardModule
+        CardModule,
+        TooltipModule,
+        DialogModule,
+        InputSwitchModule,
+        InputNumberModule
         ],
     declarations: [ PortmanCdmsComponent ]
   })

@@ -81,6 +81,8 @@ export class DslamComponent implements OnInit {
   dslam_add = {};
   submitted = false;
   prov_id;
+  is_ldap_login;
+
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -264,8 +266,14 @@ return
     // }else {
     //   console.log("token not expired"); 
     // }
-    var loginCls =  new LoginCls(this.jwtHelper,this.router);
-    loginCls.check_login();
+    this.is_ldap_login = localStorage.getItem("ldap_login");
+
+    if(this.is_ldap_login != 'true'){
+          var loginCls =  new LoginCls(this.jwtHelper,this.router);
+          loginCls.check_login();
+    }
+
+
     this.get_permission();
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     this.primengConfig.ripple = true;
