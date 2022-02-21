@@ -101,3 +101,70 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="row" *ngIf='dslam_info'>
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-header" style="text-align: center;">
+              Run Commands
+          </div>
+          <div class="card-body" class="border" style="margin: 10px;">
+              <div class="row row_class">
+                <div class="col-md-6">
+                  <span  class="p-float-label" style="margin-top: 20px; width: 100%;">
+                    <ng-autocomplete [data]="commandObj" [searchKeyword]="keyword" placeHolder="Enter the Command"
+                    (selected)='commands_selectEvent($event)' (inputChanged)='commands_onChangeSearch($event)'
+                    (inputFocused)='commands_inputFocused($event)' historyIdentifier="commandObj" [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  </span>
+                  
+                  <div style="margin-top: 10px;">     
+                      <p-inputNumber [(ngModel)]="custom_slot"  placeholder="Card"></p-inputNumber>
+                      <p-inputNumber [(ngModel)]="custom_port"  placeholder="Port"></p-inputNumber>
+                      <div *ngIf ="profile_adsl_set">
+                        <hr />
+
+                        <input style="width: 50%; height: 40px;"  id="float-input" [(ngModel)]="new_lineprofile" type="text" pInputText [value]="" placeholder="New Lineprofile">                
+                      </div>
+                      <hr />
+                      <button pButton type="button"
+                      (click)="run_command(comm_item)" label="Run Command"></button>
+                      <span style="width: 50px;" class="custom" >
+                       
+                    </span>
+                    <!-- <button pButton type="button"
+                    (click)="get_fqdn_from_zabbix_by_ip('172.17.193.192')" label="Run3" ></button>
+                    <button pButton type="button"
+                    (click)="run_command_by_ip('172.17.193.192',comm_item,port_infos.D_Kart,port_infos.D_Port)" label="Run2" ></button> -->
+                  </div>
+                </div>
+                <div class="col-md-6" style="text-align: center;">
+                  <p-card header="Command Result">
+                    <hr />
+                    <!--<div *ngIf="!show_result" class="res_div_disabled border command_res">
+                      <p-progressSpinner></p-progressSpinner>
+                    </div>-->
+                    <div class="res_div border">
+                      <pre>
+                        <div style="min-height: 300px; text-align: center;">
+                         <pre *ngIf="command_res_show">{{command_res}}</pre>
+                         <p-progressSpinner *ngIf="!command_res_show" [style]="{width: '100px', height: '100px'}" styleClass="custom-spinner" strokeWidth="2" animationDuration="1s"></p-progressSpinner>
+                        </div>
+                     </pre>
+                    </div>
+                    <pre>
+                    </pre>
+                  </p-card>
+                </div>
+              </div>
+          </div>

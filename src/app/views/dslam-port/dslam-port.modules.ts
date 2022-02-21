@@ -18,7 +18,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {FieldsetModule} from 'primeng/fieldset';
 import {CardModule} from 'primeng/card';
-import { HighchartsChartComponent } from 'highcharts-angular';
+import { HighchartsChartModule } from 'highcharts-angular';
 import {DpDatePickerModule} from 'ng2-jalali-date-picker';
 import {ChartModule} from 'primeng/chart';
 
@@ -42,8 +42,11 @@ import {ChartModule} from 'primeng/chart';
         TabsModule,
         FieldsetModule,
         DpDatePickerModule,
-        ChartModule
+        ChartModule,
+        HighchartsChartModule
+        
     ],
-    declarations: [ DslamPortComponent,DslamPortOperationComponent,HighchartsChartComponent]
+    declarations: [ DslamPortComponent,
+                    DslamPortOperationComponent]
   })
   export class DslamPortModule { }

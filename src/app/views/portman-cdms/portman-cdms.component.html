@@ -9,9 +9,13 @@
                     <div class="row">
                         <div class="col-3">
                             <span class="p-float-label" style="margin-top: 30px; float: left;">
-                                <input id="float-input" [(ngModel)]="username" type="text" pInputText [value]="" placeholder="Enter the Username" (keyup.enter)="get_port_info()">
-                                <p-button icon="pi pi-search"  (click)="get_port_info()" styleClass="rounded-button ui-button-success"></p-button>
-        
+                                <!-- <input id="float-input" [(ngModel)]="username" type="text" pInputText [value]="" placeholder="Enter the Username" (keyup.enter)="get_port_info()">
+                                <p-button icon="pi pi-search"  (click)="get_port_info()" styleClass="rounded-button ui-button-success"></p-button> -->
+                                <div class="p-inputgroup">
+                                  <input type="text" (keyup.enter)="get_port_info()" [(ngModel)]="username" placeholder="Enter the Username" (keyup.enter)="get_port_info()" pInputText  >         
+                                  <button type="button" (click)="get_port_info()"  pButton pRipple label="Search" styleClass="rounded-button ui-button-success"></button>
+
+                              </div>
                               </span>
                         </div>
                        
@@ -27,7 +31,8 @@
                                         <th class="text-center">Card</th>
                                         <th class="text-center">Port</th>
                                         <th class="text-center">FQDN</th>
-                                        <th *ngIf="port_infos.AgentUsername">Action</th>
+                                        <!-- <th *ngIf="port_infos.AgentUsername">Action</th> -->
+                                        <th>Action</th>
 
                                       </tr>
                                     </thead>
@@ -40,7 +45,8 @@
                                         <td>{{port_infos.D_Port}}</td>
                                         <td *ngIf="port_infos.FQDN">{{port_infos.FQDN}}</td>
                                         <td *ngIf="!port_infos.FQDN">{{zabbix_fqdn}}</td>
-                                        <td *ngIf="port_infos.AgentUsername">
+                                        <!-- <td *ngIf="port_infos.AgentUsername"> -->
+                                          <td>
                                           <!-- <button pButton type="button"
                                           (click)="edit_slot_port()" label="Edit Port" >
                                         </button> -->

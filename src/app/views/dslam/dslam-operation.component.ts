@@ -481,14 +481,14 @@ export class DslamOperationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var loginCls =  new LoginCls(this.jwtHelper,this.router);
-    loginCls.check_login();
-    let loggedIn = localStorage.getItem('loggedin');
-    console.log(!Boolean(loggedIn));
+    // var loginCls =  new LoginCls(this.jwtHelper,this.router);
+    // loginCls.check_login();
+    // let loggedIn = localStorage.getItem('loggedin');
+    // console.log(!Boolean(loggedIn));
 
-    if (!Boolean(loggedIn)) {
-      this.router.navigate(['/login']);
-    }
+    // if (!Boolean(loggedIn)) {
+    //   this.router.navigate(['/login']);
+    // }
     this.getDslamInfo(this.dslam_id);
     this.get_dslam_ports(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id);
     this.getDslamBoard(this.dslam_id);

@@ -32,7 +32,8 @@ export class UserPermissionComponent implements OnInit {
   add_permission_profile : boolean = false;
   view_user_dslam_permission_profile: boolean = false;
   view_user_command_permission_profile: boolean = false;
-
+  edit_permission_profile_view: boolean = false;
+  user_permissions_edit = [];
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -72,6 +73,12 @@ export class UserPermissionComponent implements OnInit {
   onChange(event){
     console.log(event);
     this.user_permissions = event.value;
+  }
+  edit_permissions(permission_id){
+    this.usrSrv.edit_permissions(permission_id).then(res=>{
+      this.user_permissions = res.result;
+      this.edit_permission_profile_view = true;
+    });
   }
 
   ngOnInit(): void {

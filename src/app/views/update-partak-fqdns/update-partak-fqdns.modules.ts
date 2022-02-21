@@ -12,6 +12,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {ButtonModule} from 'primeng/button';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {CardModule} from 'primeng/card';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
     imports: [
@@ -26,8 +29,10 @@ import {ButtonModule} from 'primeng/button';
         MultiSelectModule,
         AutocompleteLibModule,
         AutoCompleteModule,
-        ButtonModule
-        
+        ButtonModule,
+        ProgressSpinnerModule,
+        CardModule,
+        InputNumberModule
     ],
     declarations: [ 
         UpdatePartakFqdnsComponent
