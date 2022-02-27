@@ -13,7 +13,7 @@ export const navItems: INavData[] = [
     name: 'Portman CDMS',
     url: '/portman-cdms/portman-cdms',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    attributes: {hidden: null, who: ['ADMIN', 'RESELLER','DIRECTRESELLER','SUPPORT']},
     ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
    {
@@ -89,7 +89,7 @@ export const navItems: INavData[] = [
     name: 'به روز رسانی پارتاک',
     url: '/partak/update-partak-fqdns',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN']},
+    attributes: {hidden: null, who: ['ADMIN','SUPPORT']},
     ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
   {
@@ -103,7 +103,7 @@ export const navItems: INavData[] = [
     name: 'مدیریت پورت ها',
     url: '/dslamport/dslamport',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
     ldap_attributes: {hidden: null, who: []},
   },
   {

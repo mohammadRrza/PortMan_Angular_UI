@@ -23,7 +23,8 @@ export class AccessProfileComponent implements OnInit {
   add_permission_dialog;
   edit_profile_dialog;
   delete_profile_dialog;
-
+  listDslams = [];
+  
   get_permissions_profiles(page, page_size){
     this.prmSrv.get_permissions_profiles(page, page_size).then(res=>{
       this.permissions_profiles= res.results

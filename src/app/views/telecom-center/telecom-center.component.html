@@ -1,7 +1,7 @@
 <!--ADD Telecom Dialog---------------------------------------------------------------->
 <p-dialog header="Add DSLAM" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '30vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
-  <form [formGroup]="form" #f="ngForm" (ngSubmit)="add_dslam(this.form)">
+  <form [formGroup]="form" #f="ngForm" (ngSubmit)="add_telecom(this.form)">
     <div class="row">
       <div class="col-md-12">
         <span>
@@ -38,7 +38,7 @@
       </div>
   
     </div>
-    <button type="submit" (click)="displayMaximizable2=false;s">Submit</button>
+    <button type="submit" (click)="displayMaximizable2=false;">Submit</button>
     <ng-template pTemplate="footer">
     </ng-template>
   </form>

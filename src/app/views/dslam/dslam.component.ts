@@ -74,8 +74,8 @@ export class DslamComponent implements OnInit {
   displayMaximizable: boolean = false;
   displayMaximizable2: boolean = false;
   displayMaximizable3: boolean = false;
-  dslam_show_info = [];
-  permission = [];
+  dslam_show_info: any = [];
+  permission: any = [];
   progressSpinner: boolean = false;
   user_permission;
   dslam_add = {};

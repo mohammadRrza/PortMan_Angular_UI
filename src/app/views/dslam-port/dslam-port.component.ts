@@ -20,8 +20,13 @@ export class DslamPortComponent implements OnInit {
   Provinces = [];
   progressSpinner: boolean = false;
   displayMaximizable: boolean = false;
-  portobj={};
-
+  portobj: any = {};
+  port: number;
+  slot: number;
+  ip: string;
+  dslam: any;
+  city: any;
+  province: any;
   paginate(event){
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -40,7 +45,7 @@ export class DslamPortComponent implements OnInit {
     this.displayMaximizable = true;
     this.portobj = this.listDslamPotrs.find(x => x.id === port_id);
   }
-  get_dslam_port_info(){
+  get_dslam_port_info(x,y){
     
   }
   ngOnInit(): void {

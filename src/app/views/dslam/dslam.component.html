@@ -91,7 +91,7 @@
 <!--ADD DSLAM Dialog---------------------------------------------------------------->
 <p-dialog header="Add DSLAM" [(visible)]="displayMaximizable2" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
-  <form [formGroup]="add_dslam_from" (ngSubmit)="apply_add_dslam()">
+  <form [formGroup]="add_dslam_from" (ngSubmit)="apply_add_dslam($event)">
     <div class="row">
       <div class="col-md-6">
         <span>

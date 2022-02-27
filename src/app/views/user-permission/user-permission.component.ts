@@ -29,6 +29,7 @@ export class UserPermissionComponent implements OnInit {
   user_permissions : Permission[];
   pagination_config;
   users_permissions = [];
+  listDslams = [];
   add_permission_profile : boolean = false;
   view_user_dslam_permission_profile: boolean = false;
   view_user_command_permission_profile: boolean = false;

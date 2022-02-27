@@ -26,7 +26,7 @@ export class PortmanCdmsComponent implements OnInit {
   display_dslam_ping:boolean = false;
   data: any;
   port_infos;
-  responseStatus = {};
+  responseStatus: any = {};
   dslam_id;
   dslam_ip: string;
   command_res;

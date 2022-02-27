@@ -42,7 +42,7 @@ export class PortMapComponent implements OnInit {
   search_str3='';
   search_str4='';
   search_str5='';
-  port_info = {};
+  port_info :any = {};
   bukht:Bukht = new Bukht();
   View_port_status:boolean = false;
   port_status_ch_res = {};
@@ -162,8 +162,11 @@ export class PortMapComponent implements OnInit {
     this.search_ports(this.telecom_id, this.port_status_id);
   }
 
-  get_port_status_id_for_ch_st(event){
+  get_port_status_id_for_ch_st(port_status_ch,event){
     this.port_status_id_ch = event.id;
+  }
+  show_ports_operations(){
+    
   }
 
   search_ports(telecom_id, port_status_id){

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
   show_reset_password:boolean = false;
   ldap_form:boolean = true;
   ldap_obj;
+  email: string;
   show_ldap_login_form(){
     this.ldap_form = true;
   }
@@ -154,6 +155,9 @@ ldap_login(ldap_loginForm){
       }
       else if(this.role == "RESELLER"){
         this.router.navigate(['/ddr-page/ddr-page-info']);
+      }
+      else if(this.role == "SUPPORT"){
+        this.router.navigate(['/portman-cdms/portman-cdms']);
       }
       else{
         this.router.navigate(['/switch/switch']);

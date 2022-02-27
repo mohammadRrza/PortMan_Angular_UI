@@ -15,7 +15,7 @@ export class UserManagementComponent implements OnInit {
       totalItems: 0
     };
    }
-
+  progressSpinner: boolean;
   users = [];
   pagination_config: any;
   permission;

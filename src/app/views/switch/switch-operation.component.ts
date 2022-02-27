@@ -28,9 +28,10 @@ export class SwitchOperationComponent implements OnInit {
                   });
                 }
     switch_commands = [];
-    comm_item = {};
+    comm_item: any = {};
     keyword = 'switch_command_text';
     filenames:string[];
+    view_error_text: boolean = false;
     vb_filenames:string[];
     show_result: boolean = false;
     show_backup_files: boolean = false;
@@ -39,7 +40,7 @@ export class SwitchOperationComponent implements OnInit {
     show_show_vlan_brief_files:boolean = false;
     view_vlan_brif_file :boolean = false;
 
-    get_switch_commands(switch_type_id, limit_row){
+    get_switch_commands(event, limit_row){
       this.SwitchCommandSrv.get_switch_commands(4, 10).then(res=>{
         this.switch_commands = res;
       });
@@ -96,7 +97,7 @@ export class SwitchOperationComponent implements OnInit {
       this.view_vlan_brif_file = true;
     }
 
-    switch_run_command(switch_id, command, params){
+    switch_run_command(switch_id, command){
       this.show_result = false;
       this.switch_dto = new SwitchDTO();
       this.switch_dto.switch_id = switch_id;

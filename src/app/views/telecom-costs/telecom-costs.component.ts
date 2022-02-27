@@ -27,7 +27,7 @@ export class TelecomCostsComponent implements OnInit {
   see_errors_text_file(){
     this.view_error_text = true;
   }
-  send_errors_text_file(backup_error){
+  send_errors_text_file(){
     this.BackupSrv.send_router_errors_text_file().then(res=>{
       this.BackupSrv.send_switch_errors_text_file().then(res=>{
       });

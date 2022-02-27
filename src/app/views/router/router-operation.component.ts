@@ -21,7 +21,7 @@ export class RoutersOperationComponent implements OnInit {
     router_dto: RouterDTO;
     router_commands = [];
     keyword = 'router_command_text';
-    comm_item = {};
+    comm_item: any = {};
     commandRes;
     router_id:string;
     show_backup_files = false;
@@ -73,7 +73,7 @@ export class RoutersOperationComponent implements OnInit {
       });
     }
 
-    router_run_command(router_id, command, params){
+    router_run_command(router_id, command){
       this.router_dto = new RouterDTO();
       this.router_dto.router_id = router_id;
       this.router_dto.command = command;

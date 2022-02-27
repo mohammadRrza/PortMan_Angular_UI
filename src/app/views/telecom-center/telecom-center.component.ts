@@ -36,10 +36,17 @@ export class TelecomCenterComponent implements OnInit {
   f_city = new FormControl("", Validators.required);
   f_telecom_lat = new FormControl("", Validators.required);
   f_telecom_long = new FormControl("", Validators.required);
-
+  listProvinces: any;
+  porv_city: any;
+  listCities: any;
   pagination_config: any;
   listtelecoms = [];
   names = [];
+  displayMaximizable2: boolean;
+  progressSpinner: boolean;
+  name: string;
+  prefix_bukht_name: string;
+  city_info:any;
   keyword = 'name';
   prefix_names = [];
   keyword2 = 'prefix_bukht_name';
@@ -59,10 +66,18 @@ export class TelecomCenterComponent implements OnInit {
   show_add_telecom_center() {
     this.displayMaximizable = true;
   }
+
+  get_province_by_name(event){
+
+  }
+
   show_telecom_info(){
     this.displayMaximizable = true;
   }
 
+  add_telecom(telecom_obj){
+
+  }
   paginate(event) {
     if (this.telecom_info == '') {
       this.pagination_config.currentPage = event.page + 1;

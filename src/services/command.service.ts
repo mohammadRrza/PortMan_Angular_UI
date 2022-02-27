@@ -25,17 +25,34 @@ private handleError(error: any): Promise<any> {
   }
 
   //services
-  load_dslam_commands(dslam_id,type): Promise<any> {
+  load_dslam_commands_by_email(dslam_id,ldap_email, ldap_login,type): Promise<any> {
     return this._http
-      .get(this.apiURL + "?dslam_id=" + dslam_id + "&exclude_type=" + type, this.httpOptions)
+      .get(this.apiURL + "?dslam_id=" + dslam_id +"&ldap_email="+ldap_email+"&ldap_login="+ldap_login+"&exclude_type=" + type, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
   }
-  load_port_commands(dslam_id,type): Promise<any> {
+
+  load_dslam_commands_by_username(dslam_id,username, ldap_login,type): Promise<any> {
     return this._http
-      .get(this.apiURL + "?dslam_id=" + dslam_id + "&type=" + type, this.httpOptions)
+      .get(this.apiURL + "?dslam_id=" + dslam_id +"&username="+username+"&ldap_login="+ldap_login+"&exclude_type=" + type, this.httpOptions)
       .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  load_port_commands_by_email(dslam_id, ldap_email, is_ldap_login, type): Promise<any> {
+    return this._http
+    .get(this.apiURL + "?dslam_id=" + dslam_id +"&ldap_email="+ldap_email+"&ldap_login="+is_ldap_login+"&exclude_type=" + type, this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  load_port_commands_by_username(dslam_id, username, is_ldap_login, type): Promise<any> {
+    return this._http
+    .get(this.apiURL + "?dslam_id=" + dslam_id +"&username="+username+"&ldap_login="+is_ldap_login+"&exclude_type=" + type, this.httpOptions)
+    .toPromise()
       .then(res => res)
       .catch(this.handleError);
   }

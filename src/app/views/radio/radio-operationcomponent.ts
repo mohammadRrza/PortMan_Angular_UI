@@ -23,6 +23,7 @@ export class RadioOperationComponent implements OnInit {
   radio_commands_list = [{ id: 12, radio_command_description: "get Backup", radio_command_text: "get Backup" }];
   keyword = 'radio_command_text';
   comm_item = {};
+  show_result: boolean;
   show_backup_files = false;
   filenames = [];
   filenames_obj = [];
@@ -31,8 +32,8 @@ export class RadioOperationComponent implements OnInit {
   bakup_text: string;
   radio_id: string;
 
-  get_radio_commands(radio_type_id, limit_row) {
-    this.radioCommandSrv.get_radio_commands(radio_type_id, limit_row).then(res => {
+  get_radio_commands(event, limit_row) {
+    this.radioCommandSrv.get_radio_commands(event, limit_row).then(res => {
       this.radio_commands = this.radio_commands_list;
     });
   }

@@ -14,7 +14,7 @@
                         <div class="ng-autocomplete col-md-3" style="direction: ltr;">
                           <ng-autocomplete [data]="radio_commands" [searchKeyword]="keyword" placeHolder="Enter the Command"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='get_radio_commands($event)' historyIdentifier="radio_commands" [itemTemplate]="itemTemplate"
+                            (inputFocused)='get_radio_commands($event, 10)' historyIdentifier="radio_commands" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
       
@@ -27,8 +27,8 @@
                           </ng-template>
                         </div>
                         <div class="col-md-3">
-                          <button pButton type="button" style="margin-right: 0; float: right;"
-                            (click)="switch_run_command(radio_id, comm_item.radio_command_text, params)" label="Run" [disabled]="!show_result"></button>
+                          <!-- <button pButton type="button" style="margin-right: 0; float: right;"
+                            (click)="switch_run_command(radio_id, comm_item.radio_command_text, params)" label="Run" [disabled]="!show_result"></button> -->
                         </div>
                         <div class="col-md-6">
                           <div class="col-md-12">

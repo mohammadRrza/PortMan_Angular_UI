@@ -49,7 +49,7 @@ export class DslamOperationComponent implements OnInit {
   show_port_count: boolean = false;
   pagination_config: any;
   listDslamPorts = [];
-  dslamInfo = {};
+  dslamInfo: any = {};
   dslamBoard = [];
   dslam_report;
   temperatures = [];
@@ -65,9 +65,12 @@ export class DslamOperationComponent implements OnInit {
   title = 'ngrx';
   showSpinner = true;
   data: any;
+  is_ldap_login: string;
+  ldap_email: string;
   dslam_profiles = [];
   dslam_current_icmp;
   dslam_lcman;
+  agent_username: string;
   icmp_param: IcmpParam = new IcmpParam;
   comm_item = {};
   zabbix_item_id: number = 60282;
@@ -260,8 +263,17 @@ export class DslamOperationComponent implements OnInit {
       })
   }
 
-  load_dslam_commands(dslam_id, type) {
-    this.cmdSrv.load_dslam_commands(dslam_id, type).then(res => {
+  load_dslam_commands_by_email(dslam_id, ldap_email, ldap_login, type) {
+    this.cmdSrv.load_dslam_commands_by_email(dslam_id, ldap_email, ldap_login, type).then(res => {
+      this.commandObj = res;
+    },
+      (error) => {
+        this.show_errors(error);
+      })
+  }
+
+  load_dslam_commands_by_username(dslam_id, username, ldap_login, type){
+    this.cmdSrv.load_dslam_commands_by_username(dslam_id, username, ldap_login, type).then(res => {
       this.commandObj = res;
     },
       (error) => {
@@ -281,7 +293,13 @@ export class DslamOperationComponent implements OnInit {
   }
 
   onFocused(e) {
-    this.load_dslam_commands(this.dslam_id, 'port');
+    if(this.is_ldap_login == 'true'){
+      this.load_dslam_commands_by_email(this.dslam_id,this.ldap_email,this.is_ldap_login, 'port');
+    }
+    else{
+      this.agent_username = localStorage.getItem("username");
+      this.load_dslam_commands_by_username(this.dslam_id, this.agent_username, false, 'port'); 
+      }
   }
 
   show_errors(error) {
@@ -481,6 +499,9 @@ export class DslamOperationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.is_ldap_login = localStorage.getItem("ldap_login")
+    this.ldap_email = localStorage.getItem("ldap_email").toLowerCase();
+
     // var loginCls =  new LoginCls(this.jwtHelper,this.router);
     // loginCls.check_login();
     // let loggedIn = localStorage.getItem('loggedin');

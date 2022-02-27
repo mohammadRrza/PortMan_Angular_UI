@@ -50,10 +50,14 @@ export class DslamPortOperationComponent implements OnInit {
     port_id: Number;
     dslam_id: Number;
     report_his_info;
+    end_dateObject: any;
+    is_ldap_login: string;
     show_pichart:boolean=false;
     start_dateObject = "";
+    agent_username: string;
     send_dateObject = "";
-    dslamPort_info = {};
+    ldap_email: string;
+    dslamPort_info :any = {};
     dslamPortcammand_info = {};
     hist_labels_arr = [];
     hist_datasets_arr = [];
@@ -361,8 +365,13 @@ export class DslamPortOperationComponent implements OnInit {
     }
 
     onFocused(e) {
-        console.log('onFocused');
-
+        if(this.is_ldap_login == 'true'){
+            this.load_commands_by_email(this.dslam_id,this.ldap_email,this.is_ldap_login, 'dslam');
+          }
+          else{
+            this.agent_username = localStorage.getItem("username");
+            this.load_commands_by_username(this.dslam_id, this.agent_username, this.is_ldap_login, 'dslam'); 
+            }
     }
 
     get_dslamPort_info(port_id) {
@@ -375,12 +384,20 @@ export class DslamPortOperationComponent implements OnInit {
 
 
 
-    load_commands(dslam_id, type) {
-        this.cmdSrv.load_port_commands(dslam_id, type).then(res => {
+    load_commands_by_email(dslam_id, ldap_email, is_ldap_login, type) {
+        this.cmdSrv.load_port_commands_by_email(dslam_id, ldap_email, is_ldap_login, type).then(res => {
             this.commandObj = res;
         });
 
     }
+
+    load_commands_by_username(dslam_id, username, is_ldap_login, type) {
+        this.cmdSrv.load_port_commands_by_username(dslam_id, username, is_ldap_login, type).then(res => {
+            this.commandObj = res;
+        });
+
+    }
+    
     run_command(command_obj) {
         this.show_result = false;
         var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '","new_lineprofile":""}';
@@ -954,9 +971,10 @@ export class DslamPortOperationComponent implements OnInit {
         });
     }
     ngOnInit(): void {
+        this.is_ldap_login = localStorage.getItem("ldap_login");
+        this.ldap_email = localStorage.getItem("ldap_email").toLowerCase();
         this.show_pichart = false;
         this.get_dslamPort_info(this.port_id);
-        this.load_commands(this.dslam_id, 'port');
         this.get_last_command(this.dslam_id, this.port_id);
         this.get_history_report(this.port_id);
     }

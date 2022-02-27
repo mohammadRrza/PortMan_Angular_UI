@@ -9,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class BackupManagementComponent implements OnInit {
 
   constructor() { }
-
+  view_backup_Error: boolean;
+  view_error_text: boolean;
+  backup_errors: any; 
+  backup_error_text: string;
   ngOnInit(): void {
   }
 

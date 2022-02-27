@@ -14,7 +14,7 @@
                         <div class="ng-autocomplete col-md-3" style="direction: ltr;">
                           <ng-autocomplete [data]="switch_commands" [searchKeyword]="keyword" placeHolder="Enter the Command"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='get_switch_commands($event)' historyIdentifier="switch_commands" [itemTemplate]="itemTemplate"
+                            (inputFocused)='get_switch_commands($event, 10)' historyIdentifier="switch_commands" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
       
@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-md-3">
                           <button pButton type="button" style="margin-right: 0; float: right;"
-                            (click)="switch_run_command(switch_id, comm_item.switch_command_text, params)" label="Run" [disabled]="!show_result"></button>
+                            (click)="switch_run_command(switch_id, comm_item.switch_command_text)" label="Run" [disabled]="!show_result"></button>
                         </div>
                         <div class="col-md-6">
                           <div class="col-md-12">
