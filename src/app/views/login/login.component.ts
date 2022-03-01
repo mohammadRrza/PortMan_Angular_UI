@@ -156,7 +156,7 @@ ldap_login(ldap_loginForm){
       else if(this.role == "RESELLER"){
         this.router.navigate(['/ddr-page/ddr-page-info']);
       }
-      else if(this.role == "SUPPORT"){
+      else if(this.role == "SUPPORT" || this.role == "DIRECTRESELLER"){
         this.router.navigate(['/portman-cdms/portman-cdms']);
       }
       else{

@@ -20,7 +20,7 @@ export const navItems: INavData[] = [
     name: 'Pishgaman Note',
     url: '/pishgaman-note/pishgaman-note',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN', 'RESELLER']},
+    attributes: {hidden: null, who: ['ADMIN']},
     ldap_attributes: {hidden: null, who: ['Portman-support']},
    },
   {
@@ -96,7 +96,7 @@ export const navItems: INavData[] = [
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER', 'SUPPORT']},
     ldap_attributes: {hidden: null, who: ['Portman-support']},
   },
   {
@@ -128,6 +128,13 @@ export const navItems: INavData[] = [
     ldap_attributes: {hidden: null, who: []},
   },
   {
+    name: 'مدیریت کاربران',
+    url: '/userManagement',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN']},
+    ldap_attributes: {hidden: null, who: []},
+  },
+  {
     name: 'نماینده ریسلر',
     url: '/reseller',
     icon: 'icon-settings',
@@ -148,13 +155,7 @@ export const navItems: INavData[] = [
     attributes: {hidden: null, who: []},
     ldap_attributes: {hidden: null, who: []},
   },
-  {
-    name: 'مدیریت کاربران',
-    url: '/userManagement',
-    icon: 'icon-settings',
-    attributes: {hidden: null, who: []},
-    ldap_attributes: {hidden: null, who: []},
-  },
+
   {
     name: 'مدیریت اعضا',
     url: '/icons',

@@ -26,6 +26,22 @@ private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }
   //services
+  get_all_dslams_by_username(page,itemsPerPage, username, ldap_login): Promise<any> {
+    return this._http
+      .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage+"&username="+username+"&ldap_login="+ldap_login, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_all_dslams_by_email(page,itemsPerPage, email, ldap_login): Promise<any> {
+    return this._http
+    .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage+"&email="+email+"&ldap_login="+ldap_login, this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   get_all_dslams(page,itemsPerPage): Promise<any> {
     return this._http
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
@@ -33,7 +49,7 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
-
+  
   add_dslam(dslamInfo): Promise<any> {
     return this._http
       .post(this.apiURL ,dslamInfo ,this.httpOptions)
@@ -87,6 +103,14 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  search_dslams_by_username(page,itemsPerPage,search_str, username, ldap_login): Promise<any> {
+    return this._http
+    .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage+'&username='+username+'&ldap_login='+ldap_login+search_str, this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  
   edit_dslam(dslam_id):Promise<any>{
     return this._http
     .get(this.apiURL + dslam_id+'/', this.httpOptions)

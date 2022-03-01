@@ -82,7 +82,9 @@ export class DslamComponent implements OnInit {
   submitted = false;
   prov_id;
   is_ldap_login;
-
+  agent_username: string;
+  ldap_email: string;
+  
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -195,9 +197,18 @@ return
     });
 }
 
-  get_all_dslams(page, itemsPerPage) {
+get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     this.progressSpinner = true;
-    this.dslamSrv.get_all_dslams(page, itemsPerPage).then(res => {
+    this.dslamSrv.get_all_dslams_by_username(page, itemsPerPage, username, ldap_login).then(res => {
+      this.pagination_config.totalItems = res.count;
+      this.listDslams = res.results;
+      this.progressSpinner = false;
+    });
+  }
+
+  get_all_dslams_by_email(page, itemsPerPage, email, ldap_login) {
+    this.progressSpinner = true;
+    this.dslamSrv.get_all_dslams_by_email(page, itemsPerPage, email, ldap_login).then(res => {
       this.pagination_config.totalItems = res.count;
       this.listDslams = res.results;
       this.progressSpinner = false;
@@ -205,10 +216,19 @@ return
   }
 
   search_dslams(page, itemsPerPage, search_dslams) {
-    this.dslamSrv.search_dslams(page, itemsPerPage, search_dslams).then(srch_res => {
-      this.pagination_config.totalItems = srch_res.count;
-      this.listDslams = srch_res.results;
-    });
+    if(this.is_ldap_login == 'false'){
+      this.dslamSrv.search_dslams_by_username(page, itemsPerPage, search_dslams, this.agent_username, this.is_ldap_login).then(srch_res => {
+        this.pagination_config.totalItems = srch_res.count;
+        this.listDslams = srch_res.results;
+      });
+    }
+    else{
+      this.dslamSrv.search_dslams(page, itemsPerPage, search_dslams).then(srch_res => {
+        this.pagination_config.totalItems = srch_res.count;
+        this.listDslams = srch_res.results;
+      });
+    }
+
   }
 
   get_province_by_name(event) {
@@ -258,6 +278,24 @@ return
       localStorage.setItem("permissions", JSON.stringify(this.permission));
     });
   }
+
+
+  get_all_dslams(page, itemsPerPage) {
+    if(this.is_ldap_login == 'false'){
+
+      this.get_permission();
+      this.get_all_dslams_by_username(page, itemsPerPage,this.agent_username, this.is_ldap_login);
+      this.primengConfig.ripple = true;
+    }
+    else{
+      this.get_permission();
+      this.get_all_dslams_by_email(page, itemsPerPage,this.ldap_email, this.is_ldap_login);
+      this.primengConfig.ripple = true;
+    }
+  }
+
+  
+
   ngOnInit(): void {
     // let loggedIn = localStorage.getItem('loggedin');
     // if(!Boolean(loggedIn) || this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))){
@@ -267,15 +305,13 @@ return
     //   console.log("token not expired"); 
     // }
     this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.agent_username = localStorage.getItem("username");
+    this.ldap_email = localStorage.getItem("ldap_email").toLowerCase();
 
     if(this.is_ldap_login != 'true'){
           var loginCls =  new LoginCls(this.jwtHelper,this.router);
           loginCls.check_login();
     }
-
-
-    this.get_permission();
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
-    this.primengConfig.ripple = true;
-  }
+}
 }

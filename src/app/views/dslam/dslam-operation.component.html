@@ -213,15 +213,15 @@
               <tab>
                 <ng-template tabHeading><i class="icon-pie-chart"></i> لیست پورت ها</ng-template>
                 <div *ngIf="listDslamPorts?.length > 0; else empty_port_list">
-                  <div class="row">
-                    <div class="col-md-1 mb-4">
+                  <div class="row" >
+                    <div class="col-md-1 mb-6">
                       <input pInputText type="number" [(ngModel)]="P_number" (keyup)="search_ports(P_count,2)"
-                      placeholder="Search by Port" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Port"
+                      placeholder="Search by Port" class="p-column-filter" style="margin: 5px; width: 65px;" pTooltip="Search by Port"
                       tooltipPosition="top">
                     </div>   
-                  <div class="col-md-1 mb-4">
+                  <div class="col-md-1 mb-6">
                     <input pInputText type="number" [(ngModel)]="S_number" (keyup)="search_ports(S_count,1)"
-                    placeholder="Search by Slot" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Slot"
+                    placeholder="Search by Slot" class="p-column-filter" style="margin: 5px; width: 65px;" pTooltip="Search by Slot"
                     tooltipPosition="top">
                     </div>
  
