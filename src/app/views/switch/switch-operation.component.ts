@@ -129,6 +129,6 @@ export class SwitchOperationComponent implements OnInit {
     
     ngOnInit(): void {
       var loginCls =  new LoginCls(this.jwtHelper,this.router);
-      loginCls.check_login();
+      // loginCls.check_login();
       }
 }

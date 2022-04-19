@@ -72,4 +72,13 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(this.handleError);
   }
+
+  get_all_commands(): Promise<any> {
+    return this._http
+      .get(this.apiURL, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
 }

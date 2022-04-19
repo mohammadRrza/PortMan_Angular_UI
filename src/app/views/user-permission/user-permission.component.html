@@ -74,7 +74,7 @@
 
                                 <div class="col-md-12" style="padding-left: 40%">
                                   <div class="row">
-                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_permissions(permission.id)" width="20"
+                                       <img src="\assets\img\brand\edit_icon.png" (click)="edit_permissions(permission.id, permission.user, permission.permission_profile, permission.id)" width="20"
                                       pTooltip="Edit Permission" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
                                     <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Permission"
                                       tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Permission(Permission.id)" />
@@ -138,12 +138,26 @@
     <div class="row">
       <div class="col-md-12">
         <div style="height: 200px;">
+          <p-multiSelect [options]="commands" [(ngModel)]="selected_commands" [style]="{'width': '100%'}" optionLabel="name" display="chip" (onPanelShow)="get_all_commands()" (onChange)="assign_commands_to_user(selected_commands)"></p-multiSelect>
+        </div>
+        <div class="col-md-10">
+        </div>
+        <div class="col-md-2">
+          <button aria-pressed="true" style="width: 50%;" class="btn btn-block btn-outline-primary active card" type="button"
+          (click)="getTemperature(slot.card_number)">
+                  <span style="text-align: center;">Add Commands</span>
+          </button> 
+        </div>
+        <!-- <hr>
+        <hr>
+
+        <div style="height: 200px;">
           <p-multiSelect [options]="command_permissions" [style]="{'width': '100%'}" [(ngModel)]="selected_commandPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
           <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
             <button *ngIf="user_permission.model_type=='command'" aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
             (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
            </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

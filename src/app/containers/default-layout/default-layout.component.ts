@@ -23,6 +23,7 @@ export class DefaultLayoutComponent implements OnInit {
     localStorage.removeItem('role');
     localStorage.removeItem('ldap_login');
     localStorage.removeItem('username');
+    localStorage.removeItem('ldap_email');
 
     this.router.navigate(['/login']);
 

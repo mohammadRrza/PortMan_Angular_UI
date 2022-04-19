@@ -16,6 +16,8 @@ import {TooltipModule} from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {InputNumberModule} from 'primeng/inputnumber';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -34,8 +36,10 @@ import {InputNumberModule} from 'primeng/inputnumber';
         TooltipModule,
         DialogModule,
         InputSwitchModule,
-        InputNumberModule
+        InputNumberModule,
+        ToastModule
         ],
-    declarations: [ PortmanCdmsComponent ]
+    declarations: [ PortmanCdmsComponent ],
+    providers:[MessageService]
   })
   export class PortmanCdmsModule { }

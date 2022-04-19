@@ -4,6 +4,7 @@ import {DslamService} from '../../../services/dslam.service';
 import {CommandService} from '../../../services/command.service';
 import {DslamPortService} from '../../../services/dslam-port.service'
 import { Router } from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-portman-cdms',
@@ -17,6 +18,7 @@ export class PortmanCdmsComponent implements OnInit {
               private comSrv: CommandService,
               private dslamPortsrv: DslamPortService,
               private router: Router,
+              private messageSrv: MessageService
               ) { }
 
   username:string = '';
@@ -51,8 +53,8 @@ export class PortmanCdmsComponent implements OnInit {
   show_custom_port: boolean = false;;
   custom_slot:number;
   custom_port: number;
+  port_register_res: any;
 
-  
   get_port_info(){
     this.user_does_not_exist = false;
     this.run_by_ip = false;
@@ -266,6 +268,20 @@ export class PortmanCdmsComponent implements OnInit {
 
   }
 
+  port_config(fqdn, card, port, reseller_name,username){
+    let port_config_str = '{"port":{"fqdn":"'+fqdn+'","card_number":"'+card+'","port_number":"'+port+'"},"reseller":{"name":"'+reseller_name+'"},"subscriber":{"username":"'+username+'"}}';
+    console.log(port_config_str);
+    this.portman_cdmsSrv.port_register(port_config_str).then(res=>{
+      this.port_register_res = res;
+      if(this.port_register_res.id == 201){
+        this.messageSrv.add({severity:'success', summary:'Port Registration', detail:'port config has been done.'});
+      }
+      else{
+        this.messageSrv.add({severity:'info', summary:'Port Registration', detail:'port config has been failed.'});
+
+      }
+    });
+  }
   ngOnInit(): void {
      this.ldap_permissions = localStorage.getItem('ldap_permissions');
      this.is_ldap_login = localStorage.getItem("ldap_login")

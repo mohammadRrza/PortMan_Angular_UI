@@ -45,10 +45,11 @@ export class UpdatePartakFqdnsComponent implements OnInit {
   profile_adsl_set: boolean =  false;
   show_mac_by_slot_port: boolean =  false;
   command_res: boolean =  false;
-  custom_slot;
-  custom_port;
+  custom_slot: number = 0;
+  custom_port: number = 0;
   new_lineprofile:string = '';
-  
+  show_slot_port: boolean =  false;
+
   run_command(command_obj){
     console.log(command_obj);
     this.command_res_show = false;
@@ -183,6 +184,12 @@ export class UpdatePartakFqdnsComponent implements OnInit {
   commands_selectEvent(event){
       this.comm_item = event;
       console.log(event);
+      if(event.type == 'port'){
+        this.show_slot_port = true;
+      }
+      else{
+        this.show_slot_port = false;
+      }
       if(event.name == 'profile adsl set' || event.name == 'setPortProfiles'){
         this.profile_adsl_set = true;        
       }

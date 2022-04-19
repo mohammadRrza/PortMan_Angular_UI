@@ -972,7 +972,8 @@ export class DslamPortOperationComponent implements OnInit {
     }
     ngOnInit(): void {
         this.is_ldap_login = localStorage.getItem("ldap_login");
-        this.ldap_email = localStorage.getItem("ldap_email").toLowerCase();
+        this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
+        this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
         this.show_pichart = false;
         this.get_dslamPort_info(this.port_id);
         this.get_last_command(this.dslam_id, this.port_id);

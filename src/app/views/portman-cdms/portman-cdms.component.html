@@ -1,3 +1,4 @@
+<p-toast position="center"></p-toast>
 <div class="row" style="direction: rtl; text-align: center;">
     <div class="col-md-12">
         <div class="card">
@@ -44,7 +45,8 @@
                                         <td>{{port_infos.D_Kart}}</td>
                                         <td>{{port_infos.D_Port}}</td>
                                         <td *ngIf="port_infos.FQDN">{{port_infos.FQDN}}</td>
-                                        <td *ngIf="!port_infos.FQDN">{{zabbix_fqdn}}</td>
+                                        <td *ngIf="!port_infos.FQDN"></td>
+
                                         <!-- <td *ngIf="port_infos.AgentUsername"> -->
                                           <td>
                                           <!-- <button pButton type="button"
@@ -54,6 +56,8 @@
                                         style="cursor: pointer;margin: 5px;" /> -->
                                         <img src="\assets\img\brand\download_icon.png" width="20" pTooltip="Ping DSLAM"
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="ping_dslam()" />
+                                        <img src="\assets\img\brand\port.png" width="20" pTooltip="Port Config"
+                                        tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="port_config(port_infos.FQDN,port_infos.D_Kart,port_infos.D_Port,port_infos.AgentUsername,port_infos.PanelUsername)" />
                                         </td>
 
                                       </tr>
@@ -278,3 +282,6 @@
     {{responseStatus.Message}}
     </div>
   </p-dialog>
+
+
+

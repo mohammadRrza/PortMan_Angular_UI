@@ -5,6 +5,8 @@ import * as moment from 'jalali-moment';
 import {LoginCls} from '../../dtos/login_cls';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import {Subscription, timer} from 'rxjs';  
+import { map, catchError } from 'rxjs/operators';
 
 @Pipe({name: 'safeHtml'})
 export class Safe {
@@ -46,8 +48,9 @@ export class PishgamanNoteComponent implements OnInit {
       currentPage: 1,
       totalItems: 0
     };
+    
    }
-
+   timerSubscription: Subscription; 
    pagination_config;
    pishgaman_notes = [];
    display_add_new_problem: boolean = false;
@@ -96,10 +99,18 @@ export class PishgamanNoteComponent implements OnInit {
     this.get_pishgaman_notes();
   }
 
+    
   ngOnInit(): void {
-    // var loginCls =  new LoginCls(this.jwtHelper,this.router);
-    // loginCls.check_login();
+      this.timerSubscription = timer(0, 10000).pipe( 
+        map(() => { 
+          this.refresh_problems();
+        }) 
+      ).subscribe(); 
     this.get_pishgaman_notes();
+  }
+
+  ngOnDestroy() {
+    this.timerSubscription.unsubscribe();
   }
 
 }

@@ -128,9 +128,12 @@
                   </ng-template>
                   </span>
                   
-                  <div style="margin-top: 10px;">     
-                      <p-inputNumber [(ngModel)]="custom_slot"  placeholder="Card"></p-inputNumber>
-                      <p-inputNumber [(ngModel)]="custom_port"  placeholder="Port"></p-inputNumber>
+                  <div style="margin-top: 10px;">   
+                      <div *ngIf="show_slot_port">
+                        <p-inputNumber [(ngModel)]="custom_slot"  placeholder="Card"></p-inputNumber>
+                        <p-inputNumber [(ngModel)]="custom_port"  placeholder="Port"></p-inputNumber>
+                      </div>
+
                       <div *ngIf ="profile_adsl_set">
                         <hr />
 

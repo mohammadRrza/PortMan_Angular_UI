@@ -14,7 +14,7 @@ export const navItems: INavData[] = [
     url: '/portman-cdms/portman-cdms',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN', 'RESELLER','DIRECTRESELLER','SUPPORT']},
-    ldap_attributes: {hidden: null, who: ['Portman-support']},
+    ldap_attributes: {hidden: null, who: ['Portman-support','Network-Access']},
    },
    {
     name: 'Pishgaman Note',
@@ -27,7 +27,7 @@ export const navItems: INavData[] = [
     name: 'مدیریت مراکز مخابراتی',
     url: '/telecom-center/telecom-center',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR']},
+    attributes: {hidden: null, who: ['ADMIN','SUPERVISOR', ]},
     ldap_attributes: {hidden: null, who: []},
 
   },
@@ -68,7 +68,7 @@ export const navItems: INavData[] = [
     url: '/router/router',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER','Software']},
-    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
+    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group','group-network-Access']},
 
   },
   {
@@ -83,21 +83,21 @@ export const navItems: INavData[] = [
     url: '/switch/switch',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','COREUSER']},
-    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group']},
+    ldap_attributes: {hidden: null, who: ['Portman-Teh-Backup-Group','group-network-Access']},
   },
   {
     name: 'به روز رسانی پارتاک',
     url: '/partak/update-partak-fqdns',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: ['ADMIN','SUPPORT']},
-    ldap_attributes: {hidden: null, who: ['Portman-support']},
+    attributes: {hidden: null, who: ['ADMIN']},
+    ldap_attributes: {hidden: null, who: ['Portman-support', 'Network-Access']},
    },
   {
     name: 'مدیریت دی اس لم ها',
     url: '/dslam',
     icon: 'icon-settings',
     attributes: {hidden: null, who: ['ADMIN','SUPERVISOR','DIRECTRESELLER', 'SUPPORT']},
-    ldap_attributes: {hidden: null, who: ['Portman-support']},
+    ldap_attributes: {hidden: null, who: ['Portman-support','Network-Access']},
   },
   {
     name: 'مدیریت پورت ها',

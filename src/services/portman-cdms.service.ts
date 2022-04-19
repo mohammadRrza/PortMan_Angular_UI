@@ -94,4 +94,12 @@ ping_dslam(ping_str): Promise<any> {
         .catch(this.handleError);
 }
 
+port_register(port_config_str): Promise<any> {
+    return this._http
+        .post(this.apiURL4+'register-port/', port_config_str, this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(this.handleError);
+}
+
 }
