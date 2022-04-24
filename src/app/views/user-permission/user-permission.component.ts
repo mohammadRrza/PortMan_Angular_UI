@@ -88,6 +88,7 @@ export class UserPermissionComponent implements OnInit {
     this.user_id = user_id;
     this.permission_profile = permission_profile;
     this.user_permission_profile_id = user_permission_profile_id;
+    this.edit_permission_profile_view = true;
 
     this.usrSrv.edit_permissions(permission_id).then(res=>{
       this.user_permissions = res.result;
@@ -96,7 +97,6 @@ export class UserPermissionComponent implements OnInit {
       });
       console.log(this.exclude_command_ids);
 
-      this.edit_permission_profile_view = true;
     });
   }
 
@@ -120,6 +120,14 @@ export class UserPermissionComponent implements OnInit {
     let user_permission_str = '{"user":'+this.user_id+',"action":"allow","is_active":true,"permission_profile":'+this.user_id+',"id":'+this.user_id+',"objects":[{"type":"dslam","id":[]},{"type":"command","id":['+this.command_ids+']}]}';
     console.log(user_permission_str);
 
+  }
+
+
+  get_user_permission_info(username){
+    this.usrSrv.get_user_permission_info(username,this.pagination_config.currentPage).then(res=>{
+      this.users_permissions = res.results;
+      this.pagination_config.totalItems = res.count;
+    });
   }
 
   ngOnInit(): void {

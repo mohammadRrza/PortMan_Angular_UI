@@ -18,10 +18,11 @@
                   <ng-template pTemplate="header">
                     <tr class="row-accessories border" style="margin: 10px;" >
                       <th>
-                        <input pInputText type="text" [(ngModel)]="permission" (keyup)="get_dslam_info(permission,1)"
-                          placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Name"
+                        <input pInputText type="text" [(ngModel)]="username" (keyup)="get_user_permission_info(username)"
+                          placeholder="Search by Name" class="p-column-filter"  pTooltip="Search by Name"
                           tooltipPosition="top">
                       </th>
+
                     </tr>
                   </ng-template>
                 </p-table>
