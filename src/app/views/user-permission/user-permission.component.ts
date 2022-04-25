@@ -92,6 +92,7 @@ export class UserPermissionComponent implements OnInit {
 
     this.usrSrv.edit_permissions(permission_id).then(res=>{
       this.user_permissions = res.result;
+      this.exclude_command_ids = [];
       this.user_permissions.forEach(element =>{
         this.exclude_command_ids.push(element.object_id);
       });
@@ -101,7 +102,7 @@ export class UserPermissionComponent implements OnInit {
   }
 
   get_all_commands(){
-    this.commandSrv.get_all_commands().then(res=>{
+    this.commandSrv.get_all_commands(this.exclude_command_ids.join(',')).then(res=>{
       this.commands =  res;
     });  
   }

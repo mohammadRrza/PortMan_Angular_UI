@@ -140,12 +140,14 @@
       <div class="col-md-12">
         <div style="height: 200px;">
           <p-multiSelect [options]="commands" [(ngModel)]="selected_commands" [style]="{'width': '100%'}" optionLabel="name" display="chip" (onPanelShow)="get_all_commands()" (onChange)="assign_commands_to_user(selected_commands)"></p-multiSelect>
+          <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
+            <button *ngIf="user_permission.model_type=='command'" aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button">{{user_permission.object_name}}</button> 
+           </div>
         </div>
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
-          <button aria-pressed="true" style="width: 50%;" class="btn btn-block btn-outline-primary active card" type="button"
-          (click)="getTemperature(slot.card_number)">
+          <button aria-pressed="true" style="width: 50%;" class="btn btn-block btn-outline-primary active card" type="button">
                   <span style="text-align: center;">Add Commands</span>
           </button> 
         </div>

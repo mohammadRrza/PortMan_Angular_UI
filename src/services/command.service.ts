@@ -73,9 +73,9 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
-  get_all_commands(): Promise<any> {
+  get_all_commands(exclude_command_ids): Promise<any> {
     return this._http
-      .get(this.apiURL, this.httpOptions)
+      .get(this.apiURL+'?exclude_command_id='+exclude_command_ids, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
