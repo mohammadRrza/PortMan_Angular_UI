@@ -114,6 +114,13 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    assign_commands_to_user(user_permission_profile_id, user_permission_str): Promise<any> {
+        return this._http
+            .put(this.apiURL+'permission-profile/'+user_permission_profile_id+'/', user_permission_str, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
