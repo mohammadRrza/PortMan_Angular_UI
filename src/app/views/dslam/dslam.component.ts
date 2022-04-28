@@ -36,7 +36,7 @@ export class DslamComponent implements OnInit {
   ) {
     this.add_dslam_from = this.formBuilder.group({
       dslam_name : new FormControl("", Validators.required),
-      dslam_type : new FormControl("", Validators.required),
+      dslam_type : new FormControl(""),
       get_snmp_community : new FormControl("", Validators.required),
       set_snmp_community : new FormControl("", Validators.required),
       snmp_port : new FormControl("", Validators.required),
@@ -44,14 +44,14 @@ export class DslamComponent implements OnInit {
       telnet_username : new FormControl("", Validators.required),
       telnet_password : new FormControl("", Validators.required),
       ip : new FormControl("", Validators.required),
-      province : new FormControl("", Validators.required),
-      city : new FormControl("", Validators.required),
-      telecom : new FormControl("", Validators.required),
-      connection_type : new FormControl("", Validators.required),
+      province : new FormControl(""),
+      city : new FormControl(""),
+      telecom : new FormControl(""),
+      connection_type : new FormControl(""),
       fqdn : new FormControl("", Validators.required),
-      dslam_long : new FormControl("", Validators.required),
-      dslam_lat : new FormControl("", Validators.required),
-      enabled : new FormControl("", Validators.required),
+      dslam_long : new FormControl(""),
+      dslam_lat : new FormControl(""),
+      enabled : new FormControl(""),
     });
     this.pagination_config = {
       itemsPerPage: 10,
@@ -81,10 +81,14 @@ export class DslamComponent implements OnInit {
   dslam_add = {};
   submitted = false;
   prov_id;
+  city_id;
   is_ldap_login;
   agent_username: string;
   ldap_email: string;
-  
+  listDslamType = [];
+  dslam_type_id:number;
+  listConnectionTypes = []
+  connection_type_id: number;
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -97,6 +101,23 @@ export class DslamComponent implements OnInit {
 
   get f() { return this.add_dslam_from.controls; }
 
+  get_connection_types(){
+    this.listConnectionTypes = [
+      {
+      "id":1,
+      "name":"Telnet"
+      },
+      {
+        "id":2,
+        "name":"SNMP"
+      }
+      
+  ]
+  }
+
+  get_connection_type(connection_type_id){
+    this.connection_type_id = connection_type_id;
+  }
 
   edit_dslam(dslam_id) {
     this.dslamSrv.edit_dslam(dslam_id).then(res => {
@@ -117,6 +138,15 @@ export class DslamComponent implements OnInit {
   }
 
 
+  get_dslam_types(){
+    this.dslamSrv.get_dslam_types().then(res=>{
+      this.listDslamType = res;
+    });
+  }
+
+  get_dslam_type(dslam_type_id){
+    this.dslam_type_id = dslam_type_id;
+  }
 
   apply_add_dslam(param) {
     this.submitted = true;
@@ -124,8 +154,7 @@ export class DslamComponent implements OnInit {
     if (this.add_dslam_from.invalid) {
       return;
     }
-    let paramstr = '{"name":"adasasd","telecom_center":90053,"dslam_type":2,"ip":"192.18.1.1","active":true,"status":"new","conn_type":"","get_snmp_community":"asdasdasd","set_snmp_community":"asd","telnet_username":"sdfsdf","telnet_password":"asdasd","snmp_port":"1515","snmp_timeout":"161","fqdn":"adsafasdadasd"}';
-return
+    let paramstr = '{"name":"adasasd","telecom_center":90053,"dslam_type":'+this.dslam_type_id+',"ip":"192.168.1.1","active":true,"status":"new","conn_type":"","get_snmp_community":"asdasdasd","set_snmp_community":"asd","telnet_username":"sdfsdf","telnet_password":"asdasd","snmp_port":"1515","snmp_timeout":"161","fqdn":"adsafasdadasd"}';
     this.dslamSrv.apply_add_dslam(paramstr).then(res=>{
       this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     });
@@ -239,7 +268,6 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
 
   get_city_by_name(parent_id) {
     this.prov_id = parent_id
-    console.log("get_city_by_name"+"  "+parent_id)
     this.citySrv.get_city_by_name(parent_id).then(city_res => {
       this.listCites = city_res.results;
     });
@@ -252,9 +280,14 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     });
   }
 
-  getTelecomCenterByCityId(city_id){
-    console.log(city_id.query);
-    this.telecomSrv.getTelecomCenterByCityId(city_id).then(telecom_res => {
+  get_telecom_by_name(city_id){
+    this.city_id = city_id
+
+  }
+
+  getTelecomCenterByCityId(event){
+    console.log(event);
+    this.telecomSrv.getTelecomCenterByCityId(this.city_id,event.query).then(telecom_res => {
       this.listTelecom = telecom_res.results;
     });
   }

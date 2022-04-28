@@ -43,9 +43,10 @@ getAllTelecomCenters(page,page_size): Promise<any> {
                 .then(res => res)
                 .catch(this.handleError);   
              }
-getTelecomCenterByCityId(city_id): Promise<any> {
+getTelecomCenterByCityId(city_id, search_name): Promise<any> {
+    console.log(city_id);
     return this._http
-    .get(this.apiURL + '?search_city_id='+city_id, this.httpOptions)
+    .get(this.apiURL + '?search_city_id='+city_id+'&search_name='+search_name, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);   

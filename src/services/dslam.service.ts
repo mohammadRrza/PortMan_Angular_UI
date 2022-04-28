@@ -103,6 +103,14 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  get_dslam_types(): Promise<any> {
+    return this._http
+    .get(this.apiURL+'dslam-type/' , this.httpOptions)
+    .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   search_dslams_by_username(page,itemsPerPage,search_str, username, ldap_login): Promise<any> {
     return this._http
     .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage+'&username='+username+'&ldap_login='+ldap_login+search_str, this.httpOptions)
@@ -122,7 +130,7 @@ private handleError(error: any): Promise<any> {
   apply_add_dslam(paramstr):Promise<any>{
     let param_obj = JSON.parse(paramstr);
     return this._http
-    .post(this.apiURL+'/', param_obj, this.httpOptions)
+    .post(this.apiURL, paramstr, this.httpOptions)
     .toPromise()
       .then(res => res)
       .catch(this.handleError);

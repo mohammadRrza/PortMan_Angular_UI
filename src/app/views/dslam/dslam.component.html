@@ -107,6 +107,12 @@
         </span>
         <hr />
         <span class="p-float-label" style="margin-top: 20px;">
+          <p-autoComplete formControlName="dslam_type" placeholder="Dslam Type" [suggestions]="listDslamType"
+            (completeMethod)="get_dslam_types()" (onSelect)="get_dslam_type($event.id)" [dropdown]="true" field="name" dataKey="id">
+          </p-autoComplete>
+      </span>
+       <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
           <input id="float-input" formControlName="get_snmp_community" [ngClass]="{ 'is-invalid': submitted && f.get_snmp_community.errors }"  type="text" pInputText>
           <label for="float-input">Get Snmp Community</label>
         </span>
@@ -134,7 +140,7 @@
       </div>
       <div class="col-md-6">
           <p-autoComplete 
-            (completeMethod)="get_city_by_id($event)" placeholder="City Name" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
+            (completeMethod)="get_city_by_id($event)" (onSelect)="get_telecom_by_name($event.id)" placeholder="City Name" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
           </p-autoComplete>
         <hr/>
         <span class="p-float-label" style="margin-top: 20px;">
@@ -144,8 +150,13 @@
             <div *ngIf="f.dslam_name.errors.required"></div>
         </div>
         </span>
-
         <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <p-autoComplete formControlName="connection_type" placeholder="Connection Type" [suggestions]="listConnectionTypes"
+            (completeMethod)="get_connection_types()" (onSelect)="get_connection_type($event.id)" [dropdown]="true" field="name" dataKey="id">
+          </p-autoComplete>
+      </span>
+       <hr />
         <span class="p-float-label" style="margin-top: 20px;">
           <input id="float-input"  formControlName="snmp_port" [ngClass]="{ 'is-invalid': submitted && f.snmp_port.errors }" type="text" pInputText>
           <label for="float-input">Snmp Port</label>

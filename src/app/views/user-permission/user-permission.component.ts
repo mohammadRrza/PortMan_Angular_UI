@@ -121,14 +121,14 @@ export class UserPermissionComponent implements OnInit {
       // console.log(this.command_ids);
 
     });
-
+    this.command_ids.concat(this.exclude_command_ids);
 
   }
 
   apply_assign_commands_to_user(){
     let user_permission_str = '{"user":'+this.user_id+',"action":"allow","is_active":true,"permission_profile":'+this.permission_profile+',"id":'+this.permission_id+',"objects":[{"type":"dslam","id":[]},{"type":"command","id":['+this.command_ids+']}]}';
     this.usrSrv.assign_commands_to_user(this.user_permission_profile_id, user_permission_str).then(res=>{
-      
+      this.edit_permission_profile_view = false;
     });
     console.log(user_permission_str);
   }
