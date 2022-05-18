@@ -11,16 +11,20 @@
             <tabset>
               <tab>
                 <ng-template tabHeading><i class="icon-calculator"></i> کارت ها </ng-template>
-                <div class="cards" *ngFor="let slot of dslamBoard">
-                  <div *ngIf = "slot.card_status == 'active'">
-                    <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
-                    (click)="getTemperature(slot.card_number)">slot {{slot.card_number}}</button>
+                <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+                (click)="fiberhome_get_cards()">Update Cards Status</button>
+                <div *ngIf="dslamBoard">
+                  <div class="cards" *ngFor="let slot of dslamBoard">
+                    <div *ngIf = "slot.card_status == 'active'">
+                      <button aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
+                      (click)="getTemperature(slot.card_number)">slot {{slot.card_number}}</button>
+                    </div>
+                    <div *ngIf = "slot.card_status != 'active'">
+                      <button aria-pressed="true" class="btn btn-block btn-secondary active" style="cursor: no-drop;" type="button"
+                       pTooltip="Inactive" tooltipPosition="top">slot {{slot.card_number}}</button>
                   </div>
-                  <div *ngIf = "slot.card_status != 'active'">
-                    <button aria-pressed="true" class="btn btn-block btn-secondary active" style="cursor: no-drop;" type="button"
-                     pTooltip="Inactive" tooltipPosition="top">slot {{slot.card_number}}</button>
                 </div>
-              </div>
+                </div>
                 <hr/>
                 <div class="row" style="margin: 5px; direction: ltr;">
                   <table *ngIf="slot_obj" class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">

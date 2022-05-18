@@ -61,4 +61,11 @@ httpOptions = {
       .then(res => res)
       .catch(this.handleError);
   }
+  getProvinces(city_name): Promise<any> {
+    return this._http
+      .get(this.apiURL+ "?parent=all&city_name="+city_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
 }

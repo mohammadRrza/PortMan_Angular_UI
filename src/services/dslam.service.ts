@@ -12,6 +12,8 @@ export class DslamService {
   apiURL = environment.APIEndpoint + 'dslam/';
   apiURL2 = environment.APIEndpoint + 'dslamport/dslam_commandsV2/';
   apiURL3 = environment.APIEndpoint + 'dslam-port/';
+  apiURL4 = environment.APIEndpoint + 'dslamport/';
+
   constructor(private _http: HttpClient) { }
   //token = localStorage.getItem('access_token');
   token = localStorage.getItem('access_token');
@@ -156,7 +158,7 @@ private handleError(error: any): Promise<any> {
 
   remove_dslam(dslam_id):Promise<any>{
     return this._http
-    .get(this.apiURL + dslam_id+'/', this.httpOptions)
+    .delete(this.apiURL + dslam_id+'/', this.httpOptions)
     .toPromise()
       .then(res => res)
       .catch(this.handleError);
@@ -213,6 +215,14 @@ private handleError(error: any): Promise<any> {
     console.log(ngn_command_str);
     return this._http
       .post(this.apiURL+'ngn_register/', ngn_command_str, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+  
+  fiberhome_get_cards(dslam_card_str):Promise<any> {
+    return this._http
+      .post(this.apiURL4+'fiberhome_get_card/', dslam_card_str, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);

@@ -104,6 +104,11 @@ export class PortmanCdmsComponent implements OnInit {
           
           var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
+        else if(command_obj.name == 'fast profiles adsl set'){
+          this.profile_adsl_set = true;
+          
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+        }
     // else if(command_obj.name == 'show mac by slot port'){
     //     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     //   }
@@ -130,6 +135,11 @@ export class PortmanCdmsComponent implements OnInit {
     console.log(this.new_lineprofile)
     if(command_obj.type='port'){
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
+          this.profile_adsl_set = true;
+          
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+        }
+        else if(command_obj.name == 'fast profiles adsl set'){
           this.profile_adsl_set = true;
           
           var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
@@ -172,6 +182,11 @@ export class PortmanCdmsComponent implements OnInit {
     if(item.name == 'profile adsl set' || item.name == 'setPortProfiles'){
       this.profile_adsl_set = true;
       this.comm_item = item;
+    }
+    else if(item.name == 'fast profiles adsl set'){
+      this.profile_adsl_set = true;
+      this.comm_item = item;
+      
     }
 
     // else if(item.name == 'show'){

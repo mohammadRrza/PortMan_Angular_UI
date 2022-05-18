@@ -52,6 +52,10 @@ export class DslamComponent implements OnInit {
       dslam_long : new FormControl(""),
       dslam_lat : new FormControl(""),
       enabled : new FormControl(""),
+      pishgaman_vlan : new FormControl(""),
+      pishgaman_vpi : new FormControl(""),
+      pishgaman_vci : new FormControl(""),
+
     });
     this.pagination_config = {
       itemsPerPage: 10,
@@ -89,6 +93,8 @@ export class DslamComponent implements OnInit {
   dslam_type_id:number;
   listConnectionTypes = []
   connection_type_id: number;
+  enabled: boolean = true;
+
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -154,7 +160,8 @@ export class DslamComponent implements OnInit {
     if (this.add_dslam_from.invalid) {
       return;
     }
-    let paramstr = '{"name":"adasasd","telecom_center":90053,"dslam_type":'+this.dslam_type_id+',"ip":"192.168.1.1","active":true,"status":"new","conn_type":"","get_snmp_community":"asdasdasd","set_snmp_community":"asd","telnet_username":"sdfsdf","telnet_password":"asdasd","snmp_port":"1515","snmp_timeout":"161","fqdn":"adsafasdadasd"}';
+    let dslam_param = this.add_dslam_from.value;
+    let paramstr = '{"name":"'+dslam_param.dslam_name+'","telecom_center":'+dslam_param.telecom.id+',"dslam_type":'+this.dslam_type_id+',"ip":"'+dslam_param.ip+'","enabled":'+this.enabled+',"status":"new","conn_type":'+this.connection_type_id+',"get_snmp_community":"'+dslam_param.get_snmp_community+'","set_snmp_community":"'+dslam_param.set_snmp_community+'","telnet_username":"'+dslam_param.telnet_username+'","telnet_password":"'+dslam_param.telnet_password+'","snmp_port":"'+dslam_param.snmp_port+'","snmp_timeout":"'+dslam_param.snmp_timeout+'","fqdn":"'+dslam_param.fqdn+'"}';
     this.dslamSrv.apply_add_dslam(paramstr).then(res=>{
       this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     });
@@ -219,7 +226,7 @@ export class DslamComponent implements OnInit {
         message: 'Are you sure that you want to delete this Dslam?',
         accept: () => {
           this.dslamSrv.remove_dslam(dslam_id).then(res => {
-            this.dslam_edit = res;
+            this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
           });
         
         }
@@ -298,7 +305,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     "status":"'+this.dslam_edit.status+'","conn_type":"'+this.dslam_edit.conn_type+'","get_snmp_community":"'+this.dslam_edit.get_snmp_community+'",\
     "set_snmp_community":"'+this.dslam_edit.set_snmp_community+'","telnet_username":"'+this.dslam_edit.telnet_username+'",\
     "telnet_password":"'+this.dslam_edit.telnet_password+'","snmp_port":'+this.dslam_edit.snmp_port+',\
-    "snmp_timeout":'+this.dslam_edit.snmp_timeout+',"fqdn":"'+this.dslam_edit.fqdn+'"}';
+    "snmp_timeout":'+this.dslam_edit.snmp_timeout+',"fqdn":"'+this.dslam_edit.fqdn+'","pishgaman_vlan":"'+this.dslam_edit.pishgaman_vlan+'","pishgaman_vpi":"'+this.dslam_edit.pishgaman_vpi+'","pishgaman_vci":"'+this.dslam_edit.pishgaman_vci+'"}';
     this.dslamSrv.apply_edit_dslam(this.dslam_edit.id, param_str).then(res=>{
       this.edit_dslam(this.dslam_edit.id);
       this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);

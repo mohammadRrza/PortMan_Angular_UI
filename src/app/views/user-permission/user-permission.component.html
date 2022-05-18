@@ -8,8 +8,12 @@
                 User Permissions Panel
                 <span>
                     <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;"
-                        pTooltip="Add Permission" tooltipPosition="left" (click)="show_add_Permission()"></i>
+                        pTooltip="Add Permission" tooltipPosition="top" (click)="show_add_Permission()"></i>
                 </span>
+                <span>
+                  <i class="pi pi-paperclip" style="font-size: 2rem; float: right; cursor: pointer; margin-right: 10px;"
+                      pTooltip="Add  Permission By Role" tooltipPosition="top" (click)="show_add_Permission_by_role()"></i>
+              </span>
             </div>
             <div>
                 <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
@@ -161,6 +165,33 @@
             (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
            </div>
         </div> -->
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog header="Edit Permissions" [(visible)]="permission_role_view" [modal]="true" [style]="{width: '70vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="border-info">
+    <div class="row">
+      <div class="col-md-12">
+        <div style="height: 200px;">
+            <div class="row">
+              <div class="col-md-4">
+                <p-autoComplete [(ngModel)]="role" [suggestions]="roles" field="name" dataKey="id" [dropdown]="true" (completeMethod)="search($event)"></p-autoComplete>
+              </div>
+              <div class="col-md-12">
+                
+              </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+        </div>
+        <div class="col-md-2">
+          <button aria-pressed="true" style="width: 50%;" class="btn btn-block btn-outline-primary active card" type="button">
+                  <span style="text-align: center;" (click)="apply_assign_commands_to_user()">Assign Commands</span>
+          </button> 
+        </div>
       </div>
     </div>
   </div>
