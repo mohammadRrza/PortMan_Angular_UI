@@ -49,7 +49,7 @@ export class RoutersOperationComponent implements OnInit {
 
     view_backup(filename){
       this.view_backup_file = true;
-      this.routerSrv.download_backup_file(filename).then(res=>{
+      this.routerSrv.download_backup_file(filename, this.router_id).then(res=>{
          this.bakup_text = res.response;
       });
     }

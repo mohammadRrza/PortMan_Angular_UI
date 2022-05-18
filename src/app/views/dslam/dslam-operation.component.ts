@@ -373,6 +373,13 @@ export class DslamOperationComponent implements OnInit {
     }
   }
 
+  fiberhome_get_cards(){
+    let dslam_card_str = '{"dslam_id":"'+this.dslam_id+'","params":{"type":"dslam","is_queue":false, "port_conditions":{"slot_number":0,"port_number":0}}}';
+    this.dslamSrv.fiberhome_get_cards(dslam_card_str).then(res=>{
+
+    });
+  }
+  
   register_ngn_number() {
     this.ngn_register_port_started = false;
     this.ngn_register_port_comlpeted = false;

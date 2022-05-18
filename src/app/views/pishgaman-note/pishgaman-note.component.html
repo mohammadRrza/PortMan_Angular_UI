@@ -5,7 +5,7 @@
               Pishgaman Note
               <hr />
               <span style="font-size: 2rem; float: right; cursor: pointer;">
-                <i class="pi pi-plus-circle"  pTooltip="Add New Problem"
+                <i class="pi pi-plus-circle"  pTooltip="Add New Problem"  *ngIf="view_notes_edit"
                   tooltipPosition="left" (click)="show_add_new_problem()"></i>
                   <i class="pi pi-refresh" (click)="refresh_problems()"></i>
               </span>
@@ -28,7 +28,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+                [rowsPerPageOptions]="[10,20,30]"></p-paginator>
+                <div class="card-body" *ngIf="view_notes_edit">
                     <p-table [value]="pishgaman_notes" class="table table-striped" responsiveLayout="scroll">
                         <ng-template pTemplate="header">
                             <tr>
@@ -60,6 +62,8 @@
                             </tr>
                         </ng-template>
                     </p-table>
+                    <p-paginator [rows]="10" [totalRecords]="pagination_config.totalItems" (onPageChange)="paginate($event)"
+                    [rowsPerPageOptions]="[10,20,30]"></p-paginator>
                 </div>
             </div>
         </div>
@@ -96,3 +100,38 @@
   </div>
   
 </p-dialog>
+
+
+
+<p-dialog header="Add New Problem" [(visible)]="display_edit_problem" [modal]="true" [style]="{width: '80vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+  <div class="card">
+    <div class="glowing-border direction" style="direction: ltr;">
+        <div class="card-body border">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="p-float-label">
+                        <input id="float-input" [(ngModel)]="telecom_center"  type="text" pInputText style="width: 80%;"> 
+                        <label for="float-input">Telecom Center</label>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <p-button icon="pi pi-check" type="Button" label="Edit the problem" styleClass="p-button-text" (click)='apply_edit_note()'></p-button>
+                </div>
+            </div>
+            <hr />
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p-editor (onTextChange)='onTextChange($event)' [(ngModel)]="edited_problem_description" [style]="{'height':'320px'}"></p-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+</p-dialog>
+
+
+

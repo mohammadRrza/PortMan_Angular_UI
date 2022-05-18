@@ -14,6 +14,7 @@ export class UserPermissionComponent implements OnInit {
 
   constructor(private usrSrv: UserService,
     private commandSrv: CommandService) { 
+
     this.pagination_config = {
       itemsPerPage: 10,
       currentPage: 1,
@@ -44,18 +45,33 @@ export class UserPermissionComponent implements OnInit {
   command_ids = [];
   exclude_command_ids = [];
   permission_id: number;
+  selected_commands: any;
+  permission_role_view:boolean = false;
+  roles: any[] = [];
+    role: any;
 
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
     this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
   }
-
   get_users_permission(page,itemsPerPage) {
     this.usrSrv.get_users_permission(page,itemsPerPage).then(res => {
       this.users_permissions = res.results;
       this.pagination_config.totalItems = res.count;
     });
+  }
+
+  search(event){
+      this.roles=
+      [
+        {"id":1, "name": 'ADMIN'},
+        {"id":1, "name": 'SUPERVISOR'},
+        {"id":1, "name": 'SUPPORT'},
+        {"id":1, "name": 'RESELLER'},
+        {"id":1, "name": 'DIRECTRESELLER'},
+ 
+      ];
   }
 
   get_user_permission_profile(permission_profile_id, model_type){
@@ -102,6 +118,10 @@ export class UserPermissionComponent implements OnInit {
       console.log(this.exclude_command_ids);
 
     });
+  }
+  show_add_Permission_by_role(){
+    this.permission_role_view = true;
+
   }
 
   get_all_commands(){

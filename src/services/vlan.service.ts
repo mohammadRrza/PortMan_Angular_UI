@@ -2,61 +2,73 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service'
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class PishgamanNoteService {
-    apiURL = environment.APIEndpoint + 'pishgaman-note/';
+export class VlanService {
+    apiURL = environment.APIEndpoint + 'vlan/';
+
     token = localStorage.getItem('access_token');
+    helper = new JwtHelperService();
 
     constructor(private _http: HttpClient, private notSrv: NotificationService) {
+        this.token = localStorage.getItem('access_token');
+
     }
 
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Token ' + this.token
+
         })
     };
 
-    private handleError(error: any): Promise<any> {
+    private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
 
-    get_pishgaman_notes(currentPage,itemsPerPage): Promise<any> {
+    search_vlans(page,itemsPerPage,searchStr): Promise<any> {
         return this._http
-            .get(this.apiURL+'?page='+currentPage+'&page_size='+itemsPerPage , this.httpOptions)
+          .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage+"&"+searchStr, this.httpOptions)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+      }
+
+    remove_vlan(vlan_id):Promise<any>{
+        return this._http
+            .delete(this.apiURL + vlan_id +'/', this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
     }
 
-    save_note(note_obj): Promise<any> {
+    create_vlan(form_vlan_obj):Promise<any>{
         return this._http
-            .post(this.apiURL+'save-note/', note_obj, this.httpOptions)
+            .post(this.apiURL,form_vlan_obj , this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
     }
 
-    get_note_by_id(note_id): Promise<any> {
+    AssignValnToReseller(reseller_info,vlan_id){
         return this._http
-            .get(this.apiURL+'?note_id='+note_id, this.httpOptions)
+            .post(this.apiURL + '/' + vlan_id, reseller_info , this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
     }
 
-
-    apply_edit_note(note_id): Promise<any> {
+    get_all_vlan(page,itemsPerPage): Promise<any> {
         return this._http
-            .post(this.apiURL+'save-note/', note_id, this.httpOptions)
+            .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
     }
-
 }

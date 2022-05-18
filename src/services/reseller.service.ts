@@ -27,6 +27,14 @@ export class ResellerService {
             .catch(this.handleError);
     }
 
+    search_reseller(page,itemsPerPage,name): Promise<any> {
+        return this._http
+          .get(this.apiURL + "?name="+name+"&page="+page+"&page_size="+itemsPerPage, this.httpOptions)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
+      }
+      
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

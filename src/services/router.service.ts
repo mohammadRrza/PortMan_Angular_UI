@@ -63,9 +63,9 @@ get_backup_files_name2(router_id): Promise<any> {
 
 
 
-download_backup_file(backup_file_name: string): Promise<any> {
+download_backup_file(backup_file_name: string, router_id): Promise<any> {
   return this._http
-    .post(this.apiURL+'download_router_backup_file/', {'backup_file_name':backup_file_name}, this.httpOptions)
+    .post(this.apiURL+'download_router_backup_file/', {'backup_file_name':backup_file_name, 'router_id': router_id}, this.httpOptions)
     .toPromise()
     .then(res => res)
     .catch(this.handleError);

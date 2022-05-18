@@ -43,6 +43,16 @@
           <label for="float-input">IP</label>
         </span>
         <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" [(ngModel)]="dslam_edit.pishgaman_vpi" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.pishgaman_vpi">
+          <label for="float-input">VPI</label>
+        </span>
+        <hr />
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" [(ngModel)]="dslam_edit.pishgaman_vci" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.pishgaman_vci">
+          <label for="float-input">VCI</label>
+        </span>
+        <hr />
       </div>
       <div class="col-md-6">
         <span *ngIf = 'dslam_edit.telecom_center_info'>
@@ -76,7 +86,12 @@
           <label for="float-input">Fqdn</label>
         </span>
         <hr />
-        <p-inputSwitch></p-inputSwitch>
+        <span class="p-float-label" style="margin-top: 20px;">
+          <input id="float-input" [(ngModel)]="dslam_edit.pishgaman_vlan" [ngModelOptions]="{standalone: true}" type="text" pInputText [value]="dslam_edit.pishgaman_vlan">
+          <label for="float-input">VLAN</label>
+        </span>
+        <hr />
+        <p-inputSwitch [(ngModel)]="dslam_edit.active" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
         <hr />
       </div>
     </div>
@@ -182,7 +197,7 @@
           <label for="float-input">Longitude</label>
         </span>
         <hr />
-        <p-inputSwitch formControlName="enabled"></p-inputSwitch>
+        <p-inputSwitch formControlName="enabled" [(ngModel)]="enabled"></p-inputSwitch>
 
         <hr />
       </div>

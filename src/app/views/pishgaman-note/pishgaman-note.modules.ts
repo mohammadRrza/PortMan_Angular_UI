@@ -16,6 +16,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
 import {JalaliPipe} from './pishgaman-note.component'
+import {StepsModule} from 'primeng/steps';
 
 @NgModule({
     imports: [

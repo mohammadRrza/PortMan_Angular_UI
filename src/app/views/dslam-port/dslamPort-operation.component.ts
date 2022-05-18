@@ -103,7 +103,8 @@ export class DslamPortOperationComponent implements OnInit {
     his_snr_data_rate_chartOptions;
     his_tx_data_rate;
     his_tx_data_rate_chartOptions;
-
+    profile_adsl_set:boolean = false;
+    
     /////////////////// port_traffic //////////////////////////////////////////////////////
 
     data = [{
@@ -357,6 +358,15 @@ export class DslamPortOperationComponent implements OnInit {
         console.log(item);
         this.comm_item = item;
         this.get_port_command_history(this.dslam_id, this.port_id, item.id, 1);
+        if(item.name == 'profile adsl set' || item.name == 'setPortProfiles'){
+            this.profile_adsl_set = true;
+            this.comm_item = item;
+          }
+          else if(item.name == 'fast profiles adsl set'){
+            this.profile_adsl_set = true;
+            this.comm_item = item;
+            
+          }
     }
 
     onChangeSearch(search: string) {
