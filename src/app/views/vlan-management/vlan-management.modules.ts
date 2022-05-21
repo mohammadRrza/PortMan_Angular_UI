@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import {SubscriberRoutingModule} from './subscriber.routing.modules'
-import { SubscriberComponent } from './subscriber.component';
-import { NgCircleProgressModule } from 'ng-circle-progress';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {VlanManagementRoutingModule} from './vlan-management.routing.modules'
+import { VlanManagementComponent } from './vlan-management.component';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -16,17 +14,14 @@ import { DialogModule } from 'primeng/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import {ToggleButtonModule} from 'primeng/togglebutton';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {InputTextModule} from 'primeng/inputtext';
-import {StepsModule} from 'primeng/steps';
-import {CardModule} from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
-
+import {DropdownModule} from 'primeng/dropdown';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
     imports: [
         CommonModule,
-        SubscriberRoutingModule,
+        VlanManagementRoutingModule,
         TableModule,
         PaginatorModule,
         FieldsetModule,
@@ -34,17 +29,13 @@ import { ToastModule } from 'primeng/toast';
         ConfirmDialogModule,
         TabsModule,
         TabViewModule,
+        ReactiveFormsModule,
         AutoCompleteModule,
         DialogModule,
         FormsModule,
-        ReactiveFormsModule,
         AutocompleteLibModule,
         ToggleButtonModule,
-        InputSwitchModule,
-        InputTextModule,
-        StepsModule,
-        CardModule,
-        ToastModule,
+        DropdownModule,
         ProgressSpinnerModule,
         NgCircleProgressModule.forRoot({
             // set defaults here
@@ -56,6 +47,6 @@ import { ToastModule } from 'primeng/toast';
             animationDuration: 300
           }),
         ],
-    declarations: [SubscriberComponent]
+    declarations: [VlanManagementComponent]
   })
-  export class SubscriberModule { }
+  export class VlanManagementModule { }

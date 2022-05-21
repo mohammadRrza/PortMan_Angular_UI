@@ -267,8 +267,8 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
 
   }
 
-  get_province_by_name(event) {
-    this.citySrv.get_province_by_name(event.query).then(prov_res => {
+  getProvinces(event) {
+    this.citySrv.getProvinces(event.query).then(prov_res => {
       this.listProvince = prov_res.results;
     });
   }

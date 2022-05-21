@@ -48,6 +48,7 @@
     "@coreui/icons": "0.3.0",
     "@ng-bootstrap/ng-bootstrap": "6.2.0",
     "@ng-select/ng-select": "^3.7.3",
+    "@schematics/angular": "^13.3.6",
     "angular-mapbox": "0.2.2",
     "angular-ng-autocomplete": "~2.0.1",
     "bootstrap": "^4.3.1",

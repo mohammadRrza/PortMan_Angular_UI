@@ -3,6 +3,8 @@
       <div class="card">
         <div class="card-header" style="text-align: center;">
           User Management Panel
+          <i class="pi pi-plus-circle" style="font-size: 2rem; float: right; cursor: pointer;" pTooltip="Add User"
+            tooltipPosition="left" (click)="add_user()"></i>
         </div>
         <div>
             <div class="disabled" *ngIf = "progressSpinner"></div>
@@ -10,21 +12,15 @@
               <p-header>User Search</p-header>
             <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
               <ng-template pTemplate="header">
-                <tr class="row-accessories border" style="margin: 10px;" >
+                <tr class="row-accessories">
                   <th>
-                    <input pInputText type="text" [(ngModel)]="username" (keyup)="search_user(username,1)"
-                      placeholder="Search by Province" class="p-column-filter" style="margin: 10px;"
-                      pTooltip="Search by Username" tooltipPosition="top">
+                      <input pInputText type="text" (input)="dt1.filter($event.target.value, 'username', 'contains')" [value]="dt1.filters['username']?.value" placeholder="Search by Username" class="p-column-filter">
                   </th>
                   <th>
-                    <input pInputText type="text" [(ngModel)]="first_name" (keyup)="search_user(first_name,2)"
-                      placeholder="Search by City" class="p-column-filter" style="margin: 10px;" pTooltip="Search by First Name"
-                      tooltipPosition="top">
+                      <input pInputText type="text" (input)="dt1.filter($event.target.value, 'first_name', 'contains')" [value]="dt1.filters['first_name']?.value" placeholder="Search by First Name" class="p-column-filter">
                   </th>
                   <th>
-                    <input pInputText type="text" [(ngModel)]="last_name" (keyup)="search_user(last_name,3)"
-                      placeholder="Search by Name" class="p-column-filter" style="margin: 10px;" pTooltip="Search by Last Name"
-                      tooltipPosition="top">
+                      <input pInputText type="text" (input)="dt1.filter($event.target.value, 'last_name', 'contains')" [value]="dt1.filters['last_name']?.value" placeholder="Search by Last Name" class="p-column-filter">
                   </th>
                 </tr>
               </ng-template>
@@ -67,12 +63,10 @@
       
                       <div class="col-md-12" style="padding-left: 40%">
                         <div class="row" *ngIf="permission.permissions">
-                          <img *ngIf="permission.permissions.includes('view_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
-                            style="cursor: pointer; margin: 5px;" />
-                          <img *ngIf="permission.permissions.includes('edit_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
-                            pTooltip="Dslam Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
-                          <img *ngIf="permission.permissions.includes('delete_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Dslam"
-                            tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_dslam(dslam.id)" />
+                          <img *ngIf="permission.permissions.includes('edit_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_user(user.id)" width="20"
+                            pTooltip="User Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                          <img *ngIf="permission.permissions.includes('delete_users') || permission.user_type == 'ADMIN'" src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove User"
+                            tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Delete" (click)="remove_user(user.id)" />
                         </div>
                       </div>
                     </td>
@@ -85,3 +79,149 @@
     </div>
 </div>
 </div>
+
+<!-- Delete ----------------------------------------------------------------------------------------------- -->
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="position: absolute; z-index: 1000; margin-top: 15%;margin-left: 45%;">
+  <p-progressSpinner *ngIf="progressSpinner == true"></p-progressSpinner>
+</div>
+
+<!-- END ----------------------------------------------------------------------------------------------------->
+
+<!-- Add User Management ---------------------------------------------------------------------------------- -->
+
+<p-dialog header="Add User Management" [(visible)]="displayMaximizable_add" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+    <div class="border-info" style="padding: 10px;">
+        <form [formGroup]="add_user_from" #f="ngForm" (ngSubmit)="apply_add_user(this.add_user_from)">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" formControlName="email" type="text" pInputText>
+                        <label for="float-input">Email</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" formControlName="first_name" type="text" pInputText>
+                        <label for="float-input">First Name</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                      <input id="float-input" formControlName="last_name" type="text" pInputText>
+                      <label for="float-input">Last Name</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <span>
+                          <p-dropdown [options]="types" [(ngModel)]="selectfilter"
+                           (onChange)="get_types($event)" formControlName="type" optionLabel="name" placeholder="Select a Type"></p-dropdown>
+                        </span>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                  <span class="p-float-label" style="margin-top: 20px;">
+                      <input id="float-input" formControlName="username" type="text" pInputText>
+                      <label for="float-input">Username</label>
+                  </span>
+                  <br>
+                      <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" type="password" class="form-control" formControlName="password" pPassword />
+                        <label for="float-input">Password</label>
+                      </span>
+                    <br>
+                      <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" type="password" class="form-control" formControlName="confirm_password" pPassword />
+                        <label for="float-input">Confirm Password</label>
+                      </span>
+                      <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <p-inputNumber formControlName="tel" mode="decimal" inputId="withoutgrouping" [useGrouping]="false"></p-inputNumber>
+                        <label for="float-input">Tel</label>
+                    </span>
+                    <br>
+                    <span>
+                      <div class="p-field-checkbox">
+                        <p-checkbox binary="true" inputId="binary" label="Active"></p-checkbox>
+                        <label for="binary"></label>
+                      </div>
+                    </span>
+                </div>
+            </div>
+            <br>
+            <p-button icon="pi pi-check" type="submit" label="Submit" styleClass="p-button-text"></p-button>
+        </form>
+    </div>
+</p-dialog>
+
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- Edit ------------------------------------------------------------------------------------------------ -->
+
+<p-dialog header="User Edit" [(visible)]="displayMaximizable_edit" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="border-info" style="padding: 10px;">
+        <form [formGroup]="edit_user_from" (ngSubmit)="apply_edit_user()">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" [(ngModel)]="user_edit.first_name" formControlName="first_name" type="text" pInputText>
+                        <label for="float-input">First Name</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                      <input id="float-input" [(ngModel)]="user_edit.last_name" formControlName="last_name" type="text" pInputText>
+                      <label for="float-input">Last Name</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                      <input id="float-input" [(ngModel)]="user_edit.username" formControlName="username" type="text" pInputText>
+                      <label for="float-input">User Name</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" [(ngModel)]="user_edit.email" formControlName="email" type="text" pInputText>
+                        <label for="float-input">Email</label>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <span class="p-float-label" style="margin-top: 20px;">
+                        <input id="float-input" [(ngModel)]="user_edit.tel" mode="decimal" inputId="withoutgrouping" formControlName="tel" type="text" pInputText>
+                        <label for="float-input">Tel</label>
+                    </span>
+                    <br>
+                    <span class="p-float-label" style="margin-top: 20px;">
+                      <span>
+                        <p-dropdown [options]="types" [(ngModel)]="selectfilter"
+                         (onChange)="get_types($event)" formControlName="type" optionLabel="name" placeholder="Select a Type"></p-dropdown>
+                      </span>
+                    </span>
+                    <br>
+                      <span *ngIf=" reseller_info == true ">
+                          <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
+                                      (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                                      (inputFocused)='onFocused($event)' historyIdentifier="listResellers" [itemTemplate]="resellerTemplate"
+                                      [notFoundTemplate]="notFoundTemplate" formControlName="reseller">
+                          </ng-autocomplete>
+                          <ng-template #resellerTemplate let-listReseller>
+                              <a [innerHTML]="listReseller.name"></a>
+                          </ng-template>
+                      </span>
+                    <br>
+                    <br>
+                    <span>
+                      <div class="p-field-checkbox">
+                        <p-checkbox binary="true" inputId="binary" label="Active" [(ngModel)]="user_edit.is_active" [ngModelOptions]="{standalone: true}"></p-checkbox>
+                        <label for="binary"></label>
+                      </div>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-check" (click)="apply_edit_user(user_edit)" label="Edit" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog> 
+
+<!-- ------------------------------------------------------------------------------------------------------ -->

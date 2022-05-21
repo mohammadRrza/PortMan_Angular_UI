@@ -78,6 +78,11 @@ export class SubscriberComponent implements OnInit {
   telecom_centers = [];
   step: number = 1;
   subscription: any;
+  progressSpinner: boolean = false;
+  is_ldap_login;
+  agent_username: string;
+  ldap_email: string;
+
 
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
@@ -146,7 +151,7 @@ export class SubscriberComponent implements OnInit {
 
   remove_subscriber(sub_id){
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this Vlan?',
+      message: 'Are you sure that you want to delete this Subscriber?',
       accept: () => {
         this.SubServis.remove_subscriber(sub_id).then(res => {
           this.subs_edit = res;
@@ -224,15 +229,23 @@ export class SubscriberComponent implements OnInit {
   }
 
   get_all_subscriber(page,itemsPerPage){
+    this.progressSpinner = true;
     this.SubServis.get_all_subscriber(page,itemsPerPage).then(res=>{
       this.subs = res.results;
       this.pagination_config.totalItems = res.count;
+      this.progressSpinner = false;
     });
   }
 
   ngOnInit(): void {
-    this.get_all_subscriber(1,10);
-    var loginCls =  new LoginCls(this.jwtHelper,this.router);
-  }
 
+    this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
+    this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
+    if(this.is_ldap_login != 'true'){
+      var loginCls =  new LoginCls(this.jwtHelper,this.router);
+      loginCls.check_login();
+    }
+    this.get_all_subscriber(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+  }
 }

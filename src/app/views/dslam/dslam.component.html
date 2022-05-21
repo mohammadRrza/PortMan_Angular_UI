@@ -8,7 +8,7 @@
       <div class="col-md-6">
         <span *ngIf = 'dslam_edit.telecom_center_info'>
           <p-autoComplete [(ngModel)]="dslam_edit.telecom_center_info.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" [dropdown]="true" field="text"
+            (completeMethod)="getProvinces($event)" [dropdown]="true" field="text"
             (onSelect)="get_city_by_name($event.id)">
 
           </p-autoComplete>
@@ -111,7 +111,7 @@
       <div class="col-md-6">
         <span>
           <p-autoComplete formControlName="province"  placeholder="Province" [suggestions]="listProvince"
-            (completeMethod)="get_province_by_name($event)" (onSelect)="get_city_by_name($event.id)" dataKey="id"  [dropdown]="true" field="text">
+            (completeMethod)="getProvinces($event)" (onSelect)="get_city_by_name($event.id)" dataKey="id"  [dropdown]="true" field="text">
           </p-autoComplete>
         </span>
         <hr />

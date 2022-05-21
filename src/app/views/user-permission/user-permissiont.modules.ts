@@ -9,7 +9,6 @@ import {PaginatorModule} from 'primeng/paginator';
 import {FieldsetModule} from 'primeng/fieldset';
 import { DialogModule } from 'primeng/dialog';
 import {MultiSelectModule} from 'primeng/multiselect';
-import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
     imports: [
@@ -21,8 +20,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
         PaginatorModule,
         FieldsetModule,
         DialogModule,
-        MultiSelectModule,
-        AutoCompleteModule
+        MultiSelectModule
         
     ],
     declarations: [ 
