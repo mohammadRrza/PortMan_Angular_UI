@@ -94,7 +94,8 @@ export class DslamComponent implements OnInit {
   listConnectionTypes = []
   connection_type_id: number;
   enabled: boolean = true;
-
+  ldap_permissions: any;
+  view_actions: boolean = false;
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -347,7 +348,13 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     this.is_ldap_login = localStorage.getItem("ldap_login");
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
-
+    this.ldap_permissions = localStorage.getItem('ldap_permissions');
+    if( this.ldap_permissions.includes('Network-Core') || this.ldap_permissions.includes('Network-Access')){
+      this.view_actions = true;
+    }
+    else{
+      this.view_actions = false;
+    }
     if(this.is_ldap_login != 'true'){
           var loginCls =  new LoginCls(this.jwtHelper,this.router);
           loginCls.check_login();

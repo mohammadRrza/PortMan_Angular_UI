@@ -361,7 +361,9 @@
               </th>
               <th pSortableColumn="address">Active<p-sortIcon field="name"></p-sortIcon>
               </th>
-              <th pSortableColumn="address">Action<p-sortIcon field="name"></p-sortIcon>
+              <th pSortableColumn="address" *ngIf="is_ldap_login && view_actions">Action<p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="address" *ngIf="!is_ldap_login">Action<p-sortIcon field="name"></p-sortIcon>
               </th>
 
           </ng-template>
@@ -397,7 +399,19 @@
                   pTooltip="Inactive" tooltipPosition="top" />
 
               </td>
-              <td class="text-center">
+              <td class="text-center" *ngIf="is_ldap_login && view_actions">
+                <div class="col-md-12" style="padding-left: 40%">
+                  <div class="row" *ngIf="permission.permissions">
+                    <img *ngIf="permission.permissions.includes('view_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
+                      style="cursor: pointer; margin: 5px;" />
+                    <img *ngIf="permission.permissions.includes('edit_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\edit_icon.png" (click)="edit_dslam(dslam.id)" width="20"
+                      pTooltip="Dslam Edit" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
+                    <img *ngIf="permission.permissions.includes('delete_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Dslam"
+                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_dslam(dslam.id)" />
+                  </div>
+                </div>
+              </td>
+              <td class="text-center" *ngIf="!is_ldap_login">
                 <div class="col-md-12" style="padding-left: 40%">
                   <div class="row" *ngIf="permission.permissions">
                     <img *ngIf="permission.permissions.includes('view_dslam') || permission.user_type == 'ADMIN'" src="\assets\img\brand\info_icon.png" (click)="show_dslam_info(dslam.id)" width="20" pTooltip="Dslam info" tooltipPosition="top"
