@@ -143,16 +143,16 @@ export const navItems: INavData[] = [
         name: 'مدیر پورت ریسلر',
         url: '/reseller/reseller-ports',
         icon: 'icon-bell',
-        ldap_attributes: {hidden: null, who: []},
+        ldap_attributes: {hidden: null, who: ['ADMIN']},
       },
       {
         name: 'ریسلر',
         url: '/reseller/resellers',
         icon: 'icon-bell',
-        ldap_attributes: {hidden: null, who: []},
+        ldap_attributes: {hidden: null, who: ['ADMIN']},
       }
     ],
-    attributes: {hidden: null, who: []},
+    attributes: {hidden: null, who: ['ADMIN']},
     ldap_attributes: {hidden: null, who: []},
   },
 
@@ -172,9 +172,16 @@ export const navItems: INavData[] = [
   },
   {
     name: ' مدیریت وی لن ها',
-    url: '/icons',
+    url: '/vlan/vlans',
     icon: 'icon-settings',
-    attributes: {hidden: null, who: []},
+    attributes: {hidden: null, who: ['ADMIN']},
+    ldap_attributes: {hidden: null, who: []},
+  },
+  {
+    name: ' مدیریت مشترکین',
+    url: '/customer-port',
+    icon: 'icon-settings',
+    attributes: {hidden: null, who: ['ADMIN']},
     ldap_attributes: {hidden: null, who: []},
   },
   {

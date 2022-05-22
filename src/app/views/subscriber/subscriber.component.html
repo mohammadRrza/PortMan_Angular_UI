@@ -124,6 +124,9 @@
 <!------------------------------ Edit ----------------------------------------------------------------->
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="position: absolute; z-index: 1000; margin-top: 15%;margin-left: 45%;">
+    <p-progressSpinner *ngIf="progressSpinner == true"></p-progressSpinner>
+</div>
 <p-dialog header="Subscriber Edit" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
     <div class="border-info" style="padding: 10px;">
@@ -181,98 +184,99 @@
 
 <p-dialog header="Add subs" [(visible)]="displayMaximizable_add" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
-    <form [formGroup]="add_subs_from" (ngSubmit)="apply_add_subs(this.add_subs_from)">
-        
-        <div *ngIf = "step == 1">
-            <div class="row">
-                <div class="col-md-6">
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="username" type="text" pInputText>
-                        <label for="float-input">Username</label>
-                    </span>
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="lastname" type="text" pInputText>
-                        <label for="float-input">Last Name</label>
-                    </span>
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="firstname" type="text" pInputText>
-                        <label for="float-input">First name</label>
-                    </span>
-                </div>
-                <div class="col-md-6">
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="national_code" type="text" pInputText>
-                        <label for="float-input">National Code</label>
-                    </span>
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="mobile" type="text" pInputText>
-                        <label for="float-input">Mobile</label>
-                    </span>
-                    <div style="margin-top: 10%;">
-                        <p-button icon="pi pi-check" type="submit" label="Next" (onClick)="nextPage()" styleClass="p-button-text" *ngIf = "step == 1"></p-button>
+    <div class="border-info" style="padding: 10px;">
+        <form [formGroup]="add_subs_from" (ngSubmit)="apply_add_subs(this.add_subs_from)">
+            <div *ngIf = "step == 1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="username" type="text" pInputText>
+                            <label for="float-input">Username</label>
+                        </span>
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="lastname" type="text" pInputText>
+                            <label for="float-input">Last Name</label>
+                        </span>
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="firstname" type="text" pInputText>
+                            <label for="float-input">First name</label>
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="national_code" type="text" pInputText>
+                            <label for="float-input">National Code</label>
+                        </span>
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="mobile" type="text" pInputText>
+                            <label for="float-input">Mobile</label>
+                        </span>
+                        <div style="margin-top: 10%;">
+                            <p-button icon="pi pi-check" type="submit" label="Next" (onClick)="nextPage()" styleClass="p-button-text" *ngIf = "step == 1"></p-button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf = "step == 2">
-            <p-autoComplete formControlName="city_info"  placeholder="Province" [suggestions]="listprov"
-                (completeMethod)="getProvinces($event)" (onSelect)="get_province_id($event)" dataKey="id"  [dropdown]="true" field="text">
-            </p-autoComplete>
-            <p-autoComplete 
-                (completeMethod)="get_cities_by_province_id($event)" formControlName="city_info" (onSelect)="get_city($event)" placeholder="city" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
-            </p-autoComplete>
-            <br>
-            <div class="row" style="margin-top: 5%;">
-                <div class="col-md-6">
-                    <ng-autocomplete [data]="vlans" [searchKeyword]="vlan_keyword" placeHolder="Vlan"
-                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,1)'
-                    (inputFocused)='onFocused($event,1)' historyIdentifier="vlans" [itemTemplate]="itemTemplate"
-                    [notFoundTemplate]="notFoundTemplate" formControlName="vlan">
-                    </ng-autocomplete>
-                    <ng-template #itemTemplate let-vlan>
-                        <a [innerHTML]="vlan.vlan_name"></a>
-                    </ng-template>
+            <div *ngIf = "step == 2">
+                <p-autoComplete formControlName="city_info"  placeholder="Province" [suggestions]="listprov"
+                    (completeMethod)="getProvinces($event)" (onSelect)="get_province_id($event)" dataKey="id"  [dropdown]="true" field="text">
+                </p-autoComplete>
+                <p-autoComplete 
+                    (completeMethod)="get_cities_by_province_id($event)" formControlName="city_info" (onSelect)="get_city($event)" placeholder="city" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
+                </p-autoComplete>
+                <br>
+                <div class="row" style="margin-top: 5%;">
+                    <div class="col-md-6">
+                        <ng-autocomplete [data]="vlans" [searchKeyword]="vlan_keyword" placeHolder="Vlan"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,1)'
+                        (inputFocused)='onFocused($event,1)' historyIdentifier="vlans" [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="vlan">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate let-vlan>
+                            <a [innerHTML]="vlan.vlan_name"></a>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
+                                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,2)'
+                                    (inputFocused)='onFocused($event,2)' historyIdentifier="listResellers" [itemTemplate]="resellerTemplate"
+                                    [notFoundTemplate]="notFoundTemplate" formControlName="reseller">
+                        </ng-autocomplete>
+                        <ng-template #resellerTemplate let-listReseller>
+                            <a [innerHTML]="listReseller.name"></a>
+                        </ng-template>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
-                                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,2)'
-                                (inputFocused)='onFocused($event,2)' historyIdentifier="listResellers" [itemTemplate]="resellerTemplate"
-                                [notFoundTemplate]="notFoundTemplate" formControlName="reseller">
-                    </ng-autocomplete>
-                    <ng-template #resellerTemplate let-listReseller>
-                        <a [innerHTML]="listReseller.name"></a>
-                    </ng-template>
+                <div class="row" style="margin-top: 5%;">
+                    <div class="col-md-6">
+                        <ng-autocomplete [data]="telecom_centers" [searchKeyword]="telecomcenter_keyword" placeHolder="Telecom center"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,3)'
+                        (inputFocused)='onFocused($event,1)' historyIdentifier="telecom_centers" [itemTemplate]="telecomeTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="vlan">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate let-telecom_center>
+                            <a [innerHTML]="telecom_center.name"></a>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="p-float-label" style="margin-top: 20px;">
+                            <input id="float-input" formControlName="identifier_key" type="text" pInputText>
+                            <label for="float-input">Identifier Key</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p-button icon="pi pi-times" type="submit" label="Back" (onClick)="previous()" styleClass="p-button-text" *ngIf = "step == 2"></p-button>
+                    </div>
+                    <div class="col-md-6">
+                        <p-button icon="pi pi-check" type="submit" label="Submit" styleClass="p-button-text"></p-button>
+                    </div>
                 </div>
             </div>
-            <div class="row" style="margin-top: 5%;">
-                <div class="col-md-6">
-                    <ng-autocomplete [data]="telecom_centers" [searchKeyword]="telecomcenter_keyword" placeHolder="Telecom center"
-                    (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,3)'
-                    (inputFocused)='onFocused($event,1)' historyIdentifier="telecom_centers" [itemTemplate]="telecomeTemplate"
-                    [notFoundTemplate]="notFoundTemplate" formControlName="vlan">
-                    </ng-autocomplete>
-                    <ng-template #itemTemplate let-telecom_center>
-                        <a [innerHTML]="telecom_center.name"></a>
-                    </ng-template>
-                </div>
-                <div class="col-md-6">
-                    <span class="p-float-label" style="margin-top: 20px;">
-                        <input id="float-input" formControlName="identifier_key" type="text" pInputText>
-                        <label for="float-input">Identifier Key</label>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p-button icon="pi pi-times" type="submit" label="Back" (onClick)="previous()" styleClass="p-button-text" *ngIf = "step == 2"></p-button>
-                </div>
-                <div class="col-md-6">
-                    <p-button icon="pi pi-check" type="submit" label="Submit" styleClass="p-button-text"></p-button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </p-dialog>
 
 <!-- ------------------------------------------------------------------------------------------------ -->

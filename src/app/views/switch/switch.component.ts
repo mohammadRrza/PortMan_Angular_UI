@@ -39,7 +39,11 @@ export class SwitchComponent implements OnInit {
   }
   else if(type == 2){
     this.switchSrv.search_switches(this.pagination_config.currentPage, this.pagination_config.itemsPerPage,"search_ip="+search_elem).then(res=>{
+      console.log(this.pagination_config.itemsPerPage)
+      console.log(search_elem)
+      console.log(res)
       this.switches =  res.results;
+      console.log(this.switches)
       this.pagination_config.totalItems = res.count;
     });
 
