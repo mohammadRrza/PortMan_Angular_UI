@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
-import { NotificationService } from './notification.service'
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class PishgamanNoteService {
     apiURL = environment.APIEndpoint + 'pishgaman-note/';
     token = localStorage.getItem('access_token');
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService) {
+    constructor(private _http: HttpClient, private notSrv: NotificationService,private _router: Router) {
     }
 
     httpOptions = {
@@ -31,7 +32,12 @@ export class PishgamanNoteService {
             .get(this.apiURL+'?page='+currentPage+'&page_size='+itemsPerPage , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                if(err.status === 401){
+                  this._router.navigate(['/login']);
+                }
+              });
     }
 
     save_note(note_obj): Promise<any> {

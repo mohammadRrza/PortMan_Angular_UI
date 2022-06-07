@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RouterService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'router/';
   apiURL2 = environment.APIEndpoint + 'router-command/';
-
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,private _router: Router) { }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -32,7 +30,12 @@ get_all_routers(page,itemsPerPage): Promise<any> {
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
 
   

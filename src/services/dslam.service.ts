@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DslamService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'dslam/';
   apiURL2 = environment.APIEndpoint + 'dslamport/dslam_commandsV2/';
   apiURL3 = environment.APIEndpoint + 'dslam-port/';
   apiURL4 = environment.APIEndpoint + 'dslamport/';
-
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,private _router: Router) { }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -27,7 +24,6 @@ private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 
     return Promise.reject(error.message || error);
   }
-  //services
   get_all_dslams_by_username(page,itemsPerPage, username, ldap_login): Promise<any> {
     return this._http
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage+"&username="+username+"&ldap_login="+ldap_login, this.httpOptions)
@@ -49,7 +45,12 @@ private handleError(error: any): Promise<any> {
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
   
   add_dslam(dslamInfo): Promise<any> {

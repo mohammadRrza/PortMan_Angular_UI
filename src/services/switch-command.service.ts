@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SwitchCommandService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'switch-command/';
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,private _router: Router) { }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -31,7 +30,11 @@ private handleError(error: any): Promise<any> {
       .get(this.apiURL + "?switch_type_id="+switch_type_id+"&limit_row="+limit_row, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
-
 }

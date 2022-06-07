@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SwitchService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'switch/';
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,
+    private _router: Router,
+    ){
+     }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
-        'Authorization': 'Token '+this.token,
+        'Authorization': 'Token '+ this.token,
         'Content-Type':'application/json'
     })
 };
 
 private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); 
-    return Promise.reject(error.message || error);
-  }
+  console.error('An error occurred', error); 
+  return Promise.reject(error.message || error);
+}
 
   get_all_switches(page,itemsPerPage): Promise<any> {
     console.log(this.token);
@@ -31,7 +32,12 @@ private handleError(error: any): Promise<any> {
       .get(this.apiURL + "?page="+page+"&page_size="+itemsPerPage, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
 
   search_switches(page,itemsPerPage,searchStr): Promise<any> {

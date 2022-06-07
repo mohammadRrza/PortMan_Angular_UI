@@ -78,6 +78,6 @@ download_switch_backup(switch_ip){
  ngOnInit(): void {
    this.get_all_switches(1,10);
    var loginCls =  new LoginCls(this.jwtHelper,this.router);
-  //  loginCls.check_login();
+   loginCls.check_login();
  }
 }

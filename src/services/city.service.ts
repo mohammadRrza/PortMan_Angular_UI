@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class CityService {
     apiURL = environment.APIEndpoint +'city/';
     token = localStorage.getItem('access_token');
 
-constructor(private _http: HttpClient) { }
+constructor(private _http: HttpClient,private _router: Router) { }
 httpOptions = {
     headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -30,7 +32,12 @@ httpOptions = {
       .get(this.apiURL, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
 
   get_city_byName(page,itemsPerPage,city_name): Promise<any> {

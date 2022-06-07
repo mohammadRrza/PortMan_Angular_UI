@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class CommandService {
     apiURL = environment.APIEndpoint +'command/';
     token = localStorage.getItem('access_token');
 
-constructor(private _http: HttpClient) { }
+constructor(private _http: HttpClient,private _router: Router) { }
 httpOptions = {
     headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -23,8 +25,6 @@ private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 
     return Promise.reject(error.message || error);
   }
-
-  //services
   load_dslam_commands_by_email(dslam_id,ldap_email, ldap_login,type): Promise<any> {
     return this._http
       .get(this.apiURL + "?dslam_id=" + dslam_id +"&ldap_email="+ldap_email+"&ldap_login="+ldap_login+"&exclude_type=" + type, this.httpOptions)
@@ -62,7 +62,12 @@ private handleError(error: any): Promise<any> {
       .get(this.apiURL + "?dslam_id=" + dslam_id+'&username='+username+'&ldap_login='+ldap_login, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
 
   get_all_commands_by_email(dslam_id, ldap_email, ldap_login): Promise<any> {

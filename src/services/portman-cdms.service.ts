@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service'
+import { Router } from '@angular/router';
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +18,7 @@ export class PortManCDMSService {
 
     token = localStorage.getItem('access_token');
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService) {
+    constructor(private _http: HttpClient, private notSrv: NotificationService,private _router: Router) {
     }
 
     httpOptions = {

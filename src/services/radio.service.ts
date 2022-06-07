@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +12,7 @@ export class RadioService {
     apiURL = environment.APIEndpoint + 'radio/';
     token = localStorage.getItem('access_token');
 
-    constructor(private _http: HttpClient) { }
+    constructor(private _http: HttpClient,private _router: Router) { }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -24,7 +26,12 @@ export class RadioService {
             .get(this.apiURL + "?page=" + page + "&page_size=" + page_size, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                if(err.status === 401){
+                  this._router.navigate(['/login']);
+                }
+              });
     }
 
     search_radios(page, itemsPerPage,searchStr): Promise<any> {
