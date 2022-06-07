@@ -16,7 +16,7 @@ export class ResellerService {
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjUyNjk1NDgzLCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjUyNjA5MDgzfQ.gNSV_WCMtrEaJBrXh17xRng418Ot_fy9ru-iHVhYBkE'
+            'Authorization': 'Token ' + this.token
 
         })
     };
