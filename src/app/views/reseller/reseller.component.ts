@@ -176,10 +176,6 @@ export class ResellerComponent implements OnInit {
     this.is_ldap_login = localStorage.getItem("ldap_login");
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
-    if(this.is_ldap_login != 'true'){
-      var loginCls =  new LoginCls(this.jwtHelper,this.router);
-      loginCls.check_login();
-    }
     this.get_all_resellers(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class RadioCommandService {
 
         })
     };
-
+    login = new LoginCls(this._router);
     get_radio_commands(radio_type_id, limit_row): Promise<any> {
         return this._http
             .get(this.apiURL + "?radio_type_id="+radio_type_id+"&limit_row="+limit_row, this.httpOptions)
@@ -28,10 +29,8 @@ export class RadioCommandService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                if(err.status === 401){
-                  this._router.navigate(['/login']);
-                }
-              });
+                this.login.check_login(err)
+            });
     }
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);

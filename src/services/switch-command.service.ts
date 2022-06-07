@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
-
+import {LoginCls} from './../app/dtos/login_cls';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class SwitchCommandService {
         'Content-Type':'application/json'
     })
 };
-
+login = new LoginCls(this._router);
 private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 
     return Promise.reject(error.message || error);
@@ -32,9 +32,7 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        if(err.status === 401){
-          this._router.navigate(['/login']);
-        }
-      });
+        this.login.check_login(err)
+    });
   }
 }

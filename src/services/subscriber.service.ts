@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
-
+import {LoginCls} from './../app/dtos/login_cls';
 
 @Injectable({
     providedIn: 'root'
@@ -20,13 +20,16 @@ export class SubscriberService {
 
         })
     };
-
+    login = new LoginCls(this._router);
     create_subscriber(form_subscriber_obj):Promise<any>{
         return this._http
             .post(this.apiURL,form_subscriber_obj , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     get_city_by_name(parent_id): Promise<any> {
@@ -34,7 +37,10 @@ export class SubscriberService {
           .get(this.apiURL+ "?parent="+parent_id, this.httpOptions)
           .toPromise()
           .then(res => res)
-          .catch(this.handleError);
+          .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
     }
 
     apply_edit_subscriber(subs_id, paramstr):Promise<any>{
@@ -45,7 +51,10 @@ export class SubscriberService {
             .put(this.apiURL + subs_id+'/', param_obj, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     edit_subscriber(sub_id):Promise<any>{
@@ -53,7 +62,10 @@ export class SubscriberService {
             .get(this.apiURL + sub_id+'/', this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     remove_subscriber(sub_id):Promise<any>{
@@ -61,7 +73,10 @@ export class SubscriberService {
             .delete(this.apiURL + sub_id +'/', this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     get_all_subscriber(page,itemsPerPage): Promise<any> {
@@ -71,10 +86,8 @@ export class SubscriberService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                if(err.status === 401){
-                  this._router.navigate(['/login']);
-                }
-              });
+                this.login.check_login(err)
+            });
     }
 
     private handleError(error: any): Promise<any> {

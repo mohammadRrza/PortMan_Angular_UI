@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
 
 
 @Injectable({
@@ -20,13 +21,16 @@ export class RouterCommandService {
     })
 };
 
-
+login = new LoginCls(this._router);
 router_run_command(Router_dto): Promise<any> {
   return this._http
     .post(this.apiURL2+'router_run_command/', Router_dto, this.httpOptions)
     .toPromise()
     .then(res => res)
-    .catch(this.handleError);
+    .catch(err=>{
+      this.handleError;
+      this.login.check_login(err)
+  });
 }
 private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 
@@ -40,12 +44,7 @@ private handleError(error: any): Promise<any> {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        if(err.status === 401){
-          this._router.navigate(['/login']);
-        }
-      });
+        this.login.check_login(err)
+    });
   }
-
-
-
 }

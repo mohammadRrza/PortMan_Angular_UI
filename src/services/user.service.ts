@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service'
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,7 +16,7 @@ export class UserService {
     token = localStorage.getItem('access_token');
     helper = new JwtHelperService();
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService, private _router: Router,) {
+    constructor(private _http: HttpClient, private notSrv: NotificationService) {
         this.token = localStorage.getItem('access_token');
 
     }
@@ -114,12 +113,7 @@ export class UserService {
             .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(err=>{
-                this.handleError;
-                if(err.status === 401){
-                  this._router.navigate(['/login']);
-                }
-              });
+            .catch(this.handleError);
     }
 
     send_reset_password_link(email): Promise<any> {

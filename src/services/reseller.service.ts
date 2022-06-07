@@ -2,30 +2,34 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
-
+import {LoginCls} from './../app/dtos/login_cls';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class ResellerService {
+    
     apiURL = environment.APIEndpoint + 'reseller/';
     token = localStorage.getItem('access_token');
     constructor(private _http: HttpClient,private _router: Router) { }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': 'Token ' + this.token
+            'Authorization': 'Token ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjUyNjk1NDgzLCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNjUyNjA5MDgzfQ.gNSV_WCMtrEaJBrXh17xRng418Ot_fy9ru-iHVhYBkE'
 
         })
     };
-
+    login = new LoginCls(this._router);
     create_reseller(form_reseller_obj):Promise<any>{
         return this._http
             .post(this.apiURL,form_reseller_obj , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     edit_reseller(reseller_id){
@@ -33,7 +37,10 @@ export class ResellerService {
             .get(this.apiURL + reseller_id+'/', this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     apply_edit_reseller(reseller_id, paramstr):Promise<any>{
@@ -42,7 +49,10 @@ export class ResellerService {
             .put(this.apiURL + reseller_id+'/', param_obj, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     remove_reseller(reseller_id):Promise<any>{
@@ -50,7 +60,10 @@ export class ResellerService {
             .delete(this.apiURL + reseller_id +'/', this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     search_reseller(page,itemsPerPage,name): Promise<any> {
@@ -58,7 +71,10 @@ export class ResellerService {
           .get(this.apiURL + "?name="+name+"&page="+page+"&page_size="+itemsPerPage, this.httpOptions)
           .toPromise()
           .then(res => res)
-          .catch(this.handleError);
+          .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
       }
     get_all_resellers(page, page_size , name = null): Promise<any> {
         return this._http
@@ -67,12 +83,9 @@ export class ResellerService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                if(err.status === 401){
-                  this._router.navigate(['/login']);
-                }
-              });
+                this.login.check_login(err)
+            });
     }
-
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

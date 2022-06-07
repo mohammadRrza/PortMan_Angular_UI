@@ -337,21 +337,9 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
   
 
   ngOnInit(): void {
-    // let loggedIn = localStorage.getItem('loggedin');
-    // if(!Boolean(loggedIn) || this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))){
-    //   this.router.navigate(['/login']);
-    //   return;
-    // }else {
-    //   console.log("token not expired"); 
-    // }
     this.is_ldap_login = localStorage.getItem("ldap_login");
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
-
-    if(this.is_ldap_login != 'true'){
-          var loginCls =  new LoginCls(this.jwtHelper,this.router);
-          loginCls.check_login();
-    }
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
 }
 }

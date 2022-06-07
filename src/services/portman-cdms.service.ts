@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service'
 import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class PortManCDMSService {
             'Authorization': 'Token ' + this.token
         })
     };
-
+    login = new LoginCls(this._router);
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
@@ -38,7 +39,10 @@ export class PortManCDMSService {
             .get(this.apiURL+'get_user_port_info/?username='+username , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
     
     get_dslam_id_by_fqdn(fqdn:string): Promise<any> {
@@ -46,14 +50,20 @@ export class PortManCDMSService {
             .get(this.apiURL+'get_dslam_id_by_fqdn/?fqdn='+fqdn , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
     get_fqdn_from_zabbix_by_ip(ip:string): Promise<any> {
         return this._http
             .get(this.apiURL+'get_fqdn_from_zabbix_by_ip/?ip='+ip , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
 }
 
 get_dslam_id_by_ip(ip:string): Promise<any> {
@@ -61,7 +71,10 @@ get_dslam_id_by_ip(ip:string): Promise<any> {
         .get(this.apiURL+'get_dslam_id_by_ip/?ip='+ip , this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
 }
 
 get_fqdn_from_zabbix(fqdn:string): Promise<any> {
@@ -69,7 +82,10 @@ get_fqdn_from_zabbix(fqdn:string): Promise<any> {
         .get(this.apiURL+'get_fqdn_from_zabbix/?fqdn='+fqdn , this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
 }
 
 add_bulk_users_to_portman(user_str:string): Promise<any> {
@@ -77,7 +93,10 @@ add_bulk_users_to_portman(user_str:string): Promise<any> {
         .post(this.apiURL2, user_str, this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
 }
 
 set_permission_for_user(email:string): Promise<any> {
@@ -85,7 +104,10 @@ set_permission_for_user(email:string): Promise<any> {
         .get(this.apiURL3+'set_permission_for_user/?email='+email, this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
 }
 
 ping_dslam(ping_str): Promise<any> {
@@ -93,7 +115,10 @@ ping_dslam(ping_str): Promise<any> {
         .post(this.apiURL5+'icmp/command/', ping_str, this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
 }
 
 port_register(port_config_str): Promise<any> {
@@ -101,7 +126,9 @@ port_register(port_config_str): Promise<any> {
         .post(this.apiURL4+'register-port/', port_config_str, this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(this.handleError);
-}
-
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
+    }
 }
