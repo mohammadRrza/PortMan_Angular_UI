@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service';
+import { ErrorHandlerService } from './error-handler.service';
+import { StatusHandelerService } from './status-handeler.service'; 
 import { Router } from '@angular/router';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import {LoginCls} from './../app/dtos/login_cls';
@@ -16,7 +18,10 @@ export class VlanService {
     token = localStorage.getItem('access_token');
     helper = new JwtHelperService();
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService ,private _router: Router,) {
+    constructor(private _http: HttpClient,
+        private notifySrv : NotificationService,
+        private _router: Router,
+        private errorHandler: ErrorHandlerService,) {
         this.token = localStorage.getItem('access_token');
     }
     httpOptions = {
@@ -26,6 +31,7 @@ export class VlanService {
 
         })
     };
+    statusHandler = new StatusHandelerService(this.errorHandler,this.notifySrv)
     login = new LoginCls(this._router);
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
@@ -39,7 +45,8 @@ export class VlanService {
           .then(res => res)
           .catch(err=>{
             this.handleError;
-            this.login.check_login(err)
+            this.login.check_login(err);
+            this.statusHandler.show_errors(err);
         });
       }
 
@@ -50,7 +57,8 @@ export class VlanService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -58,10 +66,14 @@ export class VlanService {
         return this._http
             .post(this.apiURL,form_vlan_obj , this.httpOptions)
             .toPromise()
-            .then(res => res)
+            .then(res => {
+                res;
+                this.statusHandler.show_succsess(res);
+            })
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -69,10 +81,14 @@ export class VlanService {
         return this._http
             .post(this.apiURL + '/' + vlan_id, reseller_info , this.httpOptions)
             .toPromise()
-            .then(res => res)
+            .then(res => {
+                res;
+                this.statusHandler.show_succsess(res);
+            })
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -83,7 +99,8 @@ export class VlanService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 }

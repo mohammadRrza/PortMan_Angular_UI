@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
 import {LoginCls} from './../app/dtos/login_cls';
+import { StatusHandelerService } from './status-handeler.service'; 
+import { ErrorHandlerService } from './error-handler.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +15,11 @@ export class ResellerService {
     
     apiURL = environment.APIEndpoint + 'reseller/';
     token = localStorage.getItem('access_token');
-    constructor(private _http: HttpClient,private _router: Router) { }
+    constructor(private _http: HttpClient,
+        private _router: Router,
+        private errorHandler: ErrorHandlerService,
+        private notifySrv : NotificationService,
+        ) { }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -20,15 +27,20 @@ export class ResellerService {
 
         })
     };
+    statusHandler = new StatusHandelerService(this.errorHandler,this.notifySrv)
     login = new LoginCls(this._router);
     create_reseller(form_reseller_obj):Promise<any>{
         return this._http
             .post(this.apiURL,form_reseller_obj , this.httpOptions)
             .toPromise()
-            .then(res => res)
+            .then(res => {
+                res;
+                this.statusHandler.show_succsess(res);
+            })
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -39,7 +51,8 @@ export class ResellerService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -48,10 +61,14 @@ export class ResellerService {
         return this._http
             .put(this.apiURL + reseller_id+'/', param_obj, this.httpOptions)
             .toPromise()
-            .then(res => res)
+            .then(res => {
+                res;
+                this.statusHandler.show_succsess(res);
+            })
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -62,7 +79,8 @@ export class ResellerService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
 
@@ -73,7 +91,8 @@ export class ResellerService {
           .then(res => res)
           .catch(err=>{
             this.handleError;
-            this.login.check_login(err)
+            this.login.check_login(err);
+            this.statusHandler.show_errors(err);
         });
       }
     get_all_resellers(page, page_size , name = null): Promise<any> {
@@ -83,11 +102,13 @@ export class ResellerService {
             .then(res => res)
             .catch(err=>{
                 this.handleError;
-                this.login.check_login(err)
+                this.login.check_login(err);
+                this.statusHandler.show_errors(err);
             });
     }
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }
+
 }

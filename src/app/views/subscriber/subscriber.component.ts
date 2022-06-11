@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SubscriberService } from '../../../services/subscriber.service';
-import {LoginCls} from '../../dtos/login_cls';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
 import { porv_city} from '../../dtos/city_dto';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -10,6 +7,7 @@ import { ResellerService } from '../../../services/reseller.service';
 import {MenuItem} from 'primeng/api';
 import { CityService } from '../../../services/city.service';
 import { VlanService } from '../../../services/vlan.service';
+
 
 @Component({
   selector: 'app-subscriber',
@@ -25,9 +23,6 @@ export class SubscriberComponent implements OnInit {
     private VlanSrv: VlanService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private jwtHelper: JwtHelperService,
-    private router: Router,
-    fb: FormBuilder
   ) { 
     this.add_subs_from = this.formBuilder.group({
       firstname : new FormControl("", Validators.required),
@@ -144,8 +139,8 @@ export class SubscriberComponent implements OnInit {
   apply_edit(){
     let param_str = '{"email":"'+this.subs_edit.email+'","firstname":"'+this.subs_edit.firstname+'","id":'+parseInt(this.subs_edit.id)+',"identifier_key":"'+this.subs_edit.identifier_key+'","lastname":"'+this.subs_edit.lastname+'","mobile":"'+this.subs_edit.mobile+'","national_code":"'+this.subs_edit.national_code+'","tel":"'+this.subs_edit.tel+'","telecom_center_id":'+parseInt(this.subs_edit.telecom_center_id)+',"username":"'+this.subs_edit.username+'"}'
     this.SubServis.apply_edit_subscriber(this.subs_edit.id, param_str).then(res=>{
-      this.edit_subscriber(this.subs_edit.id);
-      this.get_all_subscriber(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+        this.edit_subscriber(this.subs_edit.id);
+        this.get_all_subscriber(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     });
   }
 
@@ -189,14 +184,11 @@ export class SubscriberComponent implements OnInit {
   }
 
   apply_add_subs(form_subs_obj){
-    console.log("=====================================")
-    console.log(form_subs_obj)
     if (this.step == 3) {
       form_subs_obj.value.city = this.city_id;
-    this.SubServis.create_subscriber(JSON.stringify(form_subs_obj.value)).then(res => {
-      this.subs_edit = res;
-      this.get_all_resellers(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
-      
+      this.SubServis.create_subscriber(JSON.stringify(form_subs_obj.value)).then(res => {
+          this.subs_edit = res;
+          this.get_all_resellers(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
     });
     }
   }

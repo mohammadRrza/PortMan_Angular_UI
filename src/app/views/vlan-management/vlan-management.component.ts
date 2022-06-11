@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { VlanService } from '../../../services/vlan.service';
-import {LoginCls} from '../../dtos/login_cls';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ResellerService } from '../../../services/reseller.service';
+
 
 @Component({
   selector: 'app-vlan-management',
@@ -17,8 +15,6 @@ export class VlanManagementComponent implements OnInit {
   constructor(private VlanSrv: VlanService,
     private resellerSrv : ResellerService,
     private confirmationService: ConfirmationService,
-    private jwtHelper: JwtHelperService,
-    private router: Router,
     fb: FormBuilder
     ) {   
       this.pagination_config = {
@@ -147,11 +143,9 @@ export class VlanManagementComponent implements OnInit {
   }
 
   AssignValnToReseller(reseller_info){
-    console.log(reseller_info.value)
-    console.log(reseller_info.id)
     this.VlanSrv.AssignValnToReseller(JSON.stringify(reseller_info.value),reseller_info.f_vlan_name.id).then(res => {
-      this.vlan_edit = res;
-      this.get_all_vlan(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
+        this.vlan_edit = res;
+        this.get_all_vlan(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
     });
   }
 
@@ -206,9 +200,9 @@ export class VlanManagementComponent implements OnInit {
   create_vlan(form_vlan_obj){
     console.log(form_vlan_obj.value)
     this.VlanSrv.create_vlan(JSON.stringify(form_vlan_obj.value)).then(res => {
-      this.vlan_edit = res;
+        this.vlan_edit = res;
       this.get_all_vlan(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
-    })
+    });
   }
   get_all_vlan(page,itemsPerPage){
     this.progressSpinner = true;

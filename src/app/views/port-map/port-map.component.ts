@@ -71,30 +71,22 @@ export class PortMapComponent implements OnInit {
     if(type == 1){
       this.search_str= '';
       this.search_str = "search_username="+search_elem;
-
-  
     }
     else if(type == 2){
       this.search_str2= '';
       this.search_str2 = "&search_ranjePhoneNumber="+search_elem;
-
-  
     }
     else if(type == 3){
       this.search_str3= '';
       this.search_str3 = "&search_fqdn="+search_elem;
     }
-
     else if(type == 4){
       this.search_str4= '';
       this.search_str4 = "&search_slot="+search_elem;
-
     }
-
     else if(type == 5){
       this.search_str5= '';
       this.search_str5 = "&search_port="+search_elem;
-
     }
     var search_str = this.search_str+this.search_str2+this.search_str3+this.search_str4+this.search_str5+this.search_str2+this.search_str3+this.search_str4+this.search_str5;
     this.conSrv.search_orders(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, search_str).then(res=>{
@@ -194,10 +186,12 @@ export class PortMapComponent implements OnInit {
       this.conSrv.search_orders(1,100, "search_username="+username).then(res=>{
         this.orders_ports =  res.results;
         this.pagination_config.totalItems = res.count;
+        this.notifySrv.showSuccess('Change port status was succsessfully','Changing');
       });
     },
     (error) => {
      this.show_errors(error);
+     this.notifySrv.showError(this.errorHandler.errorMessage,'Error');
    });
 
   }

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import {LoginCls} from '../../dtos/login_cls';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -21,8 +18,6 @@ export class UserManagementComponent implements OnInit {
     private resellerSrv : ResellerService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
-    private jwtHelper: JwtHelperService,
-    private router: Router,
     private datePipe: DatePipe,
     fb: FormBuilder
     ) {
@@ -97,9 +92,9 @@ export class UserManagementComponent implements OnInit {
     console.log(form_user_obj)
     this.add_user_from.value.type = form_user_obj.value.type.name;
     this.userSrv.create_user(JSON.stringify(form_user_obj.value)).then(res => {
-      this.user_edit = res;
-      this.get_users(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
-    })
+        this.user_edit = res;
+        this.get_users(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
+    });
   }
 
   edit_user(user_id){
@@ -110,8 +105,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   apply_edit_user(){
-    console.log(typeof(this.edit_user_from.value.reseller))
-    console.log(Boolean(this.edit_user_from.value.reseller))
     if (this.edit_user_from.value.reseller) {
       let param_str = '{"username":"'+this.user_edit.username+'","first_name":"'+this.user_edit.first_name+'",\
       "last_name":"'+this.user_edit.last_name+'","email":"'+this.user_edit.email+'",\
@@ -119,10 +112,9 @@ export class UserManagementComponent implements OnInit {
       "is_active":"'+this.user_edit.is_active+'","type":"'+this.edit_user_from.value.type.name+'"}'
       this.edit_user_from.value.reseller.id = this.edit_user_from.value.reseller;
       this.userSrv.apply_edit_user(this.user_edit.id, param_str).then(res=>{
-        this.edit_user(this.user_edit.id);
-        console.log(this.user_edit)
-        this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
-      
+          this.edit_user(this.user_edit.id);
+          console.log(this.user_edit)
+          this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
       });
     }
     let param_str = '{"username":"'+this.user_edit.username+'","first_name":"'+this.user_edit.first_name+'",\
@@ -132,9 +124,9 @@ export class UserManagementComponent implements OnInit {
     console.log(param_str)
     console.log(this.user_edit.id)
     this.userSrv.apply_edit_user(this.user_edit.id, param_str).then(res=>{
-    this.edit_user(this.user_edit.id);
-    console.log(this.user_edit)
-    this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+        this.edit_user(this.user_edit.id);
+        console.log(this.user_edit)
+        this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
       });
   }
 

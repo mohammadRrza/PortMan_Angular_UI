@@ -16,7 +16,6 @@
                                 <th pSortableColumn="vci">VCI <p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="tel">Tel<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="fax">Fax<p-sortIcon field="name"></p-sortIcon></th>
-                                <th pSortableColumn="city_info.name">City<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="address">Address<p-sortIcon field="name"></p-sortIcon></th>
                                 <th pSortableColumn="fax">Action<p-sortIcon field="name"></p-sortIcon></th>
                             </tr>
@@ -54,7 +53,6 @@
                                 <td class="text-center">{{listReseller.vci}}</td>
                                 <td class="text-center">{{listReseller.tel}}</td>
                                 <td class="text-center">{{listReseller.fax}}</td>
-                                <td class="text-center">{{listReseller.city_info.name}}</td>
                                 <td class="text-center">{{listReseller.address}}</td>
                                 <td class="text-center">
                                     <div class="col-md-12" style="padding-left: 40%">
@@ -163,7 +161,7 @@
         <form [formGroup]="edit_reseller_from" (ngSubmit)="apply_edit_reseler()">
             <div class="row">
                 <div class="col-md-6">
-                    <span class="p-float-label" style="margin-top: 20px;">
+                    <span class="p-float-label" style="margin-top: 20px;" *ngIf="reseller_edit.name">
                         <input id="float-input" [(ngModel)]="reseller_edit.name" formControlName="name" type="text" pInputText>
                         <label for="float-input">Name</label>
                     </span>
@@ -195,17 +193,29 @@
                     </span>
                     <br>
                     <span class="p-float-label" style="margin-top: 20px;">
-                        <p-autoComplete [(ngModel)]="reseller_edit.city" placeholder="Province" [ngModelOptions]="{standalone: true}" [suggestions]="listprov"
-                            (completeMethod)="getProvinceByCityName($event)" [dropdown]="true" field="text"
-                            (onSelect)="get_city_by_name($event.id)">
+                        <p-autoComplete [(ngModel)]="reseller_edit.city_info" placeholder="Province" [ngModelOptions]="{standalone: true}" [suggestions]="listprov"
+                            (completeMethod)="getProvinces($event)" [dropdown]="true" field="text"
+                            (onSelect)="get_province_id($event)">
                         </p-autoComplete>
                     </span>
                     <br>
                     <br>
                     <span>
-                        <p-autoComplete [(ngModel)]="reseller_edit.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
-                            (completeMethod)="get_city_by_id($event)" [dropdown]="true" field="name" dataKey="id">
+                        <p-autoComplete [(ngModel)]="reseller_edit.city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
+                            (completeMethod)="get_cities_by_province_id($event)" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
                         </p-autoComplete>
+                        <!-- <span class="p-float-label" style="margin-top: 20px;">
+                            <p-autoComplete [(ngModel)]="reseller_edit.city" placeholder="Province" [ngModelOptions]="{standalone: true}" [suggestions]="listprov"
+                                (completeMethod)="getProvinces($event)" [dropdown]="true" field="text"
+                                (onSelect)="get_province_id($event)">
+                            </p-autoComplete>
+                        </span>
+                        <br>
+                        <br>
+                        <span>
+                            <p-autoComplete [(ngModel)]="reseller_edit.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
+                                (completeMethod)="get_cities_by_province_id($event)" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
+                            </p-autoComplete> -->
                     </span>
                 </div>
             </div>

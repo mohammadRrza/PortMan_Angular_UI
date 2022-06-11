@@ -83,10 +83,7 @@ export class RadioService {
         .post(this.apiURL+'read_radio_backup_error_files_name/', {}, this.httpOptions)
         .toPromise()
         .then(res => res)
-        .catch(err=>{
-            this.handleError;
-            this.login.check_login(err)
-        });
+        .catch(this.handleError);
       }
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
