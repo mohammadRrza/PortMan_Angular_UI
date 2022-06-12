@@ -76,7 +76,8 @@ export class VlanManagementComponent implements OnInit {
   identifierkey_obj: boolean = false;
   card_port_obj: boolean = false;
   progressSpinner: boolean = false;
-
+  notFoundTemplate: any;
+  
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;

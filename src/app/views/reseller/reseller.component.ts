@@ -36,6 +36,7 @@ export class ResellerComponent implements OnInit {
       "tel":this.f_tel,
       "fax": this.f_fax,
       "address":this.f_address,
+      "text":this.f_text,
       "city":this.f_city,
       "city_info":this.f_city_info,
     });
@@ -58,6 +59,7 @@ export class ResellerComponent implements OnInit {
   displayMaximizable_add: boolean = false;
   displayMaximizable_edit: boolean = false;
   reseller_edit: any = {};
+  reseller_add: any = {};
   submitted = false;
   add_reseller_from: FormGroup;
   edit_reseller_from: FormGroup;
@@ -72,12 +74,14 @@ export class ResellerComponent implements OnInit {
   f_tel = new FormControl("", Validators.required);
   f_fax = new FormControl("", Validators.required);
   f_address = new FormControl("", Validators.required);
+  f_text =  this.f_name;
   f_city = new FormControl("", Validators.required);
   f_city_info = new FormControl("", Validators.required);
   progressSpinner: boolean = false;
   is_ldap_login;
   agent_username: string;
   ldap_email: string;
+  obj ; val ; value : any;
 
   add_reseler(){
     this.displayMaximizable_add = true;
@@ -85,11 +89,10 @@ export class ResellerComponent implements OnInit {
 
   apply_add_reseler(form_reseller_obj){
     form_reseller_obj.value.city = this.city_id;
-    console.log(form_reseller_obj.value)
+    form_reseller_obj.value.name = form_reseller_obj.value.text
     this.resellerSrv.create_reseller(JSON.stringify(form_reseller_obj.value)).then(res => {
-        this.reseller_edit = res;
+        this.reseller_add = res;
         console.log(res)
-        this.notifySrv.showSuccess('User successfully added','Add');
         this.get_all_resellers(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
     },
       )}
@@ -127,7 +130,7 @@ export class ResellerComponent implements OnInit {
       message: 'Are you sure that you want to delete this Reseller?',
       accept: () => {
         this.resellerSrv.remove_reseller(reseller_id).then(res => {
-          this.reseller_edit = res;
+          // this.reseller_edit = res;
           this.notifySrv.showSuccess('delete was successfully','delete');
           this.get_all_resellers(this.pagination_config.currentPage,10);
         });

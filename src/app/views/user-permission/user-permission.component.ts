@@ -43,6 +43,10 @@ export class UserPermissionComponent implements OnInit {
   user_permission_profile_id: number;
   command_ids = [];
   exclude_command_ids = [];
+  selected_commands: any;
+  slot:any;
+
+
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -104,6 +108,10 @@ export class UserPermissionComponent implements OnInit {
     this.commandSrv.get_all_commands().then(res=>{
       this.commands =  res;
     });  
+  }
+
+  getTemperature(event){
+
   }
 
   assign_commands_to_user(event){

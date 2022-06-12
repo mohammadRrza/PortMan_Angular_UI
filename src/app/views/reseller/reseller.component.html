@@ -97,10 +97,10 @@
                         <input [(ngModel)]="obj" id="float-input" formControlName="name" type="text" pInputText>
                         <label for="float-input">Name</label>
                     </span>
-                    <span *ngIf="add_reseller_from.name" class="text-center">
+                    <!-- <span *ngIf="add_reseller_from.name" class="text-center">
                         <input [(ngModel)]="obj" id="float-input" formControlName="text" type="text" pInputText>
                         <label for="float-input">text</label>
-                    </span>
+                    </span> -->
                     <br>
                     <span class="p-float-label" style="margin-top: 20px;">
                         <p-inputNumber [(ngModel)]="val" formControlName="vpi"></p-inputNumber>
@@ -139,7 +139,7 @@
                     <span class="p-float-label" style="margin-top: 20px;">
                         <span>
                             <p-autoComplete 
-                            (completeMethod)="get_cities_by_province_id($event)" formControlName="city_info" (onSelect)="get_city($event)" placeholder="City Name" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
+                            (completeMethod)="get_cities_by_province_id()" formControlName="city_info" (onSelect)="get_city($event)" placeholder="City Name" [suggestions]="listCites" [dropdown]="true" field="name" dataKey="id">
                             </p-autoComplete>
                         </span>
                     </span>
@@ -158,10 +158,10 @@
 <p-dialog header="Reseller Edit" [(visible)]="displayMaximizable_edit" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
   <div class="border-info" style="padding: 10px;">
-        <form [formGroup]="edit_reseller_from" (ngSubmit)="apply_edit_reseler()">
+        <form [formGroup]="edit_reseller_from" (ngSubmit)="apply_edit_reseller()">
             <div class="row">
                 <div class="col-md-6">
-                    <span class="p-float-label" style="margin-top: 20px;" *ngIf="reseller_edit.name">
+                    <span class="p-float-label" style="margin-top: 20px;">
                         <input id="float-input" [(ngModel)]="reseller_edit.name" formControlName="name" type="text" pInputText>
                         <label for="float-input">Name</label>
                     </span>
@@ -202,7 +202,7 @@
                     <br>
                     <span>
                         <p-autoComplete [(ngModel)]="reseller_edit.city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
-                            (completeMethod)="get_cities_by_province_id($event)" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
+                            (completeMethod)="get_cities_by_province_id()" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
                         </p-autoComplete>
                         <!-- <span class="p-float-label" style="margin-top: 20px;">
                             <p-autoComplete [(ngModel)]="reseller_edit.city" placeholder="Province" [ngModelOptions]="{standalone: true}" [suggestions]="listprov"
