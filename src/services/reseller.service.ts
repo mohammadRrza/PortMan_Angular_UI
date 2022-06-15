@@ -19,9 +19,34 @@ export class ResellerService {
         })
     };
 
-    get_all_resellers(page, page_size): Promise<any> {
+    create_reseller(form_reseller_obj):Promise<any>{
         return this._http
-            .get(this.apiURL + "?page=" + page + "&page_size=" + page_size, this.httpOptions)
+            .post(this.apiURL,form_reseller_obj , this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    edit_reseller(reseller_id){
+        return this._http
+            .get(this.apiURL + reseller_id+'/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    apply_edit_reseller(reseller_id, paramstr):Promise<any>{
+        let param_obj = JSON.parse(paramstr);
+        return this._http
+            .put(this.apiURL + reseller_id+'/', param_obj, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    remove_reseller(reseller_id):Promise<any>{
+        return this._http
+            .delete(this.apiURL + reseller_id +'/', this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -34,7 +59,14 @@ export class ResellerService {
           .then(res => res)
           .catch(this.handleError);
       }
-      
+    get_all_resellers(page, page_size , name = null): Promise<any> {
+        return this._http
+            .get(this.apiURL + "?page=" + page + "&page_size=" + page_size + "?name=" + name , this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

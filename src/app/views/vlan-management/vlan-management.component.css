@@ -6,7 +6,6 @@
       box-shadow: 3px 2px 18px 4px #A2C5FF; 
       padding: 5px;
       margin-top: 15px;
-      height: auto;
       }
 ::ng-deep .p-datatable .p-datatable-thead > tr > th{
         text-align: center;
@@ -50,12 +49,4 @@
         border-radius: 3px;
         -webkit-transition: box-shadow 0.2s;
         transition: box-shadow 0.2s;
-    }
-  
-
-::ng-deep .p-dialog .p-dialog-content{
-    background: #ffffff;
-    color: #495057;
-    padding: 0 1.5rem 2rem 1.5rem;
-    height: 100%;
     }

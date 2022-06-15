@@ -213,6 +213,13 @@ export class DslamComponent implements OnInit {
         break;
 
       }
+      case 5: {
+        //statements; 
+        this.search_str = '&search_active=&search_dslam=&search_ip=&search_status=&search_type=' + dslam_info.id;
+        this.search_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.search_str);
+        break;
+
+      }
     }
 
   }
@@ -268,8 +275,8 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
 
   }
 
-  get_province_by_name(event) {
-    this.citySrv.get_province_by_name(event.query).then(prov_res => {
+  getProvinces(event) {
+    this.citySrv.getProvinces(event.query).then(prov_res => {
       this.listProvince = prov_res.results;
     });
   }

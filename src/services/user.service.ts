@@ -121,6 +121,40 @@ export class UserService {
             .then(res => res)
             .catch(this.handleError);
     }
+
+    create_user(form_user_obj){
+        return this._http
+            .post(this.apiURL, form_user_obj, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    edit_user(user_id){
+        return this._http
+            .get(this.apiURL + user_id+'/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    apply_edit_user(user_id, paramstr):Promise<any>{
+        let param_obj = JSON.parse(paramstr);
+        return this._http
+            .put(this.apiURL + user_id+'/', param_obj, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    remove_user(user_id):Promise<any>{
+        return this._http
+            .delete(this.apiURL + user_id +'/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

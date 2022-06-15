@@ -86,8 +86,16 @@ export const routes: Routes = [
         loadChildren: () => import('./views/router/router.modules').then(m => m.RoutersModule)
       },
       {
+        path: 'vlan',
+        loadChildren: () => import('./views/vlan-management/vlan-management.modules').then(m => m.VlanManagementModule)
+      },
+      {
         path: 'switch',
         loadChildren: () => import('./views/switch/switch.modules').then(m => m.SwitchModule)
+      },
+      {
+        path: 'customer-port',
+        loadChildren: () => import('./views/subscriber/subscriber.modules').then(m => m.SubscriberModule)
       },
       {
         path: 'radio',

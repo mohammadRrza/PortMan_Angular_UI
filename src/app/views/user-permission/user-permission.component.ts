@@ -14,7 +14,6 @@ export class UserPermissionComponent implements OnInit {
 
   constructor(private usrSrv: UserService,
     private commandSrv: CommandService) { 
-
     this.pagination_config = {
       itemsPerPage: 10,
       currentPage: 1,
@@ -44,34 +43,21 @@ export class UserPermissionComponent implements OnInit {
   user_permission_profile_id: number;
   command_ids = [];
   exclude_command_ids = [];
-  permission_id: number;
   selected_commands: any;
-  permission_role_view:boolean = false;
-  roles: any[] = [];
-    role: any;
+  slot:any;
+
 
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
     this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);    
   }
+
   get_users_permission(page,itemsPerPage) {
     this.usrSrv.get_users_permission(page,itemsPerPage).then(res => {
       this.users_permissions = res.results;
       this.pagination_config.totalItems = res.count;
     });
-  }
-
-  search(event){
-      this.roles=
-      [
-        {"id":1, "name": 'ADMIN'},
-        {"id":1, "name": 'SUPERVISOR'},
-        {"id":1, "name": 'SUPPORT'},
-        {"id":1, "name": 'RESELLER'},
-        {"id":1, "name": 'DIRECTRESELLER'},
- 
-      ];
   }
 
   get_user_permission_profile(permission_profile_id, model_type){
@@ -106,12 +92,10 @@ export class UserPermissionComponent implements OnInit {
     this.user_id = user_id;
     this.permission_profile = permission_profile;
     this.user_permission_profile_id = user_permission_profile_id;
-    this.permission_id = permission_id;
     this.edit_permission_profile_view = true;
 
     this.usrSrv.edit_permissions(permission_id).then(res=>{
       this.user_permissions = res.result;
-      this.exclude_command_ids = [];
       this.user_permissions.forEach(element =>{
         this.exclude_command_ids.push(element.object_id);
       });
@@ -119,17 +103,17 @@ export class UserPermissionComponent implements OnInit {
 
     });
   }
-  show_add_Permission_by_role(){
-    this.permission_role_view = true;
-
-  }
 
   get_all_commands(){
-    this.commandSrv.get_all_commands(this.exclude_command_ids.join(',')).then(res=>{
+    this.commandSrv.get_all_commands().then(res=>{
       this.commands =  res;
     });  
   }
 
+  getTemperature(event){
+
+  }
+  
   assign_commands_to_user(event){
     // console.log(event);
     // console.log(this.user_id);
@@ -141,25 +125,10 @@ export class UserPermissionComponent implements OnInit {
       // console.log(this.command_ids);
 
     });
-    this.command_ids.concat(this.exclude_command_ids);
-
-  }
-
-  apply_assign_commands_to_user(){
-    let user_permission_str = '{"user":'+this.user_id+',"action":"allow","is_active":true,"permission_profile":'+this.permission_profile+',"id":'+this.permission_id+',"objects":[{"type":"dslam","id":[]},{"type":"command","id":['+this.command_ids+']}]}';
-    this.usrSrv.assign_commands_to_user(this.user_permission_profile_id, user_permission_str).then(res=>{
-      this.edit_permission_profile_view = false;
-    });
+    let user_permission_str = '{"user":'+this.user_id+',"action":"allow","is_active":true,"permission_profile":'+this.user_id+',"id":'+this.user_id+',"objects":[{"type":"dslam","id":[]},{"type":"command","id":['+this.command_ids+']}]}';
     console.log(user_permission_str);
-  }
 
-  get_user_permission_info(username){
-    this.usrSrv.get_user_permission_info(username,this.pagination_config.currentPage).then(res=>{
-      this.users_permissions = res.results;
-      this.pagination_config.totalItems = res.count;
-    });
   }
-
 
   ngOnInit(): void {
     this.get_users_permission(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);

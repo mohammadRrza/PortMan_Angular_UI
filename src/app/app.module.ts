@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from "@angular/common";
 import { ToastrModule } from 'ngx-toastr';
 import { GoogleMapsModule } from '@angular/google-maps'
-
+import {TabViewModule} from 'primeng/tabview';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -69,6 +69,8 @@ import { DialogModule } from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import { VlanService } from '../services/vlan.service';
+import { SubscriberService } from '../services/subscriber.service';
 
 @NgModule({
   imports: [
@@ -86,6 +88,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     AppFooterModule,
     AppHeaderModule,
     AppSidebarModule,
+    TabViewModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
@@ -104,7 +107,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent
+    LoginComponent,
             ],
   providers: [{
     provide: LocationStrategy,
@@ -127,6 +130,8 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
     SwitchCommandService,
     RouterCommandService,
     PishgamanNoteService,
+    VlanService,
+    SubscriberService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService
   ],
