@@ -156,14 +156,14 @@
                     <button pButton type="button" style="margin-right: 0; float: right;"
                       (click)="run_command(comm_item)" label="Run"></button>
                       <span class="p-float-label" style="margin-top: 10px; float: left;" *ngIf ="profile_adsl_set">
-                        <input id="float-input" [(ngModel)]="new_lineprofile" type="text" pInputText [value]="" placeholder="New Lineprofile">                
+                        <input style="direction: ltr;" id="float-input" [(ngModel)]="new_lineprofile" type="text" pInputText [value]="" placeholder="New Lineprofile">                
                       </span>
                   </div>
                   <div class="col-md-6">
                     <p-card header="Command Result">
                       <hr />
 
-                      <div  class="res_div border" style="direction:rtl;">
+                      <div  class="res_div border" style="direction:ltr;">
                         <pre *ngIf="dslamPortcammand_info">
                         {{dslamPortcammand_info}}
                       </pre>

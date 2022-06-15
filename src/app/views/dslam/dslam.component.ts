@@ -86,7 +86,7 @@ export class DslamComponent implements OnInit {
   submitted = false;
   prov_id;
   city_id;
-  is_ldap_login;
+  is_ldap_login : boolean;
   agent_username: string;
   ldap_email: string;
   listDslamType = [];
@@ -253,7 +253,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
   }
 
   search_dslams(page, itemsPerPage, search_dslams) {
-    if(this.is_ldap_login == 'false'){
+    if(this.is_ldap_login == false){
       this.dslamSrv.search_dslams_by_username(page, itemsPerPage, search_dslams, this.agent_username, this.is_ldap_login).then(srch_res => {
         this.pagination_config.totalItems = srch_res.count;
         this.listDslams = srch_res.results;
@@ -322,7 +322,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
 
 
   get_all_dslams(page, itemsPerPage) {
-    if(this.is_ldap_login == 'false'){
+    if(this.is_ldap_login == false){
 
       this.get_permission();
       this.get_all_dslams_by_username(page, itemsPerPage,this.agent_username, this.is_ldap_login);
@@ -345,20 +345,27 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     // }else {
     //   console.log("token not expired"); 
     // }
-    this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.is_ldap_login = (localStorage.getItem("ldap_login") == 'true');
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
     this.ldap_permissions = localStorage.getItem('ldap_permissions');
-    if( this.ldap_permissions.includes('Network-Core') || this.ldap_permissions.includes('Network-Access')){
+    if( this.ldap_permissions.includes('Network-Core') || this.ldap_permissions.includes('Network-Access') || this.ldap_permissions.includes('group-network-Access')){
       this.view_actions = true;
     }
     else{
       this.view_actions = false;
     }
-    if(this.is_ldap_login != 'true'){
+    if(this.is_ldap_login != true){
           var loginCls =  new LoginCls(this.jwtHelper,this.router);
           loginCls.check_login();
     }
+    console.log('view_actions');
+
+    console.log(this.view_actions);
+
+    console.log('is_ldap_login');
+
+    console.log(this.is_ldap_login);
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
 }
 }

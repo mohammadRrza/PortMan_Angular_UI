@@ -255,10 +255,10 @@ export class PortmanCdmsComponent implements OnInit {
     let confirm_password ="";
     let email ="";
     this.portman_users.forEach(item=>{
-      bulk_username = item.split('@')[0];
-      password = item.split('@')[0]+'@1577';
-      confirm_password = item.split('@')[0]+'@1577';
-      email = item;
+      bulk_username = item.split('@')[0].toLowerCase();
+      password = item.split('@')[0]+'@1577'.toLowerCase();
+      confirm_password = item.split('@')[0]+'@1577'.toLowerCase();
+      email = item.toLowerCase();
       var user_str = '{"username":"'+bulk_username+'","first_name":"'+bulk_username+'","last_name":"'+bulk_username+'","email":"'+email+'","tel":"2115770000","reseller":"","password":"'+password+'","confirm_password":"'+password+'","is_active":true,"type":"SUPPORT"}';
       this.portman_cdmsSrv.add_bulk_users_to_portman(user_str).then(res=>{
       });
@@ -268,7 +268,7 @@ export class PortmanCdmsComponent implements OnInit {
 
   set_permission_for_user(){
     this.portman_users.forEach(item=>{
-      this.portman_cdmsSrv.set_permission_for_user(item).then();
+      this.portman_cdmsSrv.set_permission_for_user(item.toLowerCase()).then();
     });
   }
 
