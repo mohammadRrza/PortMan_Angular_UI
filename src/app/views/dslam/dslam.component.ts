@@ -212,6 +212,13 @@ export class DslamComponent implements OnInit {
         break;
 
       }
+      case 5: {
+        //statements; 
+        this.search_str = '&search_active=&search_dslam=&search_ip=&search_status=&search_type=' + dslam_info.id;
+        this.search_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.search_str);
+        break;
+
+      }
     }
 
   }
