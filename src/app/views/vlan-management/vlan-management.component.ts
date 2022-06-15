@@ -104,6 +104,8 @@ export class VlanManagementComponent implements OnInit {
     }
   }
   
+  onSearch(){}
+  
   get_filter(event){
     let filter_code = event.value.code;
     switch(filter_code) { 

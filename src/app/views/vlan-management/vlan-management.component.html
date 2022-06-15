@@ -71,20 +71,26 @@
                                     <ng-autocomplete [data]="vlans" [searchKeyword]="vlan_keyword" placeHolder="Vlan Name"
                                                 (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,1)'
                                                 (inputFocused)='onFocused($event,1)' historyIdentifier="vlans" [itemTemplate]="itemTemplate"
-                                                formControlName="f_vlan_name">
+                                                [notFoundTemplate]="notFoundTemplate" formControlName="f_vlan_name">
                                     </ng-autocomplete>
                                     <ng-template #itemTemplate let-vlan>
                                         <a [innerHTML]="vlan.vlan_name"></a>
+                                    </ng-template>
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
                                     </ng-template>
                                 </div>
                                 <div class="col-md-4">
                                     <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
                                                 (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event,2)'
                                                 (inputFocused)='onFocused($event,2)' historyIdentifier="listResellers" [itemTemplate]="resellerTemplate"
-                                                formControlName="reseller">
+                                                [notFoundTemplate]="notFoundTemplate" formControlName="reseller">
                                     </ng-autocomplete>
                                     <ng-template #resellerTemplate let-listReseller>
                                         <a [innerHTML]="listReseller.name"></a>
+                                    </ng-template>
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
                                     </ng-template>
                                 </div>
                                 <div class="col-md-4">
@@ -130,7 +136,7 @@
                                         <ng-template #notFoundTemplate let-notFound>
                                             <div [innerHTML]="notFound"></div>
                                           </ng-template>
-                                        <p-dropdown [options]="flag" [(ngModel)]="selectfilter" (onChange)="flag_filter($event)" formControlName="subscriber" optionLabel="name"></p-dropdown>
+                                        <p-dropdown [options]="flag" [(ngModel)]="selectfilter" (onChange)="flag_filter($event)" formControlName="subscriber" optionLabel="name" (inputChanged)='onSearch($event)'></p-dropdown>
                                     </span>
                                 </div>
                             </div>

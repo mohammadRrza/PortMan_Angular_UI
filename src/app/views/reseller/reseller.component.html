@@ -97,10 +97,6 @@
                         <input [(ngModel)]="obj" id="float-input" formControlName="name" type="text" pInputText>
                         <label for="float-input">Name</label>
                     </span>
-                    <!-- <span *ngIf="add_reseller_from.name" class="text-center">
-                        <input [(ngModel)]="obj" id="float-input" formControlName="text" type="text" pInputText>
-                        <label for="float-input">text</label>
-                    </span> -->
                     <br>
                     <span class="p-float-label" style="margin-top: 20px;">
                         <p-inputNumber [(ngModel)]="val" formControlName="vpi"></p-inputNumber>
@@ -204,18 +200,6 @@
                         <p-autoComplete [(ngModel)]="reseller_edit.city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
                             (completeMethod)="get_cities_by_province_id()" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
                         </p-autoComplete>
-                        <!-- <span class="p-float-label" style="margin-top: 20px;">
-                            <p-autoComplete [(ngModel)]="reseller_edit.city" placeholder="Province" [ngModelOptions]="{standalone: true}" [suggestions]="listprov"
-                                (completeMethod)="getProvinces($event)" [dropdown]="true" field="text"
-                                (onSelect)="get_province_id($event)">
-                            </p-autoComplete>
-                        </span>
-                        <br>
-                        <br>
-                        <span>
-                            <p-autoComplete [(ngModel)]="reseller_edit.city_info" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
-                                (completeMethod)="get_cities_by_province_id($event)" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
-                            </p-autoComplete> -->
                     </span>
                 </div>
             </div>
