@@ -80,6 +80,7 @@ export class VlanManagementComponent implements OnInit {
   identifierkey_obj: boolean = false;
   card_port_obj: boolean = false;
   progressSpinner: boolean = false;
+  notFoundTemplate: any;
 
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
@@ -106,6 +107,8 @@ export class VlanManagementComponent implements OnInit {
       });
     }
   }
+
+  onSearch(){}
   
   get_filter(event){
     let filter_code = event.value.code;

@@ -331,6 +331,11 @@
                   placeholder="Search by IP" class="p-column-filter" style="margin: 10px;" pTooltip="Search by IP"
                   tooltipPosition="top">
               </th>
+              <th>
+                <p-autoComplete [(ngModel)]="dslam_type" placeholder="Dslam Type" [suggestions]="listDslamType"
+                (completeMethod)="get_dslam_types()" class="p-column-filter" (onSelect)="get_dslam_info(dslam_type,5)" field="name" dataKey="id">
+                </p-autoComplete>
+              </th>
             </tr>
           </ng-template>
         </p-table>
