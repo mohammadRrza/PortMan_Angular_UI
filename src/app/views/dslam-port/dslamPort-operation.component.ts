@@ -435,7 +435,6 @@ export class DslamPortOperationComponent implements OnInit {
         this.show_result = false;
         this.dsportSrv.get_last_command(dslam_id, port_id).then(res => {
             this.dslamPortcammand_info = res[0].value.result;
-            this.dslamPort_info = {}
             this.show_result = true;
         });
     }

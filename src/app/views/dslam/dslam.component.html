@@ -332,9 +332,20 @@
                   tooltipPosition="top">
               </th>
               <th>
-                <p-autoComplete [(ngModel)]="dslam_type" placeholder="Dslam Type" [suggestions]="listDslamType"
-                (completeMethod)="get_dslam_types()" (onFocus)="get_dslam_types()" class="p-column-filter" (onSelect)="get_dslam_info(dslam_type,5)" field="name" dataKey="id">
-                </p-autoComplete>
+
+
+
+                <ng-autocomplete [data]="listDslamType" [searchKeyword]="dslam_type_Keyword" placeHolder="Search by Type"
+                (inputChanged)='dslamtype_onSearch($event)' (selected)="dslamtype_selectEvent($event)"
+                (inputFocused)='dslamttype_onFocused($event)' [itemTemplate]="dslamtype_itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">
+                </ng-autocomplete>
+                  <ng-template #dslamtype_itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
               </th>
             </tr>
           </ng-template>
@@ -440,88 +451,6 @@
 
 
 
+<!-- <div style="font-family: 'IRANSansWebFaNum' !important; margin: 10px;  padding: 5px; text-align: justify;">
 
-<!-- <div style="font-family: 'IRANSansWebFaNum' !important; margin: 10px; border-style: double; padding: 5px;">
-  پهنای باند اختصاصی چیست؟
-
-  سرویسی اختصاصی است که به یک سازمان یا نهاد اختصاص می‌یابد. آن دسته از شرکت‌هایی که بسیار بزرگ هستند و نیاز زیادی به اینترنت پرسرعت دارند، از پهنای باند اختصاصی یا Dedicated Bandwidth استفاده می‌کنند. مزیت این سرویس عدم نوسان سرعت است. یعنی سرعت در هر ساعت از شبانه روز در حالتی ثابت می‌ماند. همچنین پهنای باند اختصاصی برای شرکت‌هایی مناسب است که مشکل ترافیک مصرفی دارند. در این سرویس دیگر نیازی نیست که شرکت‌ها نگران حجم مصرفی اینترنت خود باشند.
-  
-  پهنای باند در واقع مقدار اطلاعاتی است که می‌تواند از طریق اینترنت منتقل شود. این مقدار ممکن است در عمل و در تئوری متفاوت از هم باشد که این امر به خاطر برخی موارد مانند خط تلفن و دستگاه‌های ارتباطی ما به وجود می آید. این امر باعث می شود پهنای باند در عمل ظرفیتش کمتر از آن چیزی باشد که در تئوری وجود دارد و در واقع نمی‌تواند از حداکثر توان خود استفاده کند.
-    
-
-
-<div class="images-box row" style="font-family: 'IRANSansWebFaNum' !important; margin: 10px; border-style: double; padding: 5px;">
- 
-<p>
-  تحلیلگر بلومبرگ در یادداشتی می‌نویسد هدست واقعیت ترکیبی اپل حتی درصورت معرفی‌نشدن در WWDC 2022، می‌تواند در نقش ستاره‌ی اصلی مراسم ظاهر شود. اپل نطق اصلی WWDC را دوشنبه‌شب برگزار می‌کند.
-</p>
-<div>
-  اپل دوشنبه‌شب به‌وقت تهران کنفرانس جهانی توسعه‌دهندگان موسوم به WWDC 2022 را برای معرفی iOS 16 ،iPadOS 16 ،tvOS 16 ،watchOS 9 و macOS 13 برگزار می‌کند؛ بااین‌حال به‌نوشته‌ی مارک گارمن در بلومبرگ، هدست مورد‌انتظار اپل که مبتنی‌بر فناور‌ی‌های واقعیت افزوده و واقعیت مجازی است، صرف‌نظر از حضور یافتن یا نیافتن در WWDC می‌تواند تمام توجهات را به خود جلب کند.
-
-مارک گارمن می‌گوید در فاصله‌ی کمتر از ۲۴ ساعت مانده به مراسم بزرگ اپل همچنان هیچ‌کس با قطعیت نمی‌داند که کوپرتینویی‌ها در WWDC هدست واقعیت ترکیبی خود را رونمایی می‌کنند یا خیر. اکنون هیجان برای محصول بزرگ بعدی اپل به بیشترین حد رسیده است و بسیاری از توسعه‌دهندگان، مشتریان و حتی مهندسان اپل منتظرند رونمایی رسمی هدست واقعیت ترکیبی هستند. اپل در بدترین حالت ممکن به‌صورت خلاصه‌وار به هدست جدید خود اشاره خواهد کرد؛ ولی همچنان احتمال رونمایی کامل محصول در WWDC وجود دارد. 
-</div>
-<table>
-  <tr>
-    <td><img class="alignnone size-full wp-image-15" style="margin: 5px;" src="http://shervinpardaznj.ir/wp-content/uploads/2021/03/b_details02.jpg" alt="" width="255" height="276" />
-    </td>
-    <td>
-      <img class="alignnone size-full wp-image-15" style="margin: 5px;" src="http://shervinpardaznj.ir/wp-content/uploads/2021/03/b_details02.jpg" alt="" width="255" height="276" />
-    </td>
-  </tr>
-</table>
-
-<p>
-  اپل در هدست واقعیت ترکیبی خود اِلِمان‌های واقعیت مجازی و واقعیت افزوده را ترکیب می‌کند تا محصولی برای رقابت نزدیک با متا (شرکت مادر فیسبوک) بسازد. به‌تازگی شرکتی ناشناس علامت تجاری جدیدی به نام realityOS ثبت کرده که ظاهراً مربوط به سیستم‌عامل هدست اپل است.
-
-در‌ظاهر اپل ارتباطی با این علامت تجاری ندارد؛ اما فراموش نکنید شرکت‌هایی مثل اپل همواره برای ثبت علائم تجاری از شرکت‌های کاغذی استفاده می‌کنند. در این زمینه، به‌نظر می‌رسد اپل شرکتی کاغذی با عنوان Realityo Systems LLC را بنیان‌گذاری و ازطریق این شرکت علامت تجاری realityOS را ثبت کرده است.
-
-یک زن با هدست واقعیت مجازی افزوده ترکیبی اپل / Apple طرح غیررسمی
-</p>
-</div>
-
-
-
-<div style="font-family: 'IRANSansWebFaNum' !important;margin: 5px;">
-  <div class="images-box row">
-    <div class="column col-lg-4 col-md-4 col-sm-4 wow fadeInRight pro-col" style="visibility: visible; animation-name: fadeInRight;"></div>
-    <div class="column col-lg-8 col-md-8 col-sm-8 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
-    <figure class="image wow fadeIn" style="visibility: visible; animation-name: fadeIn;"><img class="alignnone wp-image-1363 size-medium" src="http://sibanet.ir/wp-content/uploads/2022/06/td-lte2-300x238.jpg" alt="" width="300" height="238" /></figure>
-    </div>
-    </div>
-    <div class="content-box">
-    <h2> اینترنت پرسرعت برج‌ها و مجتمع‌ها</h2>
-
-    سرویس اینترنت مرکزی ویژه برج ها و مجتمع های مسکونی و تجاری خدمتی دیگر از گروه شروین پرداز می باشد که با تکیه بر دانش فنی و در اختیار داشتن متخصصین مجرب، این مراکز را با ارائه ی پهنای باند مناسب به سوی خدماتی با کیفیت سوق می دهد که از جمله ویژگی های این نوع سرویس دهی می توان به موارد ذیل اشاره نمود:    <!-- Two Column -->
-    <!-- <div class="two-column">
-    <div class="row">
-    <div class="text-column col-xl-6 col-lg-12 col-md-12">
-    <h3>
-      مزایای استفاده از اینترنت برج و مجتمع   
-     </h3>
-
-        <ul class="list-style-one">
-          <li>عدم وابستگی به مرکز مخابراتی</li>
-          <li>راه اندازی بر روی خطوط مسی، فیبر نوری و PCM</li>
-          <li>عدم اتلاف زمان در راه اندازی سرویس اینترنت</li>
-          <li>کیفیت بسیار بالا به علت فاصله ی کوتاه تجهیزات ارتباطی</li>
-          <li>پشتیبانی ۲۴ ساعته</li>
-          <li>به کارگیری تجهیزات رایگان</li>
-          <li>بهره مندی از امتیاز کاربران ویژه جهت پشتیبانی فنی</li>
-          <li>امتیاز استفاده از جشنواره های ویژه مجتمع ها</li>
-          <li>عدم نیاز به پرداخت هزینه ی تلفن و آبونمان مخابرات</li>
-          <li>امکان تمدید اشتراک آنلاین</li>
-    </ul>
-    </div>
-    <div class="image-column col-xl-6 col-lg-12 col-md-12">
-    <figure class="image"><img class="alignnone wp-image-1362 size-medium" src="http://sibanet.ir/wp-content/uploads/2022/06/TD-LTE-300x238.jpg" alt="" width="300" height="238" /></figure>
-    </div>
-    </div>
-    </div>
-    <h3>تجهیزات مورد نیاز برای استفاده از اینترنت نسل چهارم ثابت</h3>
-    همان طور که گفته شد، تکنولوژی اینترنت تی دی ال تی نیازی به خط ثابت تلفن ندارد و به جای آن از سیم کارت‌های مخصوصی استفاده می‌کند که برای همین کاربرد طراحی شده‌اند. در واقع با این سیم کارت‌ها نمی‌توان مانند سیم کارت‌های معمولی با تلفن‌های دیگر تماس گرفت یا برای دیگران پیامک فرستاد. این سیم کارت‌ها را باید در زمان خرید سرویس  TD-LTEاز شرکت‌های ارائه‌دهنده خدمات اینترنتی تهیه کنید.
-
-    خوشبختانه برای استفاده از اینترنت TD-LTE علاوه بر سیم کارت مخصوص فقط به یک مودم نیاز است. البته این مودم نیز با مودم‌های دیگر فرق دارد و یک مودم مخصوص است. اتصال به این مودم‌ها هم از طریق کابل و هم وای فای امکان پذیر است. در واقع شرکت‌های ارائه دهنده خدمات اینترنتی به جهت خاص بودن مودم و سیم کارت این نوع اینترنت، آن‌ها را برای مشترکان خود تهیه کرده و در صورت درخواست در اختیارشان قرار می‌دهند.    
-   
-    </div>
-</div> --> 
-
+</div> -->

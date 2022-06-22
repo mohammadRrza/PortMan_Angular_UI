@@ -96,6 +96,8 @@ export class DslamComponent implements OnInit {
   enabled: boolean = true;
   ldap_permissions: any;
   view_actions: boolean = false;
+  dslam_type_Keyword='name';
+  
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -144,14 +146,26 @@ export class DslamComponent implements OnInit {
     this.displayMaximizable3 = true;
   }
 
+  dslamtype_selectEvent(event){
+    this.dslam_type_id = event.id;
+    this.get_dslam_info(event.id,5)
+  }
+
+  dslamttype_onFocused(event){
+    this.get_dslam_types();
+  }
 
   get_dslam_types(){
     this.dslamSrv.get_dslam_types().then(res=>{
       this.listDslamType = res;
+      console.log('line 1')
+      console.log(this.listDslamType)
     });
   }
 
   get_dslam_type(dslam_type_id){
+    console.log('line 2')
+    console.log(dslam_type_id)
     this.dslam_type_id = dslam_type_id;
   }
 
@@ -215,7 +229,9 @@ export class DslamComponent implements OnInit {
       }
       case 5: {
         //statements; 
-        this.search_str = '&search_active=&search_dslam=&search_ip=&search_status=&search_type=' + dslam_info.id;
+        console.log('line 3')
+        console.log(dslam_info)
+        this.search_str = '&search_active=&search_dslam=&search_ip=&search_status=&search_type=' + dslam_info;
         this.search_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.search_str);
         break;
 
@@ -228,6 +244,10 @@ export class DslamComponent implements OnInit {
     this.submitted = false;
     this.add_dslam_from.reset();
 }
+
+  dslamtype_onSearch(event){
+
+  }
 
   remove_dslam(dslam_id) {
     this.confirmationService.confirm({
