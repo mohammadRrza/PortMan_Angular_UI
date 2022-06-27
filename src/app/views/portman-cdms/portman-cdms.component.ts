@@ -65,10 +65,10 @@ export class PortmanCdmsComponent implements OnInit {
   view_live_user_port:boolean = false;
   snmp_data: any;
   snmp_port_status_res: any;
-  ADSL_CURR_DOWNSTREAM_RATE = [];
-  ADSL_CURR_UPSTREAM_RATE = [];
-  ADSL_DOWNSTREAM_SNR = [];
-  ADSL_UPSTREAM_SNR = [];
+  ADSL_CURR_DOWNSTREAM_RATE = [0];
+  ADSL_CURR_UPSTREAM_RATE = [0];
+  ADSL_DOWNSTREAM_SNR = [0];
+  ADSL_UPSTREAM_SNR = [0];
   TIME = [];
   get_port_info(){
     this.user_does_not_exist = false;
