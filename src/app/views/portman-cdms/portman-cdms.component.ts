@@ -5,6 +5,8 @@ import {CommandService} from '../../../services/command.service';
 import {DslamPortService} from '../../../services/dslam-port.service'
 import { Router } from '@angular/router';
 import {MessageService} from 'primeng/api';
+import {Subscription, timer} from 'rxjs';  
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-portman-cdms',
@@ -19,7 +21,9 @@ export class PortmanCdmsComponent implements OnInit {
               private dslamPortsrv: DslamPortService,
               private router: Router,
               private messageSrv: MessageService
-              ) { }
+              ) {
+                
+               }
 
   username:string = '';
   commandObj = [];
@@ -32,7 +36,11 @@ export class PortmanCdmsComponent implements OnInit {
   dslam_id;
   dslam_ip: string;
   command_res;
+  snmp_card: number;
+  snmp_port: number;
   comm_item;
+  timerSubscription: Subscription; 
+  timerSubscription2: Subscription; 
   slot:string;
   port:string;
   zabbix_fqdn:string;
@@ -54,7 +62,14 @@ export class PortmanCdmsComponent implements OnInit {
   custom_slot:number;
   custom_port: number;
   port_register_res: any;
-
+  view_live_user_port:boolean = false;
+  snmp_data: any;
+  snmp_port_status_res: any;
+  ADSL_CURR_DOWNSTREAM_RATE = [];
+  ADSL_CURR_UPSTREAM_RATE = [];
+  ADSL_DOWNSTREAM_SNR = [];
+  ADSL_UPSTREAM_SNR = [];
+  TIME = [];
   get_port_info(){
     this.user_does_not_exist = false;
     this.run_by_ip = false;
@@ -297,11 +312,67 @@ export class PortmanCdmsComponent implements OnInit {
       }
     });
   }
+
+  view_live_user_port_func(fqdn, card, port){
+    this.snmp_card = card;
+    this.snmp_port = port;
+  this.view_live_user_port = true;
+
+
+  }
+
   ngOnInit(): void {
      this.ldap_permissions = localStorage.getItem('ldap_permissions');
      this.is_ldap_login = localStorage.getItem("ldap_login")
      console.log(this.is_ldap_login);
 
   }
+  show_snmp_data(){
+    this.snmp_data = {
+      labels: this.TIME,
+      datasets: [
+          {
+              label: 'Downstream Rate',
+              backgroundColor: 'rgba(161, 247, 237, 0.8)',
+              tension: 0.4,
+              data: this.ADSL_CURR_DOWNSTREAM_RATE,
+          },
+          {
+              label: 'Upstream Rate',
+              backgroundColor: 'rgba(129, 177, 232, 0.8)',
+              tension: 0.4,
+              data: this.ADSL_CURR_UPSTREAM_RATE,
+          }
+      ]
+  }
+  }
+  show_snmp_data_refresh(){
+    var command_str = '{"dslam_id":"' + this.dslam_id + '","params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+this.snmp_card+'","port_number":"'+this.snmp_port+'"}},"command":"snmp get port params","new_lineprofile":""}';
+    this.timerSubscription = timer(0, 1000).pipe( 
+      map(() => { 
+        this.dslamPortsrv.get_snmp_port_status(command_str).then((res)=>{
+          this.snmp_port_status_res = res.response.result;
+          this.ADSL_CURR_DOWNSTREAM_RATE.push(this.snmp_port_status_res.ADSL_CURR_DOWNSTREAM_RATE);
+          this.ADSL_CURR_UPSTREAM_RATE.push(this.snmp_port_status_res.ADSL_CURR_UPSTREAM_RATE);
+          this.TIME.push(this.snmp_port_status_res.TIME);
+     });
+      })
+    ).subscribe();    
+    this.timerSubscription2 = timer(0, 1000).pipe( 
+      map(() => { 
+        this.show_snmp_data();
+      })
+    ).subscribe(); 
+  }
+  stop_snmp_get() {
+    console.log('stop_snmp_get');
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription2.unsubscribe();
+    // this.ADSL_CURR_DOWNSTREAM_RATE = [];
+    // this.ADSL_CURR_UPSTREAM_RATE = [];
+    // this.TIME = [];
+
+  }
+
 
 }

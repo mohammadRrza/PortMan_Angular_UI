@@ -58,6 +58,8 @@
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="ping_dslam()" />
                                         <img src="\assets\img\brand\port.png" width="20" pTooltip="Port Config"
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="port_config(port_infos.FQDN,port_infos.D_Kart,port_infos.D_Port,port_infos.AgentUsername,port_infos.PanelUsername)" />
+                                        <img src="\assets\img\brand\port_live.png" width="20" pTooltip="View Live Port"
+                                        tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_live_user_port_func(port_infos.FQDN,port_infos.D_Kart,port_infos.D_Port)" />
                                         </td>
 
                                       </tr>
@@ -281,6 +283,16 @@
   <div *ngIf='responseStatus.ErrorCode != 0'>
     {{responseStatus.Message}}
     </div>
+  </p-dialog>
+
+  <p-dialog header="View live user port" [(visible)]="view_live_user_port" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false" (onHide)="stop_snmp_get()">
+  <button type="button" (click)="show_snmp_data_refresh()"  pButton pRipple label="Start" styleClass="rounded-button ui-button-success"></button>
+  <button type="button" (click)="stop_snmp_get()"  pButton pRipple label="Stop" styleClass="rounded-button ui-button-success"></button>
+
+  <div class="border-info" style="padding: 10px;">
+    <p-chart type="line" [data]="snmp_data"></p-chart>
+  </div>
   </p-dialog>
 
 
