@@ -194,8 +194,7 @@ export class UserManagementComponent implements OnInit {
       message: 'Are you sure that you want to delete this User?',
       accept: () => {
         this.userSrv.remove_user(user_id).then(res => {
-          this.user_edit = res;
-          // this.get_all_resellers(this.pagination_config.currentPage,10);
+          this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
         });
       }
     });

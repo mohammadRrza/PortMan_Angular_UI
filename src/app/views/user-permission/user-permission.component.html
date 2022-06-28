@@ -14,6 +14,7 @@
             <div>
                 <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
                   <p-header>Search</p-header>
+<<<<<<< Updated upstream
                 <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
                   <ng-template pTemplate="header">
                     <tr class="row-accessories border" style="margin: 10px;" >
@@ -25,6 +26,18 @@
                     </tr>
                   </ng-template>
                 </p-table>
+=======
+
+                  <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
+                    <ng-template pTemplate="header">
+                      <tr class="row-accessories">
+                        <th>
+                            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'username', 'contains')" [value]="dt1.filters['username']?.value" placeholder="Search by Username" class="p-column-filter">
+                        </th>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+>>>>>>> Stashed changes
                 </p-fieldset>
               </div>
             <div class="card-body" class="border" style="margin: 10px;">
