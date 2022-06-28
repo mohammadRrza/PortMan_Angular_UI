@@ -45,7 +45,7 @@ export class UserPermissionComponent implements OnInit {
   exclude_command_ids = [];
   selected_commands: any;
   slot:any;
-
+  username: string;
 
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
@@ -86,6 +86,12 @@ export class UserPermissionComponent implements OnInit {
   onChange(event){
     console.log(event);
     this.user_permissions = event.value;
+  }
+  search_by_name(){
+    this.usrSrv.get_user_permission_info(this.username,this.pagination_config.currentPage).then(res=>{
+      this.users_permissions = res.results;
+      this.pagination_config.totalItems = res.count;
+    });
   }
 
   edit_permissions(permission_id, user_id, permission_profile, user_permission_profile_id){
