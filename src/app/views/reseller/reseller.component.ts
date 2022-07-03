@@ -58,8 +58,8 @@ export class ResellerComponent implements OnInit {
   listResellers = [];
   displayMaximizable_add: boolean = false;
   displayMaximizable_edit: boolean = false;
-  reseller_edit: any = {};
   reseller_add: any = {};
+  reseller_edit: any = {};
   submitted = false;
   add_reseller_from: FormGroup;
   edit_reseller_from: FormGroup;
@@ -73,8 +73,8 @@ export class ResellerComponent implements OnInit {
   f_vpi = new FormControl("", Validators.required);
   f_tel = new FormControl("", Validators.required);
   f_fax = new FormControl("", Validators.required);
-  f_address = new FormControl("", Validators.required);
   f_text =  this.f_name;
+  f_address = new FormControl("", Validators.required);
   f_city = new FormControl("", Validators.required);
   f_city_info = new FormControl("", Validators.required);
   progressSpinner: boolean = false;
@@ -91,11 +91,10 @@ export class ResellerComponent implements OnInit {
     form_reseller_obj.value.city = this.city_id;
     form_reseller_obj.value.name = form_reseller_obj.value.text
     this.resellerSrv.create_reseller(JSON.stringify(form_reseller_obj.value)).then(res => {
-        this.reseller_add = res;
-        console.log(res)
-        this.get_all_resellers(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
-    },
-      )}
+      this.reseller_add = res;
+      this.get_all_resellers(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
+    })
+  }
 
   get_all_resellers(page, page_size) {
     this.progressSpinner = true;
@@ -130,8 +129,8 @@ export class ResellerComponent implements OnInit {
       message: 'Are you sure that you want to delete this Reseller?',
       accept: () => {
         this.resellerSrv.remove_reseller(reseller_id).then(res => {
-          // this.reseller_edit = res;
           this.notifySrv.showSuccess('delete was successfully','delete');
+
           this.get_all_resellers(this.pagination_config.currentPage,10);
         });
       }

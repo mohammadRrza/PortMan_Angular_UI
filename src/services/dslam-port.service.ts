@@ -140,4 +140,13 @@ private handleError(error: any): Promise<any> {
           this.login.check_login(err)
       });
 }
+
+get_snmp_port_status(oprt_params): Promise<any> {
+  return this._http
+      .post(this.apiURL4+'get_snmp_port_status/', oprt_params,this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+}
+
 }

@@ -77,7 +77,6 @@ export class VlanManagementComponent implements OnInit {
   card_port_obj: boolean = false;
   progressSpinner: boolean = false;
   notFoundTemplate: any;
-  
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -103,6 +102,7 @@ export class VlanManagementComponent implements OnInit {
       });
     }
   }
+
   
   onSearch(){}
   

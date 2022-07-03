@@ -4,6 +4,7 @@ import { environment } from './../environments/environment';
 import { Router } from '@angular/router';
 import {LoginCls} from './../app/dtos/login_cls';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,7 @@ export class SwitchService {
     private _router: Router,
     ){
      }
+
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -37,7 +39,9 @@ private handleError(error: any): Promise<any> {
         this.handleError;
         this.login.check_login(err)
     });
+
   }
+
 
   search_switches(page,itemsPerPage,searchStr): Promise<any> {
     return this._http

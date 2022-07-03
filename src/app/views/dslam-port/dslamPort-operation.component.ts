@@ -104,7 +104,7 @@ export class DslamPortOperationComponent implements OnInit {
     his_tx_data_rate;
     his_tx_data_rate_chartOptions;
     profile_adsl_set:boolean = false;
-    
+    new_lineprofile: string = '';
     /////////////////// port_traffic //////////////////////////////////////////////////////
 
     data = [{
@@ -410,7 +410,21 @@ export class DslamPortOperationComponent implements OnInit {
     
     run_command(command_obj) {
         this.show_result = false;
-        var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+        var command_str = '';
+        if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
+            this.profile_adsl_set = true;
+            this.comm_item = command_obj;
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+          }
+          else if(command_obj.name == 'fast profiles adsl set'){
+            this.profile_adsl_set = true;
+            this.comm_item = command_obj;
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+          }
+          else{
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+
+          }
         this.dsportSrv.run_command(command_str).then(res => {
             console.log(res);
             this.dslamPortcammand_info = res.response.result;
@@ -421,7 +435,6 @@ export class DslamPortOperationComponent implements OnInit {
         this.show_result = false;
         this.dsportSrv.get_last_command(dslam_id, port_id).then(res => {
             this.dslamPortcammand_info = res[0].value.result;
-            this.dslamPort_info = {}
             this.show_result = true;
         });
     }
@@ -438,7 +451,7 @@ export class DslamPortOperationComponent implements OnInit {
         setTimeout(() => {
             this.hide_chart = false;
             this.message = '{"action": "port_status", "params": {"port":{"port_index":' + this.dslamPort_info2.port_index + ',"port_number":' + this.dslamPort_info2.port_number + ',"slot_number":' + this.dslamPort_info2.slot_number + ' }}, "dslam_id":' + this.dslam_id + '}';
-            this.ws = webSocket('ws://172.28.238.114:2083/ws/');
+            this.ws = webSocket('ws://5.202.129.160:2083/ws/');
             this.ws.next({ message: this.message });
             this.ws.subscribe(
                 data => {

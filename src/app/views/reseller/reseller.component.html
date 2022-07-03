@@ -193,12 +193,14 @@
                             (completeMethod)="getProvinces($event)" [dropdown]="true" field="text"
                             (onSelect)="get_province_id($event)">
                         </p-autoComplete>
+
                     </span>
                     <br>
                     <br>
                     <span>
                         <p-autoComplete [(ngModel)]="reseller_edit.city" [ngModelOptions]="{standalone: true}" [suggestions]="listCites"
                             (completeMethod)="get_cities_by_province_id()" [dropdown]="true" field="name" dataKey="id" (onSelect)="get_city($event)">
+
                         </p-autoComplete>
                     </span>
                 </div>

@@ -79,6 +79,7 @@
                                     <ng-template #notFoundTemplate let-notFound>
                                         <div [innerHTML]="notFound"></div>
                                     </ng-template>
+
                                 </div>
                                 <div class="col-md-4">
                                     <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
@@ -91,7 +92,8 @@
                                     </ng-template>
                                     <ng-template #notFoundTemplate let-notFound>
                                         <div [innerHTML]="notFound"></div>
-                                    </ng-template>
+
+                                      </ng-template>
                                 </div>
                                 <div class="col-md-4">
                                     <span style="margin-top: 5%;">
@@ -135,7 +137,8 @@
                                         </ng-template>
                                         <ng-template #notFoundTemplate let-notFound>
                                             <div [innerHTML]="notFound"></div>
-                                          </ng-template>
+
+                                        </ng-template>
                                         <p-dropdown [options]="flag" [(ngModel)]="selectfilter" (onChange)="flag_filter($event)" formControlName="subscriber" optionLabel="name" (inputChanged)='onSearch($event)'></p-dropdown>
                                     </span>
                                 </div>

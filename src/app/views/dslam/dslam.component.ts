@@ -82,7 +82,7 @@ export class DslamComponent implements OnInit {
   submitted = false;
   prov_id;
   city_id;
-  is_ldap_login;
+  is_ldap_login : boolean;
   agent_username: string;
   ldap_email: string;
   listDslamType = [];
@@ -90,7 +90,10 @@ export class DslamComponent implements OnInit {
   listConnectionTypes = []
   connection_type_id: number;
   enabled: boolean = true;
-
+  ldap_permissions: any;
+  view_actions: boolean = false;
+  dslam_type_Keyword='name';
+  
   get dslam_name() {
     return this.add_dslam_from.get('dslam_name');
   }
@@ -139,14 +142,26 @@ export class DslamComponent implements OnInit {
     this.displayMaximizable3 = true;
   }
 
+  dslamtype_selectEvent(event){
+    this.dslam_type_id = event.id;
+    this.get_dslam_info(event.id,5)
+  }
+
+  dslamttype_onFocused(event){
+    this.get_dslam_types();
+  }
 
   get_dslam_types(){
     this.dslamSrv.get_dslam_types().then(res=>{
       this.listDslamType = res;
+      console.log('line 1')
+      console.log(this.listDslamType)
     });
   }
 
   get_dslam_type(dslam_type_id){
+    console.log('line 2')
+    console.log(dslam_type_id)
     this.dslam_type_id = dslam_type_id;
   }
 
@@ -209,6 +224,15 @@ export class DslamComponent implements OnInit {
         break;
 
       }
+      case 5: {
+        //statements; 
+        console.log('line 3')
+        console.log(dslam_info)
+        this.search_str = '&search_active=&search_dslam=&search_ip=&search_status=&search_type=' + dslam_info;
+        this.search_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.search_str);
+        break;
+
+      }
     }
 
   }
@@ -217,6 +241,10 @@ export class DslamComponent implements OnInit {
     this.submitted = false;
     this.add_dslam_from.reset();
 }
+
+  dslamtype_onSearch(event){
+
+  }
 
   remove_dslam(dslam_id) {
     this.confirmationService.confirm({
@@ -249,7 +277,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
   }
 
   search_dslams(page, itemsPerPage, search_dslams) {
-    if(this.is_ldap_login == 'false'){
+    if(this.is_ldap_login == false){
       this.dslamSrv.search_dslams_by_username(page, itemsPerPage, search_dslams, this.agent_username, this.is_ldap_login).then(srch_res => {
         this.pagination_config.totalItems = srch_res.count;
         this.listDslams = srch_res.results;
@@ -318,7 +346,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
 
 
   get_all_dslams(page, itemsPerPage) {
-    if(this.is_ldap_login == 'false'){
+    if(this.is_ldap_login == false){
 
       this.get_permission();
       this.get_all_dslams_by_username(page, itemsPerPage,this.agent_username, this.is_ldap_login);
@@ -332,9 +360,16 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
   }
 
   ngOnInit(): void {
-    this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.is_ldap_login = (localStorage.getItem("ldap_login") == 'true');
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
+    this.ldap_permissions = localStorage.getItem('ldap_permissions');
+    if( this.ldap_permissions.includes('Network-Core') || this.ldap_permissions.includes('Network-Access') || this.ldap_permissions.includes('group-network-Access')){
+      this.view_actions = true;
+    }
+    else{
+      this.view_actions = false;
+    }
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
 }
 }
