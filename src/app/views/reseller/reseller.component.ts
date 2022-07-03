@@ -1,12 +1,11 @@
 import { Component, OnInit,ViewEncapsulation  } from '@angular/core';
 import { ResellerService } from '../../../services/reseller.service';
-import {LoginCls} from '../../dtos/login_cls';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
+import { NotificationService } from '../../../services/notification.service';
 import {ConfirmationService} from 'primeng/api';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { porv_city } from '../../dtos/city_dto';
 import { CityService } from '../../../services/city.service';
+import { ErrorHandlerService } from '../../../services/error-handler.service';
 
 @Component({
   selector: 'app-reseller',
@@ -20,8 +19,8 @@ export class ResellerComponent implements OnInit {
     private citySrv: CityService,
     private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder,
-    private jwtHelper: JwtHelperService,
-    private router: Router,
+    private notifySrv : NotificationService,
+    private errorHandler: ErrorHandlerService,
     fb: FormBuilder
     ) {
     this.pagination_config = {
@@ -107,7 +106,6 @@ export class ResellerComponent implements OnInit {
   }
 
   edit_reseller(reseller_id) {
-    console.log(reseller_id)
     this.resellerSrv.edit_reseller(reseller_id).then(res => {
       this.reseller_edit = res;
       this.displayMaximizable_edit = true;
@@ -115,22 +113,24 @@ export class ResellerComponent implements OnInit {
   }
 
   apply_edit_reseller(){
-    let param_str = '{"id":"'+this.reseller_edit.id+'","name":"'+this.reseller_edit.name+'","tel":"'+this.reseller_edit.tel+'","fax":"'+this.reseller_edit.fax+'",\
+    let param_str =   '{"id":"'+this.reseller_edit.id+'","name":"'+this.reseller_edit.name+'","tel":"'+this.reseller_edit.tel+'","fax":"'+this.reseller_edit.fax+'",\
     "address":"'+this.reseller_edit.address+'","city":"'+this.reseller_edit.city_info.id+'","city_info":{"id":"'+this.reseller_edit.city_info.id+'","name":"'+this.reseller_edit.city_info.name+'",\
     "parent":"'+this.reseller_edit.city_info.parent+'","text":"'+this.reseller_edit.city_info.text+'","english_name":"'+this.reseller_edit.city_info.english_name+'","abbr":"'+this.reseller_edit.city_info.abbr+'"},\
     "text":"'+this.reseller_edit.text+'","vpi":"'+this.reseller_edit.vpi+'","vci":"'+this.reseller_edit.vci+'"}';
     this.resellerSrv.apply_edit_reseller(this.reseller_edit.id, param_str).then(res=>{
       this.edit_reseller(this.reseller_edit.id);
       this.get_all_resellers(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
-    });
+    },
+  );
   }
- 
+
   remove_reseller(reseller_id){
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this Reseller?',
       accept: () => {
         this.resellerSrv.remove_reseller(reseller_id).then(res => {
-          // this.reseller_edit = res;
+          this.notifySrv.showSuccess('delete was successfully','delete');
+
           this.get_all_resellers(this.pagination_config.currentPage,10);
         });
       }
@@ -138,28 +138,23 @@ export class ResellerComponent implements OnInit {
   }
 
   getProvinces(event){
-    console.log(event);
     this.citySrv.getProvinces(event.query).then(province => {
       this.listprov = province.results;
     });
   }
   get_province_id(event){
     this.prov_id = event.id;
-
   }
 
   get_cities_by_province_id() {
     this.citySrv.get_city_by_name(this.prov_id).then(city_res => {
       this.listCites = city_res.results;
-      console.log(city_res.results);
     });
   }
 
   get_city(event){
-    console.log(event);
     this.city_text = event.text;
     this.city_id = event.id;
-
   }
   
   get_city_by_id(event){
@@ -179,10 +174,6 @@ export class ResellerComponent implements OnInit {
     this.is_ldap_login = localStorage.getItem("ldap_login");
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
-    if(this.is_ldap_login != 'true'){
-      var loginCls =  new LoginCls(this.jwtHelper,this.router);
-      loginCls.check_login();
-    }
     this.get_all_resellers(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 }

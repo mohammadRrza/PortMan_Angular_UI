@@ -4,6 +4,7 @@ import { environment } from './../environments/environment';
 import { NotificationService } from './notification.service'
 import { JwtHelperService } from "@auth0/angular-jwt";
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -74,54 +75,6 @@ export class UserService {
             .catch(this.handleError);
     }
 
-    get_users(page,itemsPerPage): Promise<any> {
-        return this._http
-            .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-
-    send_reset_password_link(email): Promise<any> {
-        return this._http
-            .post(this.apiURL+'SendResetPasswordLink/', {'email':email},this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-    
-    get_user_permission_profile(permission_profile_id){
-        return this._http
-            .get(this.apiURL2+permission_profile_id+'/objects/', this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-
-    edit_permissions(permission_id): Promise<any> {
-        return this._http
-            .get(this.apiURL+'permission-profile/'+permission_id+'/objects/', this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-    
-    get_user_permission_info(username,page): Promise<any> {
-        return this._http
-            .get(this.apiURL2 + '?username='+username+ '&page='+page, this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-
-    assign_commands_to_user(user_permission_profile_id, user_permission_str): Promise<any> {
-        return this._http
-            .put(this.apiURL+'permission-profile/'+user_permission_profile_id+'/', user_permission_str, this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-
     create_user(form_user_obj){
         return this._http
             .post(this.apiURL, form_user_obj, this.httpOptions)
@@ -155,6 +108,38 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    get_users(page,itemsPerPage): Promise<any> {
+        return this._http
+            .get(this.apiURL + '?page='+page+'&page_size='+itemsPerPage, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    send_reset_password_link(email): Promise<any> {
+        return this._http
+            .post(this.apiURL+'SendResetPasswordLink/', {'email':email},this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+    
+    get_user_permission_profile(permission_profile_id){
+        return this._http
+            .get(this.apiURL2+permission_profile_id+'/objects/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    edit_permissions(permission_id): Promise<any> {
+        return this._http
+            .get(this.apiURL+'permission-profile/'+permission_id+'/objects/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+    
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

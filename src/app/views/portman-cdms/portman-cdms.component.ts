@@ -325,7 +325,6 @@ export class PortmanCdmsComponent implements OnInit {
      this.ldap_permissions = localStorage.getItem('ldap_permissions');
      this.is_ldap_login = localStorage.getItem("ldap_login")
      console.log(this.is_ldap_login);
-
   }
   show_snmp_data(){
     this.snmp_data = {

@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RouterCommandService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'router-command/';
   apiURL2 = environment.APIEndpoint + 'router/';
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,private _router: Router) { }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,13 +21,16 @@ export class RouterCommandService {
     })
 };
 
-
+login = new LoginCls(this._router);
 router_run_command(Router_dto): Promise<any> {
   return this._http
     .post(this.apiURL2+'router_run_command/', Router_dto, this.httpOptions)
     .toPromise()
     .then(res => res)
-    .catch(this.handleError);
+    .catch(err=>{
+      this.handleError;
+      this.login.check_login(err)
+  });
 }
 private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 
@@ -39,9 +42,9 @@ private handleError(error: any): Promise<any> {
       .get(this.apiURL + "?router_type_id="+router_type_id+"&limit_row="+limit_row, this.httpOptions)
       .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        this.login.check_login(err)
+    });
   }
-
-
-
 }

@@ -25,6 +25,9 @@ export class RoutersComponent implements OnInit {
   pagination_config;
   router_backup_errors = [];
   view_backup_error_file:boolean = false;
+  is_ldap_login;
+  agent_username: string;
+  ldap_email: string;
   paginate(event) {
     this.pagination_config.currentPage = event.page + 1;
     this.pagination_config.itemsPerPage = event.rows;
@@ -68,11 +71,9 @@ export class RoutersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))) {
-      this.router.navigate(['/login']);
-    } else {
-      console.log("token not expired"); 
-    }
+    this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
+    this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
     this.get_all_routers(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 }

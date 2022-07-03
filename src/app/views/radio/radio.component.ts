@@ -16,7 +16,9 @@ export class RadioComponent implements OnInit {
       totalItems: 0
     }; 
   }
-
+  is_ldap_login;
+  agent_username: string;
+  ldap_email: string;
   radios = [];
   pagination_config;
   radio_backup_errors = [];
@@ -70,6 +72,9 @@ export class RadioComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.is_ldap_login = localStorage.getItem("ldap_login");
+    this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
+    this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
     this.get_all_radios(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 

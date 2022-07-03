@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ContactService {
-
-  //apiURL = environment.APIEndpoint+'api/v1/repository/';
   apiURL = environment.APIEndpoint + 'contact/';
   apiURL2 = environment.APIEndpoint + 'farzanegan_data/';
-  constructor(private _http: HttpClient) { }
-  //token = localStorage.getItem('access_token');
+  constructor(private _http: HttpClient,private _router: Router) { }
   token = localStorage.getItem('access_token');
   httpOptions = {
     headers: new HttpHeaders({
@@ -31,7 +30,12 @@ private handleError(error: any): Promise<any> {
     .get(this.apiURL + "portmap/?page="+page+"&page_size="+itemsPerPage+'&telecom_id='+telecom_id+'&port_status_id='+port_status_id, this.httpOptions)
     .toPromise()
       .then(res => res)
-      .catch(this.handleError);
+      .catch(err=>{
+        this.handleError;
+        if(err.status === 401){
+          this._router.navigate(['/login']);
+        }
+      });
   }
 
   search_orders(page,itemsPerPage,searchStr): Promise<any> {
