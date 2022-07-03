@@ -168,7 +168,8 @@
                             <td class="text-center">{{vlan.vlan_name}}</td>
                             <td class="text-center">{{vlan.ports_count}}</td>
                             <td class="text-center">{{vlan.dslam_count}}</td>
-                            <td class="text-center">{{vlan.reseller}}</td>
+                            <td class="text-center" *ngIf="vlan.reseller_info">{{vlan.reseller_info.name}}</td>
+                            <td class="text-center" *ngIf="!vlan.reseller_info"></td>
                             <td class="text-center">
                                 <div class="col-md-12" style="padding-left: 40%">
                                     <div class="row">

@@ -11,10 +11,10 @@
                         pTooltip="Add Permission" tooltipPosition="left" (click)="show_add_Permission()"></i>
                 </span>
             </div>
+<!-- Search --------------------------------------------------------------------------------------------------------->
             <div>
                 <p-fieldset   [toggleable]="true" [collapsed]="true"  [transitionOptions]="'200ms'">               
                   <p-header>Search</p-header>
-<<<<<<< Updated upstream
                 <p-table styleClass="p-datatable-striped" #dt1 [value]="listDslams" selectionMode="single" >
                   <ng-template pTemplate="header">
                     <tr class="row-accessories border" style="margin: 10px;" >
@@ -26,18 +26,6 @@
                     </tr>
                   </ng-template>
                 </p-table>
-=======
-
-                  <p-table styleClass="p-datatable-striped" #dt1 [value]="users" selectionMode="single" >
-                    <ng-template pTemplate="header">
-                      <tr class="row-accessories">
-                        <th>
-                            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'username', 'contains')" [value]="dt1.filters['username']?.value" placeholder="Search by Username" class="p-column-filter">
-                        </th>
-                      </tr>
-                    </ng-template>
-                  </p-table>
->>>>>>> Stashed changes
                 </p-fieldset>
               </div>
             <div class="card-body" class="border" style="margin: 10px;">
@@ -103,8 +91,103 @@
         </div>
     </div>
 </div>
+<!-- End ------------------------------------------------------------------------------------------------>
+<!-- Add new user permission ---------------------------------------------------------------------------->
+<p-dialog header="Add New User Permission" [(visible)]="displayMaximizable_add" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">
+    <div class="border-info" style="padding: 10px;">
+        <form [formGroup]="add_form" #f="ngForm" (ngSubmit)="apply_add_Permission(this.add_form)">
+        <div class="row">
 
+          <!-- User ----------------------------------------------------------------------->
+          <div  class="col-md-6">
+            <ng-autocomplete [data]="usersearchs" [searchKeyword]="user_keyword" placeHolder="User"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_users($event,1)'
+                        (inputFocused)='onFocused_users($event,1)' historyIdentifier="usersearchs" [itemTemplate]="userTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="user">
+            </ng-autocomplete>
+            <ng-template #userTemplate let-usersearch>
+                <a [innerHTML]="usersearch.username"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+          <br>
+          <!-- Dslam  ---------------------------------------------------------------------------->
+          
+            <ng-autocomplete [data]="dslamsearchs" [searchKeyword]="dslam_keyword" placeHolder="Dslams"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_dslam($event,2)'
+                        (inputFocused)='onFocused_dslam($event,2)' historyIdentifier="dslamsearchs" [itemTemplate]="dslsamTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="object">
+            </ng-autocomplete>
+            <ng-template #dslsamTemplate let-dslamsearch>
+                <a [innerHTML]="dslamsearch.search_name"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+          <br>
+          <!-- Command  ---------------------------------------------------------------------------->
+          
+            <ng-autocomplete [data]="commandsearchs" [searchKeyword]="command_keyword" placeHolder="Commands"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_commands($event,2)'
+                        (inputFocused)='onFocused_commands($event,2)' historyIdentifier="commandsearchs" [itemTemplate]="commandTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="object">
+            </ng-autocomplete>
+            <ng-template #commandTemplate let-commandsearch>
+                <a [innerHTML]="commandsearch.text"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+          </div>
+          <br>
+          <!-- Permission profile  ----------------------------------------------------------------->
+          <div  class="col-md-6">
+            <ng-autocomplete [data]="permissionsearchs" [searchKeyword]="permission_keyword" placeHolder="Permission Profile"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_profile($event,2)'
+                        (inputFocused)='onFocused_profile($event,2)' historyIdentifier="permissionsearchs" [itemTemplate]="PermissionTemplate"
+                        [notFoundTemplate]="notFoundTemplate" formControlName="permission_profile">
+            </ng-autocomplete>
+            <ng-template #PermissionTemplate let-permissionsearch>
+                <a [innerHTML]="permissionsearch.name"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+          <br>
+          <!-- Action  ---------------------------------------------------------------------------->
+          
+            <span class="p-float-label" style="margin-top: 20px;">
+              <span>
+                <p-dropdown [options]="action" [(ngModel)]="selectfilter"
+                formControlName="action" optionLabel="name" placeholder="Action"></p-dropdown>
+              </span>
+          </span>
+          
+          <br>
+          <!-- Active  ---------------------------------------------------------------------------->
+          
+            <span>
+              <div class="p-field-checkbox">
+                <p-checkbox binary="true" inputId="binary" label="Active" [formControl]="add_form.controls['is_active']"></p-checkbox>
+                <label for="binary"></label>
 
+              </div>
+            </span>
+          <br>
+              <span style="margin-top: 5%;">
+                  <button pButton type="submit" label="Submit"></button>
+              </span>
+          </div>
+      </div>
+          <ng-template pTemplate="footer">
+          </ng-template>
+        </form>
+      </div>
+</p-dialog>
+
+<!-- End ------------------------------------------------------------------------------------------------>
 <p-dialog header="Dslam Permission Profile" [(visible)]="view_user_dslam_permission_profile" [modal]="true" [style]="{width: '50vw', height: '100vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="true">
   <div class="border-info">
@@ -161,16 +244,6 @@
                   <span style="text-align: center;">Add Commands</span>
           </button> 
         </div>
-        <!-- <hr>
-        <hr>
-
-        <div style="height: 200px;">
-          <p-multiSelect [options]="command_permissions" [style]="{'width': '100%'}" [(ngModel)]="selected_commandPermissions" (onChange)="onChange($event)" optionLabel="object_name" display="chip"></p-multiSelect>
-          <div *ngFor="let user_permission of user_permissions;" style="float: left; margin: 2px;">
-            <button *ngIf="user_permission.model_type=='command'" aria-pressed="true" class="btn btn-block btn-outline-primary active card" type="button"
-            (click)="getTemperature(slot.card_number)">{{user_permission.object_name}}</button> 
-           </div>
-        </div> -->
       </div>
     </div>
   </div>

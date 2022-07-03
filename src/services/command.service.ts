@@ -81,4 +81,12 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  search_commands(command_obj){
+    return this._http
+      .get(this.apiURL+'?command_name='+command_obj, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
 }

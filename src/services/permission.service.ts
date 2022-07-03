@@ -31,6 +31,14 @@ export class PermissionService {
             .catch(this.handleError);
     }
 
+    search_profile(name_obj){
+        return this._http
+            .get(this.apiURL + "?search_name=" + name_obj , this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
     delete_permission_profile(permission_profile_id){
         return this._http
             .post(this.apiURL2+'delete_permission_profile/', {'permission_profile_id': permission_profile_id} , this.httpOptions)

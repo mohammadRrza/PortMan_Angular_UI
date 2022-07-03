@@ -105,6 +105,14 @@ export class UserService {
             .then(res => res)
             .catch(this.handleError);
     }
+
+    add_permissions(permission_obj): Promise<any> {
+        return this._http
+            .post(this.apiURL+'permission-profile/'+permission_obj, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
     
     get_user_permission_info(username,page): Promise<any> {
         return this._http
@@ -153,6 +161,14 @@ export class UserService {
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
+    }
+
+    search_users(user_obj){
+        return this._http
+          .get(this.apiURL +"?username="+user_obj, this.httpOptions)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
     }
 
     private handleError(error: HttpErrorResponse): Promise<any> {

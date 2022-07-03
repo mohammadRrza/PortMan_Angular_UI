@@ -40,8 +40,6 @@ export class AccessProfileComponent implements OnInit {
     this.edit_profile_dialog = true;
   }
 
-
-
   remove_Profile(permission_profile_id){
     this.confirmationsrv.confirm({
       message: 'Are you sure that you want to delete this Profile?',

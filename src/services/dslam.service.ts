@@ -211,6 +211,23 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
+  get_dslam_names_search(dslam_object_name){
+    return this._http
+      // .get(this.apiURL+'get_dslam_names/?dslam_name='+dslam_object_name+'&exclude_dslam_id='+dslam_id, this.httpOptions)
+      .get(this.apiURL+'get_dslam_names/?dslam_name='+dslam_object_name, this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
+  get_dslam_names(){
+    return this._http
+      .get(this.apiURL+'get_dslam_names/', this.httpOptions)
+      .toPromise()
+      .then(res => res)
+      .catch(this.handleError);
+  }
+
   register_ngn_number(ngn_command_str):Promise<any> {
     console.log(ngn_command_str);
     return this._http
