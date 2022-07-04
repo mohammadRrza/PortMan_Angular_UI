@@ -78,7 +78,7 @@
                                        <img src="\assets\img\brand\edit_icon.png" (click)="edit_permissions(permission.id, permission.user, permission.permission_profile, permission.id)" width="20"
                                       pTooltip="Edit Permission" tooltipPosition="top" style="cursor: pointer;margin: 5px;" />
                                     <img src="\assets\img\brand\remove_icon.png" width="20" pTooltip="Remove Permission"
-                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Permission(Permission.id)" />
+                                      tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="remove_Permission(permission.id)" />
                                   </div>
                                 </div>
                               </td>
@@ -92,6 +92,15 @@
     </div>
 </div>
 <!-- End ------------------------------------------------------------------------------------------------>
+
+<!-- Delete --------------------------------------------------------------------------------------------->
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="position: absolute; z-index: 1000; margin-top: 15%;margin-left: 45%;">
+  </div>
+
+<!-- End ------------------------------------------------------------------------------------------------>
+
 <!-- Add new user permission ---------------------------------------------------------------------------->
 <p-dialog header="Add New User Permission" [(visible)]="displayMaximizable_add" [modal]="true" [style]="{width: '50vw'}"
   [maximizable]="true" [baseZIndex]="10001" [draggable]="false" [resizable]="false">

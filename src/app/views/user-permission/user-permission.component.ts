@@ -21,7 +21,7 @@ export class UserPermissionComponent implements OnInit {
     private dslamSrv : DslamService,
     private commandSrv: CommandService,
     private permissionService : PermissionService,
-    private confirmationService: CommandService,
+    private confirmationService: ConfirmationService,
     fb: FormBuilder
     ) { 
       this.is_active = [
@@ -180,17 +180,16 @@ show_add_Permission(){
     })
   }
 
-  // remove_Permission(permission_id){
-  //   this.confirmationService.confirm({
-  //     message: 'Are you sure that you want to delete this Vlan?',
-  //     accept: () => {
-  //       this.usrSrv.remove_vlan(vlan_id).then(res => {
-  //         this.vlan_edit = res;
-  //         this.get_all_vlan(this.pagination_config.currentPage,10);
-  //       });
-  //     }
-  // });
-  // }
+  remove_Permission(permission_id){
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this Permission?',
+      accept: () => {
+        this.usrSrv.remove_user(permission_id).then(res => {
+          this.get_users_permission(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
+        });
+      }
+  });
+  }
 
   get_user_permission_profile(permission_profile_id, model_type){
     this.usrSrv.get_user_permission_profile(permission_profile_id).then(res => {
