@@ -126,7 +126,7 @@ export class UserService {
 
     remove_user(user_id):Promise<any>{
         return this._http
-            .delete(this.apiURL + user_id +'/', this.httpOptions)
+            .delete(this.apiURL +'permission-profile/'+ user_id , this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -151,14 +151,6 @@ export class UserService {
     get_user_permission_profile(permission_profile_id){
         return this._http
             .get(this.apiURL2+permission_profile_id+'/objects/', this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
-    }
-
-    edit_permissions(permission_id): Promise<any> {
-        return this._http
-            .get(this.apiURL+'permission-profile/'+permission_id+'/objects/', this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
