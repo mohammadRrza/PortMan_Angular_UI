@@ -108,7 +108,7 @@ export class UserService {
 
     add_permissions(permission_obj): Promise<any> {
         return this._http
-            .post(this.apiURL+'permission-profile/'+permission_obj, this.httpOptions)
+            .post(this.apiURL2,permission_obj, this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);

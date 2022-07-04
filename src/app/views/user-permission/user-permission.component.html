@@ -114,32 +114,17 @@
             </ng-template>
           <br>
           <!-- Dslam  ---------------------------------------------------------------------------->
-          
-            <ng-autocomplete [data]="dslamsearchs" [searchKeyword]="dslam_keyword" placeHolder="Dslams"
-                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_dslam($event,2)'
-                        (inputFocused)='onFocused_dslam($event,2)' historyIdentifier="dslamsearchs" [itemTemplate]="dslsamTemplate"
-                        [notFoundTemplate]="notFoundTemplate" formControlName="object">
-            </ng-autocomplete>
-            <ng-template #dslsamTemplate let-dslamsearch>
-                <a [innerHTML]="dslamsearch.search_name"></a>
-            </ng-template>
-            <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
+          <br>
+          <p-multiSelect [options]="dslams" [style]="{'width': '100%'}" placeholder="Dslam"
+          formControlName="objects" (onPanelShow)="get_dslams_name()" 
+          (onChange)="assign_dslams_to_user($event)" 
+          optionLabel="search_name" display="chip"></p-multiSelect>
           <br>
           <!-- Command  ---------------------------------------------------------------------------->
           
-            <ng-autocomplete [data]="commandsearchs" [searchKeyword]="command_keyword" placeHolder="Commands"
-                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch_commands($event,2)'
-                        (inputFocused)='onFocused_commands($event,2)' historyIdentifier="commandsearchs" [itemTemplate]="commandTemplate"
-                        [notFoundTemplate]="notFoundTemplate" formControlName="object">
-            </ng-autocomplete>
-            <ng-template #commandTemplate let-commandsearch>
-                <a [innerHTML]="commandsearch.text"></a>
-            </ng-template>
-            <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
+          <p-multiSelect [options]="commands" formControlName="objects" [style]="{'width': '100%'}"
+          optionLabel="name" display="chip" (onPanelShow)="get_all_commands()" placeholder="Command"
+         (onChange)="assign_commands_to_user($event)"></p-multiSelect>
           </div>
           <br>
           <!-- Permission profile  ----------------------------------------------------------------->

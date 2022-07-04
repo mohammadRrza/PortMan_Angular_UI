@@ -29,12 +29,12 @@ export class UserPermissionComponent implements OnInit {
         {bool: false},
       ];
       this.action = [
-        {name : 'Allow'},
-        {name : 'Deny'},
+        {name : 'allow'},
+        {name : 'deny'},
       ];
       this.add_form = fb.group({
         action : new FormControl("", Validators.required),
-        object : new FormControl("", Validators.required),
+        objects : new FormControl("", Validators.required),
         is_active : new FormControl("", Validators.required),
         permission_profile : new FormControl("", Validators.required),
         user : new FormControl("", Validators.required),
@@ -72,6 +72,7 @@ export class UserPermissionComponent implements OnInit {
   user_permissions_edit = [];
   user_permission_add = [];
   commands = [];
+  dslams = [];
   user_id :number;
   permission_profile: number;
   user_permission_profile_id: number;
@@ -86,9 +87,10 @@ export class UserPermissionComponent implements OnInit {
   dslamsearchs = [];
   commandsearchs = [];
   permissionsearchs = [];
-  permission_profile_id : number;
-  user_profile_id : number;
-  action_name : string;
+  dslam_ids = [];
+  command_id = [];
+  dslam_dict = {};
+  command_dict = {};
   
 
 
@@ -106,15 +108,12 @@ export class UserPermissionComponent implements OnInit {
   }
 
   selectEvent(item){
-    console.log(item)
   }
 
   onChangeSearch_users(event){
     this.usrSrv.search_users(event).then(res=>{
       this.usersearchs =  res.results;
       this.pagination_config.totalItems = res.count;
-      console.log(this.usersearchs)
-
     });
   }
 
@@ -124,10 +123,8 @@ onFocused_users(event){
 
 onChangeSearch_dslam(event){
   this.dslamSrv.get_dslam_names_search(event).then(res=>{
-    console.log(res.result)
     this.dslamsearchs =  res.result;
     this.pagination_config.totalItems = res.count;
-    console.log(this.dslamsearchs)
 
   });
 }
@@ -138,7 +135,6 @@ onFocused_dslam(event){
 
 onChangeSearch_commands(event){
   this.commandSrv.search_commands(event).then(res=>{
-    console.log(res)
     this.commandsearchs =  res;
   });
 }
@@ -148,18 +144,12 @@ this.get_all_commands()
 }
 
 onChangeSearch_profile(event){
-  console.log('line 2')
-  console.log(event)
   this.permissionService.search_profile(event).then(res=>{
-    console.log(res.results)
     this.permissionsearchs =  res.results;
-    console.log(this.permissionsearchs)
   });
 }
 
 onFocused_profile(event){
-console.log('line 3')
-console.log(event)
 this.permissionService.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage)
 }
 
@@ -176,10 +166,14 @@ show_add_Permission(){
 
   apply_add_Permission(form_permission_obj){
     console.log(form_permission_obj.value)
-    this.permission_profile_id = form_permission_obj.value.permission_profile.id
-    this.user_profile_id = form_permission_obj.value.user.id
-    this.action_name = form_permission_obj.value.action.name
-    console.log(form_permission_obj.value)
+    form_permission_obj.value.permission_profile = form_permission_obj.value.permission_profile.id;
+    form_permission_obj.value.user = form_permission_obj.value.user.id;
+    form_permission_obj.value.action = form_permission_obj.value.action.name;
+    form_permission_obj.value.is_active = form_permission_obj.value.is_active.toString();
+    form_permission_obj.value.objects = [this.command_dict,this.dslam_dict];
+    console.log(form_permission_obj.value);
+    console.log(JSON.stringify(form_permission_obj.value));
+
     this.usrSrv.add_permissions(JSON.stringify(form_permission_obj.value)).then(res => {
       this.user_permission_add = res;
       this.get_users_permission(this.pagination_config.currentPage,this.pagination_config.itemsPerPage);
@@ -263,26 +257,32 @@ show_add_Permission(){
   }
 
   get_dslams_name(){
-    this.dslamSrv.get_dslam_names().then(res=>{
-      this.users =  res.results;
-      this.pagination_config.totalItems = res.count;
+    this.dslamSrv.get_dslam_names(10).then(res=>{
+      this.dslams =  res.result;
     });
+  }
+
+  assign_dslams_to_user(event){
+    let obj = event.value
+    this.dslam_ids = [];
+    obj.forEach(element =>{
+      this.dslam_ids.push(element.id);
+    });
+    this.dslam_dict['id'] = this.dslam_ids
+    this.dslam_dict['type'] = 'dslam'
+    console.log(this.dslam_dict)
   }
   
   assign_commands_to_user(event){
-    // console.log(event);
-    // console.log(this.user_id);
-    // console.log(this.permission_profile);
-    // console.log(this.user_permission_profile_id);
+    let obj = event.value
     this.command_ids = [];
-    event.forEach(element =>{
+    obj.forEach(element =>{
+      console.log(element)
       this.command_ids.push(element.id);
-      // console.log(this.command_ids);
-
     });
-    let user_permission_str = '{"user":'+this.user_id+',"action":"allow","is_active":true,"permission_profile":'+this.user_id+',"id":'+this.user_id+',"objects":[{"type":"dslam","id":[]},{"type":"command","id":['+this.command_ids+']}]}';
-    console.log(user_permission_str);
-
+    this.command_dict['id'] = this.command_ids
+    this.command_dict['type'] = 'command'
+    console.log(this.command_dict)
   }
 
   ngOnInit(): void {

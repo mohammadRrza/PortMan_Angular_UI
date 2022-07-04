@@ -220,9 +220,9 @@ private handleError(error: any): Promise<any> {
       .catch(this.handleError);
   }
 
-  get_dslam_names(){
+  get_dslam_names(page_size){
     return this._http
-      .get(this.apiURL+'get_dslam_names/', this.httpOptions)
+      .get(this.apiURL+'get_dslam_names/?page_size='+page_size, this.httpOptions)
       .toPromise()
       .then(res => res)
       .catch(this.handleError);
