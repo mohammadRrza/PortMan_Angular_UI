@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
-import { NotificationService } from './notification.service'
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
+
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +15,7 @@ export class PermissionService {
     apiURL2 = environment.APIEndpoint + 'permission-profile/';
     token = localStorage.getItem('access_token');
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService) {
+    constructor(private _http: HttpClient, private notSrv: NotificationService,private _router: Router) {
     }
 
     httpOptions = {
@@ -22,13 +25,16 @@ export class PermissionService {
 
         })
     };
-
+    login = new LoginCls(this._router);
     get_permissions_profiles(page,page_size): Promise<any> {
         return this._http
             .get(this.apiURL + "?page=" + page , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     search_profile(name_obj){
@@ -44,7 +50,10 @@ export class PermissionService {
             .post(this.apiURL2+'delete_permission_profile/', {'permission_profile_id': permission_profile_id} , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     private handleError(error: any): Promise<any> {

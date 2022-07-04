@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../environments/environment';
-import { NotificationService } from './notification.service'
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
+import {LoginCls} from './../app/dtos/login_cls';
+
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +14,7 @@ export class PishgamanNoteService {
     apiURL = environment.APIEndpoint + 'pishgaman-note/';
     token = localStorage.getItem('access_token');
 
-    constructor(private _http: HttpClient, private notSrv: NotificationService) {
+    constructor(private _http: HttpClient, private notSrv: NotificationService,private _router: Router) {
     }
 
     httpOptions = {
@@ -20,7 +23,7 @@ export class PishgamanNoteService {
             'Authorization': 'Token ' + this.token
         })
     };
-
+    login = new LoginCls(this._router);
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
@@ -31,7 +34,10 @@ export class PishgamanNoteService {
             .get(this.apiURL+'?page='+currentPage+'&page_size='+itemsPerPage , this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     save_note(note_obj): Promise<any> {
@@ -39,7 +45,10 @@ export class PishgamanNoteService {
             .post(this.apiURL+'save-note/', note_obj, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
     get_note_by_id(note_id): Promise<any> {
@@ -47,7 +56,10 @@ export class PishgamanNoteService {
             .get(this.apiURL+'?note_id='+note_id, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
 
@@ -56,7 +68,10 @@ export class PishgamanNoteService {
             .post(this.apiURL+'save-note/', note_id, this.httpOptions)
             .toPromise()
             .then(res => res)
-            .catch(this.handleError);
+            .catch(err=>{
+                this.handleError;
+                this.login.check_login(err)
+            });
     }
 
 }

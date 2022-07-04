@@ -78,7 +78,8 @@
                                     </ng-template>
                                     <ng-template #notFoundTemplate let-notFound>
                                         <div [innerHTML]="notFound"></div>
-                                      </ng-template>
+                                    </ng-template>
+
                                 </div>
                                 <div class="col-md-4">
                                     <ng-autocomplete [data]="listResellers" [searchKeyword]="reseller_keyword" placeHolder="Resseler"
@@ -91,6 +92,7 @@
                                     </ng-template>
                                     <ng-template #notFoundTemplate let-notFound>
                                         <div [innerHTML]="notFound"></div>
+
                                       </ng-template>
                                 </div>
                                 <div class="col-md-4">
@@ -111,7 +113,7 @@
                         <form [formGroup]="assigne_form_subs" #f="ngForm" (ngSubmit)="assign_vlan_to_subscriber(this.assigne_form)">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <p-dropdown [options]="filters" [(ngModel)]="selectfilter" (onChange)="get_filter($event)" formControlName="subscriber" optionLabel="name" (inputChanged)='onSearch()'></p-dropdown>
+                                    <p-dropdown [options]="filters" [(ngModel)]="selectfilter" (onChange)="get_filter($event)" formControlName="subscriber" optionLabel="name"></p-dropdown>
                                 </div>
                                 <div class="col-md-4">
                                     <ng-autocomplete [data]="vlans" [searchKeyword]="vlan_keyword" placeHolder="Vlan Name"
@@ -135,6 +137,7 @@
                                         </ng-template>
                                         <ng-template #notFoundTemplate let-notFound>
                                             <div [innerHTML]="notFound"></div>
+
                                         </ng-template>
                                         <p-dropdown [options]="flag" [(ngModel)]="selectfilter" (onChange)="flag_filter($event)" formControlName="subscriber" optionLabel="name" (inputChanged)='onSearch($event)'></p-dropdown>
                                     </span>

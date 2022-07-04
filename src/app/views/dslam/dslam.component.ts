@@ -3,14 +3,11 @@ import { DslamService } from '../../../services/dslam.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { CityService } from '../../../services/city.service';
 import { TelecomCenterService } from '../../../services/telecom-center.service';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import { UserService } from '../../../services/user.service';
 import { porv_city, ci_city, telecoms } from '../../dtos/city_dto';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {ConfirmationService} from 'primeng/api';
 import { navItems } from '../../_nav';
-import { Router } from '@angular/router';
-import {LoginCls} from '../../dtos/login_cls';
 
 @Component({
   selector: 'app-dslam',
@@ -24,7 +21,7 @@ export class DslamComponent implements OnInit {
 
 
 
-  constructor(private router: Router,
+  constructor(
     private dslamSrv: DslamService,
     private confirmationService: ConfirmationService,
     private primengConfig: PrimeNGConfig,
@@ -32,7 +29,6 @@ export class DslamComponent implements OnInit {
     private usrSrv: UserService,
     private telecomSrv:TelecomCenterService,
     private formBuilder: FormBuilder,
-    private jwtHelper: JwtHelperService
   ) {
     this.add_dslam_from = this.formBuilder.group({
       dslam_name : new FormControl("", Validators.required),
@@ -178,7 +174,8 @@ export class DslamComponent implements OnInit {
     let dslam_param = this.add_dslam_from.value;
     let paramstr = '{"name":"'+dslam_param.dslam_name+'","telecom_center":'+dslam_param.telecom.id+',"dslam_type":'+this.dslam_type_id+',"ip":"'+dslam_param.ip+'","enabled":'+this.enabled+',"status":"new","conn_type":'+this.connection_type_id+',"get_snmp_community":"'+dslam_param.get_snmp_community+'","set_snmp_community":"'+dslam_param.set_snmp_community+'","telnet_username":"'+dslam_param.telnet_username+'","telnet_password":"'+dslam_param.telnet_password+'","snmp_port":"'+dslam_param.snmp_port+'","snmp_timeout":"'+dslam_param.snmp_timeout+'","fqdn":"'+dslam_param.fqdn+'"}';
     this.dslamSrv.apply_add_dslam(paramstr).then(res=>{
-      this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+        console.log(res)
+        this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     });
   }
   paginate(event) {
@@ -335,8 +332,8 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     "telnet_password":"'+this.dslam_edit.telnet_password+'","snmp_port":'+this.dslam_edit.snmp_port+',\
     "snmp_timeout":'+this.dslam_edit.snmp_timeout+',"fqdn":"'+this.dslam_edit.fqdn+'","pishgaman_vlan":"'+this.dslam_edit.pishgaman_vlan+'","pishgaman_vpi":"'+this.dslam_edit.pishgaman_vpi+'","pishgaman_vci":"'+this.dslam_edit.pishgaman_vci+'"}';
     this.dslamSrv.apply_edit_dslam(this.dslam_edit.id, param_str).then(res=>{
-      this.edit_dslam(this.dslam_edit.id);
-      this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+        this.edit_dslam(this.dslam_edit.id);
+        this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
     });
   }
   
@@ -362,16 +359,7 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     }
   }
 
-  
-
   ngOnInit(): void {
-    // let loggedIn = localStorage.getItem('loggedin');
-    // if(!Boolean(loggedIn) || this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'))){
-    //   this.router.navigate(['/login']);
-    //   return;
-    // }else {
-    //   console.log("token not expired"); 
-    // }
     this.is_ldap_login = (localStorage.getItem("ldap_login") == 'true');
     this.agent_username = localStorage.getItem("username")?localStorage.getItem("username"):'';
     this.ldap_email = localStorage.getItem("ldap_email")?localStorage.getItem("ldap_email").toLowerCase():'';
@@ -382,17 +370,6 @@ get_all_dslams_by_username(page, itemsPerPage, username, ldap_login) {
     else{
       this.view_actions = false;
     }
-    if(this.is_ldap_login != true){
-          var loginCls =  new LoginCls(this.jwtHelper,this.router);
-          loginCls.check_login();
-    }
-    console.log('view_actions');
-
-    console.log(this.view_actions);
-
-    console.log('is_ldap_login');
-
-    console.log(this.is_ldap_login);
     this.get_all_dslams(this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
 }
 }
