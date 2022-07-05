@@ -35,7 +35,7 @@ httpOptions = {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        this.login.check_login(err)
+        this.login.check_login(err);
     });
   }
 
@@ -46,7 +46,7 @@ httpOptions = {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        this.login.check_login(err)
+        this.login.check_login(err);
     });
   }
   getProvinces(city_name): Promise<any> {
@@ -56,7 +56,7 @@ httpOptions = {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        this.login.check_login(err)
+        this.login.check_login(err);
     });
   }
   get_city_by_name(parent_id): Promise<any> {
@@ -66,7 +66,7 @@ httpOptions = {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        this.login.check_login(err)
+        this.login.check_login(err);
     });
   }
   get_city_by_id(parent_id, city_srch): Promise<any> {
@@ -76,7 +76,7 @@ httpOptions = {
       .then(res => res)
       .catch(err=>{
         this.handleError;
-        this.login.check_login(err)
+        this.login.check_login(err);
     });
   }
 }
