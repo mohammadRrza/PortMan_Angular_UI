@@ -91,6 +91,30 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    edit_permissions(permission_id): Promise<any> {
+        return this._http
+            .get(this.apiURL+'permission-profile/'+permission_id+'/objects/', this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+
+    add_permissions(permission_obj): Promise<any> {
+        return this._http
+            .post(this.apiURL2,permission_obj, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+    
+    get_user_permission_info(username,page): Promise<any> {
+        return this._http
+            .get(this.apiURL2 + '?username='+username+ '&page='+page, this.httpOptions)
+            .toPromise()
+            .then(res => res)
+            .catch(this.handleError);
+    }
+    
     apply_edit_user(user_id, paramstr):Promise<any>{
         let param_obj = JSON.parse(paramstr);
         return this._http
@@ -102,7 +126,7 @@ export class UserService {
 
     remove_user(user_id):Promise<any>{
         return this._http
-            .delete(this.apiURL + user_id +'/', this.httpOptions)
+            .delete(this.apiURL +'permission-profile/'+ user_id , this.httpOptions)
             .toPromise()
             .then(res => res)
             .catch(this.handleError);
@@ -132,14 +156,15 @@ export class UserService {
             .catch(this.handleError);
     }
 
-    edit_permissions(permission_id): Promise<any> {
+    search_users(user_obj){
         return this._http
-            .get(this.apiURL+'permission-profile/'+permission_id+'/objects/', this.httpOptions)
-            .toPromise()
-            .then(res => res)
-            .catch(this.handleError);
+          .get(this.apiURL +"?username="+user_obj, this.httpOptions)
+          .toPromise()
+          .then(res => res)
+          .catch(this.handleError);
     }
-    
+
+
     private handleError(error: HttpErrorResponse): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
