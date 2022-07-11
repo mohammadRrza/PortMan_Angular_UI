@@ -359,17 +359,33 @@ export class DslamOperationComponent implements OnInit {
     if (type == "1") {
       this.slot_count = count;
       console.log(count);
-
+      console.log(this.S_number)
+      console.log(this.P_number)
+      if(this.S_number && this.P_number){
+        this.dslamSrv.search_port(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id, this.S_number, this.P_number).then(res => {
+          if(res){
+            this.pagination_config.totalItems = res.count;
+          this.listDslamPorts = res.results;
+          }
+        });
+      } 
     }
 
 
     if (type == "2") {
       this.port_count = count;
       console.log(count);
-      this.dslamSrv.search_port(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id, this.S_number, this.P_number).then(res => {
-        this.pagination_config.totalItems = res.count;
-        this.listDslamPorts = res.results;
-      });
+      console.log(this.S_number)
+      console.log(this.P_number)
+      if(this.S_number && this.P_number){
+        this.dslamSrv.search_port(this.pagination_config.currentPage, this.pagination_config.itemsPerPage, this.dslam_id, this.S_number, this.P_number).then(res => {
+          if(res){
+            this.pagination_config.totalItems = res.count;
+          this.listDslamPorts = res.results;
+          }
+        });
+      } 
+      
     }
   }
 
