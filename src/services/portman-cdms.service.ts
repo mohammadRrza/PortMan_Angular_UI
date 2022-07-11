@@ -15,7 +15,8 @@ export class PortManCDMSService {
     apiURL2 = environment.APIEndpoint + 'users/';
     apiURL3 = environment.APIEndpoint + 'user/';
     apiURL4 = environment.APIEndpoint + 'dslamport/';
-    apiURL5 = environment.APIEndpoint + 'dslam/';
+    apiURL5 = environment.APIEndpoint + 'portman-commands-log/';
+    apiURL6 = environment.APIEndpoint + 'portman-commands-log/';
 
     token = localStorage.getItem('access_token');
 
@@ -124,6 +125,16 @@ ping_dslam(ping_str): Promise<any> {
 port_register(port_config_str): Promise<any> {
     return this._http
         .post(this.apiURL4+'register-port/', port_config_str, this.httpOptions)
+        .toPromise()
+        .then(res => res)
+        .catch(err=>{
+            this.handleError;
+            this.login.check_login(err)
+        });
+    }
+get_command_history(username, page, page_size): Promise<any> {
+    return this._http
+        .get(this.apiURL6+'?page='+page+'&page_size='+page_size+'&username='+username, this.httpOptions)
         .toPromise()
         .then(res => res)
         .catch(err=>{

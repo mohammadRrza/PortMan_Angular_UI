@@ -22,7 +22,11 @@ export class PortmanCdmsComponent implements OnInit {
               private router: Router,
               private messageSrv: MessageService
               ) {
-                
+                this.pagination_config = {
+                  itemsPerPage: 10,
+                  currentPage: 1,
+                  totalItems: 0
+                };
                }
 
   username:string = '';
@@ -63,6 +67,7 @@ export class PortmanCdmsComponent implements OnInit {
   custom_port: number;
   port_register_res: any;
   view_live_user_port:boolean = false;
+  view_run_command_details_dialog:boolean = false;
   snmp_data: any;
   snmp_port_status_res: any;
   ADSL_CURR_DOWNSTREAM_RATE = [0];
@@ -70,6 +75,11 @@ export class PortmanCdmsComponent implements OnInit {
   ADSL_DOWNSTREAM_SNR = [0];
   ADSL_UPSTREAM_SNR = [0];
   TIME = [];
+  pagination_config: any;
+  command_histories = [];
+  operator = localStorage.getItem("username");
+  command_history_detail = {};
+  
   get_port_info(){
     this.user_does_not_exist = false;
     this.run_by_ip = false;
@@ -82,7 +92,7 @@ export class PortmanCdmsComponent implements OnInit {
       else{
         this.user_does_not_exist = false;
         this.get_dslam_id_by_fqdn(this.port_infos.FQDN);
-
+        this.get_command_history('0'+this.username, this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
       }
     });
   }
@@ -117,12 +127,12 @@ export class PortmanCdmsComponent implements OnInit {
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
           this.profile_adsl_set = true;
           
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false, "request_from_ui": true, "operator": "'+this.operator+'", "username": "0'+this.username+'","new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
         else if(command_obj.name == 'fast profiles adsl set'){
           this.profile_adsl_set = true;
           
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false, "request_from_ui": true,"operator": "'+this.operator+'", "username": "0'+this.username+'","new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
     // else if(command_obj.name == 'show mac by slot port'){
     //     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
@@ -130,17 +140,18 @@ export class PortmanCdmsComponent implements OnInit {
     else
       {
           this.profile_adsl_set = false;
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false, "request_from_ui": true,"operator": "'+this.operator+'", "username": "0'+this.username+'","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
         }
     }
     else if(command_obj.type='dslam'){
-      var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+      var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true, "operator": "'+this.operator+'", "username": "0'+this.username+'","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     }
     this.dslamSrv.run_command(command_str).then(res => {
       this.command_res = res.response.result?res.response.result:res.response?res.response:res.response;
       this.command_res_show = true;
   });
-  }
+  this.get_command_history('0'+this.username, this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
+}
   
   run_command(command_obj, card, port){
     console.log(command_obj.name);
@@ -152,12 +163,12 @@ export class PortmanCdmsComponent implements OnInit {
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
           this.profile_adsl_set = true;
           
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"request_from_ui": true, "operator": "'+this.operator+'", "username": "0'+this.username+'","new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
         else if(command_obj.name == 'fast profiles adsl set'){
           this.profile_adsl_set = true;
           
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false, "request_from_ui": true,"operator": "'+this.operator+'", "username": "0'+this.username+'","new_lineprofile":"' +this.new_lineprofile+ '","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '"}';
         }
     // else if(command_obj.name == 'show mac by slot port'){
     //     var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
@@ -165,21 +176,32 @@ export class PortmanCdmsComponent implements OnInit {
     else
       {
           this.profile_adsl_set = false;
-          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+          var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam_port","is_queue":false, "request_from_ui": true,"operator": "'+this.operator+'", "username": "0'+this.username+'","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"'+card+'","port_number":"'+port+'"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
         }
     }
     else if(command_obj.type='dslam'){
-      var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+      var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true,"operator": "'+this.operator+'", "username": "0'+this.username+'","dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     }
     this.dslamSrv.run_command(command_str).then(res => {
       this.command_res = res.response.result?res.response.result:res.response?res.response:res.response;
       this.command_res_show = true;
   });
+  this.get_command_history('0'+this.username, this.pagination_config.currentPage, this.pagination_config.itemsPerPage);
   }
 
   register_port(){
     var command_str = '';
     this.dslamPortsrv.register_port(command_str).then();
+
+  }
+
+  view_run_command_details(command_history_id){
+    this.view_run_command_details_dialog = true;
+    this.command_histories.forEach(element => {
+      if(element.id == command_history_id)
+      this.command_history_detail = element;
+    });
+    console.log(this.command_history_detail);
 
   }
 
@@ -321,11 +343,7 @@ export class PortmanCdmsComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-     this.ldap_permissions = localStorage.getItem('ldap_permissions');
-     this.is_ldap_login = localStorage.getItem("ldap_login")
-     console.log(this.is_ldap_login);
-  }
+
   show_snmp_data(){
     this.snmp_data = {
       labels: this.TIME,
@@ -373,5 +391,15 @@ export class PortmanCdmsComponent implements OnInit {
 
   }
 
+  get_command_history(username, currentPage, page_size){
+    this.portman_cdmsSrv.get_command_history(username, currentPage, page_size).then(res=>{
+      this.command_histories = res.results;
+    });
+  }
 
+  ngOnInit(): void {
+    this.ldap_permissions = localStorage.getItem('ldap_permissions');
+    this.is_ldap_login = localStorage.getItem("ldap_login");
+    console.log(this.is_ldap_login);
+ }
 }

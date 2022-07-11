@@ -163,7 +163,7 @@ export class DslamOperationComponent implements OnInit {
   run_command(command_obj) {
     //alert(command_obj.name)
     this.show_result = false;
-    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"0","port_number":"0"}},"command":"' + command_obj.name + '","new_lineprofile":""}';
     this.dslamSrv.run_command(command_str).then(res => {
       this.command_res = res.response.result;
       console.log(this.command_res);
@@ -432,19 +432,19 @@ export class DslamOperationComponent implements OnInit {
     // });
     let ngn_command = "assign_number_to_user"
     this.assign_number_to_user_started = true;
-    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '","ngn_phon_number":"' + this.ngn_phone_number + '","ngn_password":"' + this.ngn_Sip_password + '"}},"command":"' + ngn_command + '"}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '","ngn_phon_number":"' + this.ngn_phone_number + '","ngn_password":"' + this.ngn_Sip_password + '"}},"command":"' + ngn_command + '"}';
     this.dslamSrv.register_ngn_number(command_str).then(res => {
       this.assign_number_to_user_res = res.result.result;
       this.assign_number_to_user_comlpeted = true;
       ngn_command = "reset_sip_configuration"
       this.reset_sip_configuration_started = true;
-      command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+      command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"' + ngn_command + '","new_lineprofile":""}';
       this.dslamSrv.register_ngn_number(command_str).then(res => {
         this.reset_sip_configuration_res = res.result.result;
         this.reset_sip_configuration_comlpeted = true;
         ngn_command = "display_if_sip_attribute_running"
         this.display_if_sip_attribute_running_started = true;
-        command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"' + ngn_command + '","new_lineprofile":""}';
+        command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"' + ngn_command + '","new_lineprofile":""}';
         this.dslamSrv.register_ngn_number(command_str).then(res => {
           this.display_if_sip_attribute_running_res = res.result;
           console.log(this.display_if_sip_attribute_running_res);
@@ -475,7 +475,7 @@ export class DslamOperationComponent implements OnInit {
   }
 
   view_registered_numbers() {
-    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"display_sippstnuser_reg_state","new_lineprofile":""}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"display_sippstnuser_reg_state","new_lineprofile":""}';
     this.dslamSrv.register_ngn_number(command_str).then(res => {
       this.display_if_sip_attribute_running_res = res.result.result;
         if(res.result.result.includes(this.ngn_phone_number)){
@@ -487,7 +487,7 @@ export class DslamOperationComponent implements OnInit {
     });
   }
   view_call_state() {
-    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"display_sippstnuser_call_state","new_lineprofile":""}';
+    var command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslam","is_queue":false, "request_from_ui": true,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":"' + this.ngn_card + '","port_number":"' + this.ngn_port + '"}},"command":"display_sippstnuser_call_state","new_lineprofile":""}';
     this.dslamSrv.register_ngn_number(command_str).then(res => {
 
     });

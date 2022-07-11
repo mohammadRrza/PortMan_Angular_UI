@@ -19,6 +19,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {ChartModule} from 'primeng/chart';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import {ChartModule} from 'primeng/chart';
         InputSwitchModule,
         InputNumberModule,
         ToastModule,
-        ChartModule
+        ChartModule,
+        TabViewModule
         ],
     declarations: [ PortmanCdmsComponent ],
     providers:[MessageService]

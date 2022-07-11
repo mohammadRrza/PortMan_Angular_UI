@@ -414,15 +414,15 @@ export class DslamPortOperationComponent implements OnInit {
         if(command_obj.name == 'profile adsl set' || command_obj.name == 'setPortProfiles'){
             this.profile_adsl_set = true;
             this.comm_item = command_obj;
-            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport", "request_from_ui": true,"new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
           }
           else if(command_obj.name == 'fast profiles adsl set'){
             this.profile_adsl_set = true;
             this.comm_item = command_obj;
-            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport", "request_from_ui": true,"new_lineprofile":"' +this.new_lineprofile+ '","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
           }
           else{
-            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","new_lineprofile":"","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
+            command_str = '{"dslam_id":' + this.dslam_id + ',"params":{"type":"dslamport","request_from_ui": true,"new_lineprofile":"","is_queue":false,"dslam_id":"' + this.dslam_id + '","port_conditions":{"slot_number":' + this.dslamPort_info2.slot_number + ',"port_number":' + this.dslamPort_info2.port_number + '}},"command":"' + command_obj.name + '"}';
 
           }
         this.dsportSrv.run_command(command_str).then(res => {

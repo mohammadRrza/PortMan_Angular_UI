@@ -58,7 +58,7 @@
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="ping_dslam()" />
                                         <img src="\assets\img\brand\port.png" width="20" pTooltip="Port Config"
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="port_config(port_infos.FQDN,port_infos.D_Kart,port_infos.D_Port,port_infos.AgentUsername,port_infos.PanelUsername)" />
-                                        <img src="\assets\img\brand\port_live.png" width="20" pTooltip="View Live Port"
+                                        <img *ngIf="x" src="\assets\img\brand\port_live.png" width="20" pTooltip="View Live Port"
                                         tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_live_user_port_func(port_infos.FQDN,port_infos.D_Kart,port_infos.D_Port)" />
                                         </td>
 
@@ -153,7 +153,9 @@
                         </div>
                     </div>
                     <div class="col-6" style="max-width: 50%;">
-                        <p-card header="Command Result" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+                      <p-tabView *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+                        <p-tabPanel header="Command Result">
+                          <p-card header="Command Result" >
                             <hr />
                             <!--<div *ngIf="!show_result" class="res_div_disabled border command_res">
                               <p-progressSpinner></p-progressSpinner>
@@ -169,6 +171,38 @@
                             <pre>
                             </pre>
                           </p-card>
+                        </p-tabPanel>
+                        <p-tabPanel header="Command History" *ngIf="x">
+                          <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
+
+                            <div class="col-12">
+                                <p-card header="Command History">
+                                    <hr />
+                                    <p-table [value]="command_histories" styleClass="p-datatable-striped" responsiveLayout="scroll">
+                                      <ng-template pTemplate="header">
+                                          <tr>
+                                              <th class="text-center">Command</th>
+                                              <th class="text-center">Log Date</th>
+                                              <th class="text-center">Request</th>
+                                              <th class="text-center">Action</th>
+                                          </tr>
+                                      </ng-template>
+                                      <ng-template pTemplate="body" let-command_history>
+                                          <tr class="text-center">
+                                              <td class="text-center">{{command_history.command}}</td>
+                                              <td class="text-center">{{command_history.log_date | date: 'yyyy/MM/dd hh:mm:ss a'}}</td>
+                                              <td class="text-center">{{command_history.request}}</td>
+                                              <td class="text-center"> <img src="\assets\img\brand\info_icon.png" width="20" pTooltip="View Details"
+                                                tooltipPosition="top" style="cursor: pointer;margin: 5px;" label="Confirm" (click)="view_run_command_details(command_history.id)" /></td>
+                                          </tr>
+                                      </ng-template>
+                                  </p-table>
+                                </p-card>
+                            </div>
+                        </div>
+                        </p-tabPanel>
+                     </p-tabView>
+
                         </div>
                     </div> 
             </div>
@@ -176,17 +210,6 @@
             (click)="add_bulk_users_to_portman()" label="Run Command" ></button>
             <button pButton type="button"
             (click)="set_permission_for_user()" label="set_permission_for_user" ></button> -->
-            <hr/>
-            <div class="row" *ngIf='port_infos && responseStatus.ErrorCode == 0'>
-
-                <div class="col-12">
-                    <p-card header="Command History">
-                        <hr />
-                        <table class="table table-responsive-sm table-hover table-outline mb-0 table-striped table-bordered">
-                        </table>
-                    </p-card>
-                </div>
-            </div>
             </div>
     </div>
 </div>
@@ -292,6 +315,26 @@
 
   <div class="border-info" style="padding: 10px;">
     <p-chart type="line" [data]="snmp_data"></p-chart>
+  </div>
+  </p-dialog>
+
+  <p-dialog header="View Run Command Details" [(visible)]="view_run_command_details_dialog" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+          View Run Command Details
+        </div>
+        <div class="glowing-border direction">
+            <div class="card-body">
+                <div class="row">
+                  <pre>
+                    {{command_history_detail}}
+                  </pre>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
   </p-dialog>
 

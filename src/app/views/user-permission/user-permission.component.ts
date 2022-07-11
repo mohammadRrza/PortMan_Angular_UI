@@ -110,14 +110,14 @@ export class UserPermissionComponent implements OnInit {
   selectEvent(item){
   }
 
-  onChangeSearch_users(event){
+  onChangeSearch_users(event, type){
     this.usrSrv.search_users(event).then(res=>{
       this.usersearchs =  res.results;
       this.pagination_config.totalItems = res.count;
     });
   }
 
-onFocused_users(event){
+onFocused_users(event, type){
   this.get_users(this.pagination_config.currentPage, this.pagination_config.itemsPerPage)
 }
 
@@ -143,13 +143,13 @@ onFocused_commands(event){
 this.get_all_commands()
 }
 
-onChangeSearch_profile(event){
+onChangeSearch_profile(event, type){
   this.permissionService.search_profile(event).then(res=>{
     this.permissionsearchs =  res.results;
   });
 }
 
-onFocused_profile(event){
+onFocused_profile(event, type){
 this.permissionService.get_permissions_profiles(this.pagination_config.currentPage, this.pagination_config.itemsPerPage)
 }
 
@@ -221,6 +221,9 @@ show_add_Permission(){
       this.pagination_config.totalItems = res.count;
     });
   }
+
+  add_permission_profile(){}
+
 
   edit_permissions(permission_id, user_id, permission_profile, user_permission_profile_id){
     this.user_id = user_id;
